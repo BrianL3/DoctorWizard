@@ -28,6 +28,7 @@
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
 		C4EA38691A76C4B700EC284C /* ScrollingBackgroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */; };
+		C4EA386B1A76CD1C00EC284C /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA386A1A76CD1C00EC284C /* MainMenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingBackgroundScene.swift; sourceTree = "<group>"; };
+		C4EA386A1A76CD1C00EC284C /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = SKTUtils/MainMenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +111,8 @@
 			children = (
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
-				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
+				C4EA386A1A76CD1C00EC284C /* MainMenuViewController.swift */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
 				C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */,
 				C4D707D21A76BEFB00A990A1 /* GameViewController.swift */,
@@ -267,7 +269,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
@@ -279,6 +280,7 @@
 				C4EA38621A76C0AB00EC284C /* SKColor+Extensions.swift in Sources */,
 				C4D707D31A76BEFB00A990A1 /* GameViewController.swift in Sources */,
 				C4EA385F1A76C0AB00EC284C /* Int+Extensions.swift in Sources */,
+				C4EA386B1A76CD1C00EC284C /* MainMenuViewController.swift in Sources */,
 				C4EA38631A76C0AB00EC284C /* SKNode+Extensions.swift in Sources */,
 				C4EA38641A76C0AB00EC284C /* SKTAudio.swift in Sources */,
 				C4EA385C1A76C0AB00EC284C /* CGFloat+Extensions.swift in Sources */,
