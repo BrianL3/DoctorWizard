@@ -20,6 +20,59 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-125" y="34"/>
+        </scene>
+        <!--Pop Up Menu Controller-->
+        <scene sceneID="lQl-bn-brO">
+            <objects>
+                <viewController storyboardIdentifier="PopUpVC" id="oEe-LF-YWh" customClass="PopUpMenuController" customModule="DoctorWizard" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nGi-vx-6oz"/>
+                        <viewControllerLayoutGuide type="bottom" id="Di2-fV-jMz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Huf-Rx-WX9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="min-36-gcu">
+                                <rect key="frame" x="258" y="20" width="84" height="30"/>
+                                <state key="normal" title="pick a song!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedPickaSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="li8-B9-7h6"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your selected song name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-hw-cNk">
+                                <rect key="frame" x="203" y="58" width="194" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHH-UH-BpJ">
+                                <rect key="frame" x="279" y="86" width="42" height="30"/>
+                                <state key="normal" title="PLAY!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="userDidPlaySong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="OV2-Wf-UfM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="min-36-gcu" secondAttribute="centerX" id="7kR-jc-Jtv"/>
+                            <constraint firstAttribute="centerX" secondItem="S1T-hw-cNk" secondAttribute="centerX" id="c6n-7f-kQO"/>
+                            <constraint firstAttribute="centerX" secondItem="ZHH-UH-BpJ" secondAttribute="centerX" id="gOy-nY-9FB"/>
+                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="S1T-hw-cNk" secondAttribute="bottom" constant="7.5" id="kCQ-Ih-7GM"/>
+                            <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" id="lKD-bA-1v0"/>
+                            <constraint firstItem="S1T-hw-cNk" firstAttribute="top" secondItem="min-36-gcu" secondAttribute="bottom" constant="8" id="r9U-QB-AO6"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="59Q-SM-SKD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="516" y="48"/>
         </scene>
     </scenes>
 </document>
