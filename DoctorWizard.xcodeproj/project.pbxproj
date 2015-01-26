@@ -109,6 +109,7 @@
 			children = (
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
+				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
 				C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */,
@@ -266,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
