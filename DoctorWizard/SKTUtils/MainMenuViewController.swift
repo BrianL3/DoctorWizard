@@ -75,20 +75,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
     }
     
-    func setUpMainButton(){
-        
-        
-        
-        
-        
-        // setting up the MediaPickerController as the MPMediaPlayerDelegate
-            let musicPickerController = MPMediaPickerController()
-            musicPickerController.allowsPickingMultipleItems = false
-            musicPickerController.delegate = self
-            self.presentViewController(musicPickerController, animated: true, completion: nil)
-        
-        }
-    
     //MARK: MediaPickerController Options
     func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -100,15 +86,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
             self.presentViewController(GameViewController(), animated: true, completion: nil)
             
         })
-        
-        
-        
-        
-      
-        
-        
-        
-        
+        self.playMusic(mediaItemCollection)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -133,10 +112,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
 
     func userDidPressSelectSong(){
         
-        
-        
-        
-        
+        // setting up the MediaPickerController as the MPMediaPlayerDelegate
+        let musicPickerController = MPMediaPickerController()
+        musicPickerController.allowsPickingMultipleItems = false
+        musicPickerController.delegate = self
+        self.presentViewController(musicPickerController, animated: true, completion: nil)
         
     }
     
