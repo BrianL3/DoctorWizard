@@ -15,7 +15,22 @@ class GameScene: SKScene {
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 1000.0
     var velocity = CGPointZero
+    let playableRect: CGRect
     var lastTouchLocation: CGPoint?
+    
+    override init(size: CGSize) {
+        let maxAspectRatio:CGFloat = 16.0/9.0 // 1
+        let playableHeight = size.width / maxAspectRatio // 2
+        let playableMargin = (size.height-playableHeight)/2.0 // 3
+        playableRect = CGRect(x: 0, y: playableMargin,
+            width: size.width,
+            height: playableHeight) // 4
+        super.init(size: size) // 5
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented") // 6
+    }
 
     
     override func didMoveToView(view: SKView) {
@@ -46,10 +61,9 @@ class GameScene: SKScene {
                 moveSprite(dude, velocity: velocity)
             }
         }
+        
+        boundsCheckDude()
 
-        
-        
-        
         
     }
     
@@ -83,5 +97,34 @@ class GameScene: SKScene {
             let touchLocation = touch.locationInNode(self)
             sceneTouched(touchLocation)
     }
+    
+    func boundsCheckDude() {
+        let bottomLeft = CGPoint(x: 0,
+            y: CGRectGetMinY(playableRect))
+        let topRight = CGPoint(x: size.width,
+            y: CGRectGetMaxY(playableRect))
+        
+        
+        if dude.position.x <= bottomLeft.x {
+            dude.position.x = bottomLeft.x
+            velocity.x = -velocity.x
+        }
+        if dude.position.x >= topRight.x {
+            dude.position.x = topRight.x
+            velocity.x = -velocity.x
+        }
+        if dude.position.y <= bottomLeft.y {
+            dude.position.y = bottomLeft.y
+            velocity.y = -velocity.y
+        }
+        if dude.position.y >= topRight.y {
+            dude.position.y = topRight.y
+            velocity.y = -velocity.y
+        } 
+    }
+    
+    
+
+
 
 }
