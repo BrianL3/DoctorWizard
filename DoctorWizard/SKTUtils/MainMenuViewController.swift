@@ -93,23 +93,16 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 //MARK: MPMusicPlayerController
+    // the music will play
     func playMusic(music: MPMediaItemCollection) -> () {
         let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    // what happens when the user selects the pick a song button
     func userDidPressSelectSong(){
         
         // setting up the MediaPickerController as the MPMediaPlayerDelegate
@@ -117,9 +110,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         musicPickerController.allowsPickingMultipleItems = false
         musicPickerController.delegate = self
         self.presentViewController(musicPickerController, animated: true, completion: nil)
-        
     }
-    
     
     func userDidPlaySong(){
         

@@ -16,6 +16,8 @@ protocol popUpMenuDelegate {
 
 class PopUpMenuController: UIViewController {
 
+    @IBOutlet weak var songNameLabel: UILabel!
+    
     var delegate: popUpMenuDelegate?
     
     
