@@ -157,8 +157,6 @@ class GameScene: SKScene {
         SKAction.moveToY(-rock.size.height/2, duration: 2.0)
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))
-     
-        
     }
   
 //
