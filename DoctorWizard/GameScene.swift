@@ -18,6 +18,8 @@ class GameScene: SKScene {
     var velocity = CGPointZero
     let playableRect: CGRect
     var lastTouchLocation: CGPoint?
+    var animator: UIDynamicAnimator!
+    var gravity: UIGravityBehavior!
     
     
     //MARK: INTIALIZER ==============================================================================
@@ -45,6 +47,11 @@ class GameScene: SKScene {
         dude.setScale(0.75)
         addChild(dude)
         
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnRock),
+                SKAction.waitForDuration(1.0)])))
+        
+    
         //simulate SKSpriteNode for collision purposes
         let fakeDude: SKSpriteNode = SKSpriteNode(imageNamed: "rock")
         fakeDude.name = "fakeDude"
@@ -143,7 +150,30 @@ class GameScene: SKScene {
         } 
     }
     
+    //MARK: SPAWN ROCKS ========================================================================
     
+    func spawnRock() {
+        let rock = SKSpriteNode(imageNamed: "Rock")
+        rock.name = "rock"
+        rock.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect),
+                max: CGRectGetMaxX(playableRect)),
+            y: size.height)
+        rock.setScale(0)
+        addChild(rock)
+        let appear = SKAction.scaleTo(1, duration: 2.0)
+        let actions = [appear]
+        rock.runAction(SKAction.sequence(actions))
+        let actionMove =
+        SKAction.moveToY(-rock.size.height/2, duration: 2.0)
+        let actionRemove = SKAction.removeFromParent()
+        rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
+  
+//
+//    func checkCollisions() {
+//        
+//        var hitBounds: [] = []
+//    }
     //MARK: COLLISIONS ==========================================================================
     
     func checkCollisions() {
