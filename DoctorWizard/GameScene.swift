@@ -20,7 +20,7 @@ class GameScene: SKScene {
     var lastTouchLocation: CGPoint?
     
     
-    //MARK: INTIALIZER ===============================================================================
+    //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
         let maxAspectRatio:CGFloat = 16.0/9.0 // 1
@@ -144,8 +144,7 @@ class GameScene: SKScene {
     }
     
     
-
-    
+    //MARK: COLLISIONS ==========================================================================
     
     func checkCollisions() {
         
