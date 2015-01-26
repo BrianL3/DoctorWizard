@@ -27,6 +27,7 @@
 		C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA38591A76C0AB00EC284C /* SKTEffects.swift */; };
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
+		C4EA38691A76C4B700EC284C /* ScrollingBackgroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		C4EA38591A76C0AB00EC284C /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingBackgroundScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
+				C4EA38681A76C4B700EC284C /* ScrollingBackgroundScene.swift */,
 				C4D707D21A76BEFB00A990A1 /* GameViewController.swift */,
 				C4D707D41A76BEFB00A990A1 /* Main.storyboard */,
 				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
@@ -267,6 +270,7 @@
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
 				C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */,
+				C4EA38691A76C4B700EC284C /* ScrollingBackgroundScene.swift in Sources */,
 				C4EA38611A76C0AB00EC284C /* SKAction+SpecialEffects.swift in Sources */,
 				C4EA385E1A76C0AB00EC284C /* CGVector+Extensions.swift in Sources */,
 				C4EA38601A76C0AB00EC284C /* SKAction+Extensions.swift in Sources */,
