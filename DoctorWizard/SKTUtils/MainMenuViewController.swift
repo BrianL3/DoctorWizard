@@ -11,6 +11,7 @@ import MediaPlayer
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate {
     
+    var didPickMusic = false
     let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
     
     override func viewDidLoad() {
@@ -23,7 +24,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate 
     
     override func viewDidAppear(animated: Bool) {
         // set up the main menu button
-        setUpMainButton()
+        if !didPickMusic {
+            setUpMainButton()
+        }
     }
     
     func setUpMainButton(){
@@ -45,8 +48,10 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate 
     }
     
     func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
-        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+        didPickMusic = !didPickMusic
+        mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
             self.presentViewController(GameViewController(), animated: true, completion: nil)
+            
         })
         
 
