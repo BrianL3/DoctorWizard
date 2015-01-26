@@ -54,9 +54,9 @@ class GameScene: SKScene {
     }
     
     func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
-        let amountToMove = velocity * CGFloat(dt)
+        let amountToMove = velocity.y * CGFloat(dt)
         println("Amount to move: \(amountToMove)")
-        sprite.position += amountToMove
+        sprite.position += CGPoint(x: 0, y: amountToMove)
     }
     
     func moveZombieToward(location: CGPoint) {
