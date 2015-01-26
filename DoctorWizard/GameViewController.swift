@@ -20,6 +20,9 @@ class GameViewController: UIViewController {
         scene.scaleMode = .AspectFill
         skView.presentScene(scene)
     }
+    
+
+    
     override func prefersStatusBarHidden() -> Bool  {
         return true
     }
