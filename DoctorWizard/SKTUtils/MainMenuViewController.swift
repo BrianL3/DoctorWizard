@@ -9,46 +9,70 @@
 import UIKit
 import MediaPlayer
 
-class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate {
+class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate {
     
     var song : MPMediaItem?
     
     var didPickMusic = false
+    
     let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setting the background color
-//        if let popOverController = self.menuAlertController.popoverPresentationController{
-//            
-//            let fakeView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//            fakeView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + (self.view.frame.height / 3))
-//            self.view.addSubview(fakeView)
-//            popOverController.sourceRect = fakeView.frame
-//            popOverController.sourceView = fakeView
-//        }
-        self.view.backgroundColor = UIColor.purpleColor()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
-        // set up the main menu button
-        if !didPickMusic {
-            setUpMainButton()
-        }
-    }
-    
-    func setUpMainButton(){
-        let playOption = UIAlertAction(title: NSLocalizedString("CHOOSE MUSE", comment: "the play button"), style: .Default) { (action) -> Void in
-            // setting up the MediaPickerController as the MPMediaPlayerDelegate
-            let musicPickerController = MPMediaPickerController()
-            musicPickerController.allowsPickingMultipleItems = false
-            musicPickerController.delegate = self
-            self.presentViewController(musicPickerController, animated: true, completion: nil)
-        }
-        menuAlertController.addAction(playOption)
         
-        self.presentViewController(menuAlertController, animated: true, completion: nil)
+        super.viewDidAppear(animated)
+        
+        //create pop up controller
+        let popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
+        
+        popUpVC.delegate = self
+        
+        
+        
+        // frame  is 40% of screen
+        let width = self.view.frame.width * 0.4
+        let height = self.view.frame.height * 0.4
+        
+        popUpVC.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        popUpVC.view.center = self.view.center
+        
+        
+        self.view.addSubview(popUpVC.view)
+    
+        //tell child and parent vcs that the child is being added to the parent
+        
+        //told parent vc that child vc was added
+        self.addChildViewController(popUpVC)
+        
+        //told child it has a parent
+        popUpVC.didMoveToParentViewController(self)
+        
+        
+        //do animation
+        
+        popUpVC.view.alpha = 0
+        
+        //do trasform
+        popUpVC.view.transform = CGAffineTransformMakeScale(1.2, 1.2)
+        
+        //do animation
+        UIView.animateWithDuration(0.2, delay: 0.5, options: nil, animations: { () -> Void in
+            
+            popUpVC.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            popUpVC.view.alpha = 1
+
+            
+            
+        }) { (finished) -> Void in
+            
+        }
+        
     }
     
     //MARK: MediaPickerController Options
@@ -86,4 +110,25 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate 
     }
     */
 
+    func userDidPressSelectSong(){
+        
+        // setting up the MediaPickerController as the MPMediaPlayerDelegate
+        let musicPickerController = MPMediaPickerController()
+        musicPickerController.allowsPickingMultipleItems = false
+        musicPickerController.delegate = self
+        self.presentViewController(musicPickerController, animated: true, completion: nil)
+        
+    }
+    
+    
+    func userDidPlaySong(){
+        
+        
+        
+        
+    }
+    
+    
+    
+    
 }
