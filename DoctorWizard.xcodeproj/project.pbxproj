@@ -27,6 +27,7 @@
 		C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA38591A76C0AB00EC284C /* SKTEffects.swift */; };
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
+		FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		C4EA38591A76C0AB00EC284C /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = SKTUtils/MainMenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
+				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
 				C4D707D21A76BEFB00A990A1 /* GameViewController.swift */,
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
