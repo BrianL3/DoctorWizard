@@ -10,24 +10,63 @@ import UIKit
 import MediaPlayer
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate {
-
+    
+    var didPickMusic = false
+    let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // creating the main menu alert controller
-        let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         // creating the select music button
         let musicSelectButton = UIButton()
-        
-        // setting up the MediaPickerController as the MPMediaPlayerDelegate
-        let musicPickerController = MPMediaPickerController()
-        musicPickerController.allowsPickingMultipleItems = false
-        musicPickerController.delegate = self
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        // set up the main menu button
+        if !didPickMusic {
+            setUpMainButton()
+        }
+    }
+    
+    func setUpMainButton(){
+        let playOption = UIAlertAction(title: NSLocalizedString("CHOOSE MUSE", comment: "the play button"), style: .Default) { (action) -> Void in
+            // setting up the MediaPickerController as the MPMediaPlayerDelegate
+            let musicPickerController = MPMediaPickerController()
+            musicPickerController.allowsPickingMultipleItems = false
+            musicPickerController.delegate = self
+            self.presentViewController(musicPickerController, animated: true, completion: nil)
+        }
+        menuAlertController.addAction(playOption)
+        
+        self.presentViewController(menuAlertController, animated: true, completion: nil)
+    }
+    
+    //MARK: MediaPickerController Options
+    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
+        didPickMusic = !didPickMusic
+        mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.presentViewController(GameViewController(), animated: true, completion: nil)
+            
+        })
+        
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+//            // set the image to main
+//            let imageFromCam = info[UIImagePickerControllerEditedImage] as? UIImage
+//            if imageFromCam != nil {
+//                self.DelegatorDidSelectImage(imageFromCam! as UIImage)
+//            }
+//            // and dismiss the ImagePickerController
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//    }
+//    
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
     }
     
 
