@@ -13,7 +13,7 @@ class GameScene: SKScene {
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    let zombieMovePointsPerSec: CGFloat = 480.0
+    let dudeMovePointsPerSec: CGFloat = 1000.0
     var velocity = CGPointZero
     var lastTouchLocation: CGPoint?
 
@@ -21,6 +21,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
         dude.position = CGPoint(x: 400, y: 400)
+        dude.setScale(0.75)
         addChild(dude)
       
     }
@@ -38,12 +39,11 @@ class GameScene: SKScene {
         
         if let lastTouch = lastTouchLocation {
             let diff = lastTouch - dude.position
-            if (diff.length() <= zombieMovePointsPerSec * CGFloat(dt)) {
+            if (diff.length() <= dudeMovePointsPerSec * CGFloat(dt)) {
                 dude.position = lastTouchLocation!
                 velocity = CGPointZero
             } else {
                 moveSprite(dude, velocity: velocity)
-                //rotateSprite(dude, direction: velocity, rotateRadiansPerSec: zombieRotateRadiansPerSec)
             }
         }
 
@@ -59,15 +59,15 @@ class GameScene: SKScene {
         sprite.position += CGPoint(x: 0, y: amountToMove)
     }
     
-    func moveZombieToward(location: CGPoint) {
+    func moveDudeToward(location: CGPoint) {
         let offset = location - dude.position
         let direction = offset.normalized()
-        velocity = direction * zombieMovePointsPerSec
+        velocity = direction * dudeMovePointsPerSec
     }
     
     func sceneTouched(touchLocation:CGPoint) {
         lastTouchLocation = touchLocation
-        moveZombieToward(touchLocation)
+        moveDudeToward(touchLocation)
     }
     
     override func touchesBegan(touches: NSSet,
