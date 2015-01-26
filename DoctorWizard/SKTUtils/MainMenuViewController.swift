@@ -19,8 +19,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate 
         
         // creating the select music button
         let musicSelectButton = UIButton()
-        
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -46,9 +44,24 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.presentViewController(GameViewController(), animated: true, completion: nil)
+        })
+        
+
+//            // set the image to main
+//            let imageFromCam = info[UIImagePickerControllerEditedImage] as? UIImage
+//            if imageFromCam != nil {
+//                self.DelegatorDidSelectImage(imageFromCam! as UIImage)
+//            }
+//            // and dismiss the ImagePickerController
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//    }
+//    
+//    override func didReceiveMemoryWarning() {
+//        super.didReceiveMemoryWarning()
+//        // Dispose of any resources that can be recreated.
     }
     
 
