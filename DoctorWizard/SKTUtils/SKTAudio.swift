@@ -21,6 +21,7 @@
  */
 
 import AVFoundation
+import MediaPlayer
 
 /**
  * Audio player that uses AVFoundation to play looping background music and
@@ -51,7 +52,7 @@ public class SKTAudio {
       println("Could not create audio player: \(error!)")
     }
   }
-
+    
   public func pauseBackgroundMusic() {
     if let player = backgroundMusicPlayer {
       if player.playing {

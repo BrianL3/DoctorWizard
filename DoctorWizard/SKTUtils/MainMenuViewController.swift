@@ -11,13 +11,14 @@ import MediaPlayer
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate {
     
+    var song : MPMediaItem?
+    
     var didPickMusic = false
     
     let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // creating the main menu alert controller
         
         
     }
@@ -109,20 +110,16 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         
 
-//            // set the image to main
-//            let imageFromCam = info[UIImagePickerControllerEditedImage] as? UIImage
-//            if imageFromCam != nil {
-//                self.DelegatorDidSelectImage(imageFromCam! as UIImage)
-//            }
-//            // and dismiss the ImagePickerController
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//    }
-//    
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-    
+//MARK: MPMusicPlayerController
+    func playMusic(music: MPMediaItemCollection) -> () {
+        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        musicPlayer.setQueueWithItemCollection(music)
+        musicPlayer.play()
+    }
 
     /*
     // MARK: - Navigation
