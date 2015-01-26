@@ -11,15 +11,24 @@ import MediaPlayer
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate {
     
+    var song : MPMediaItem?
+    
     var didPickMusic = false
     let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // creating the main menu alert controller
         
-        // creating the select music button
-        let musicSelectButton = UIButton()
+        // setting the background color
+//        if let popOverController = self.menuAlertController.popoverPresentationController{
+//            
+//            let fakeView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//            fakeView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + (self.view.frame.height / 3))
+//            self.view.addSubview(fakeView)
+//            popOverController.sourceRect = fakeView.frame
+//            popOverController.sourceView = fakeView
+//        }
+        self.view.backgroundColor = UIColor.purpleColor()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -53,22 +62,19 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate 
             self.presentViewController(GameViewController(), animated: true, completion: nil)
             
         })
-        
-
-//            // set the image to main
-//            let imageFromCam = info[UIImagePickerControllerEditedImage] as? UIImage
-//            if imageFromCam != nil {
-//                self.DelegatorDidSelectImage(imageFromCam! as UIImage)
-//            }
-//            // and dismiss the ImagePickerController
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//    }
-//    
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Dispose of any resources that can be recreated.
+        self.playMusic(mediaItemCollection)
     }
-    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+//MARK: MPMusicPlayerController
+    func playMusic(music: MPMediaItemCollection) -> () {
+        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+        musicPlayer.setQueueWithItemCollection(music)
+        musicPlayer.play()
+    }
 
     /*
     // MARK: - Navigation
