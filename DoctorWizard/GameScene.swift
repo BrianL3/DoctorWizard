@@ -11,15 +11,16 @@ import SpriteKit
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
+    
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    let dudeMovePointsPerSec: CGFloat = 1000.0
+    let dudeMovePointsPerSec: CGFloat = 1500.0
     var velocity = CGPointZero
     let playableRect: CGRect
     var lastTouchLocation: CGPoint?
     
     
-    //MARK: INTIALIZER ===============================================================================
+    //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
         let maxAspectRatio:CGFloat = 16.0/9.0 // 1
@@ -43,7 +44,14 @@ class GameScene: SKScene {
         dude.position = CGPoint(x: 400, y: 400)
         dude.setScale(0.75)
         addChild(dude)
-      
+        
+        //simulate SKSpriteNode for collision purposes
+        let fakeDude: SKSpriteNode = SKSpriteNode(imageNamed: "rock")
+        fakeDude.name = "fakeDude"
+        fakeDude.position = CGPoint(x: 400, y: 1200)
+        addChild(fakeDude)
+        dude.zPosition = 0
+        fakeDude.zPosition = 0
     }
     
     //called before each frame is rendered
@@ -56,7 +64,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-        println("\(dt*1000) milliseconds since last update")
+        //println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
@@ -73,6 +81,10 @@ class GameScene: SKScene {
         boundsCheckDude()
     }
     
+    override func didEvaluateActions() {
+        
+        checkCollisions()
+    }
     
     //MARK: MOVE THE DUDE ======================================================================
 
@@ -80,7 +92,7 @@ class GameScene: SKScene {
         
         let amountToMove = velocity.y * CGFloat(dt)
         
-        println("Amount to move: \(amountToMove)")
+        //println("Amount to move: \(amountToMove)")
         
         sprite.position += CGPoint(x: 0, y: amountToMove)
     }
@@ -123,20 +135,32 @@ class GameScene: SKScene {
         
         if dude.position.y <= bottomLeft.y {
             dude.position.y = bottomLeft.y
-            velocity.y = 0
+            velocity.y = -velocity.y
         }
         if dude.position.y >= topRight.y {
             dude.position.y = topRight.y
-            velocity.y = 0
+            velocity.y = -velocity.y
         } 
     }
     
     
-//
-//    func checkCollisions() {
-//        
-//        var hitBounds: [] = []
-//    }
+    //MARK: COLLISIONS ==========================================================================
+    
+    func checkCollisions() {
+        
+        var hitObstacle: [SKSpriteNode] = []
+        
+        enumerateChildNodesWithName("fakeDude", usingBlock: { (node: SKNode!, _: UnsafeMutablePointer<ObjCBool>) -> Void in
+            
+            let fakeDude = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(fakeDude.frame, self.dude.frame) {
+                
+                hitObstacle.append(fakeDude)
+                self.velocity = CGPoint(x:0, y:0)
+            }
+        })
+    }
 
 
 }
