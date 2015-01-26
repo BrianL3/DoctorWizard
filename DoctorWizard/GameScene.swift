@@ -11,7 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
-    //var rock : SKSpriteNode =  SKSpriteNode(imageNamed: "Rock")
+    //let rock : SKSpriteNode =  SKSpriteNode(imageNamed: "Rock")
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 1000.0
@@ -51,7 +51,7 @@ class GameScene: SKScene {
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
         
-      
+    
     }
     
     //called before each frame is rendered
@@ -148,26 +148,22 @@ class GameScene: SKScene {
         rock.position = CGPoint(
             x: CGFloat.random(min: CGRectGetMinX(playableRect),
                 max: CGRectGetMaxX(playableRect)),
-            y: CGFloat.random(min: CGRectGetMinY(playableRect),
-                max: CGRectGetMaxY(playableRect)))
+            y: size.height)
         rock.setScale(0)
         addChild(rock)
         // 2
-        let appear = SKAction.scaleTo(0.5, duration: 1.2)
+        let appear = SKAction.scaleTo(1, duration: 2.0)
         let actions = [appear]
         rock.runAction(SKAction.sequence(actions))
         
-        //applying gravity to rocks
-        //        animator = UIDynamicAnimator(referenceView: view)
-        //        gravity = UIGravityBehavior(items: [rock])
-        //        animator.addBehavior(gravity)
-        
-        
+        let actionMove =
+        SKAction.moveToY(-rock.size.height/2, duration: 2.0)
+        let actionRemove = SKAction.removeFromParent()
+        rock.runAction(SKAction.sequence([actionMove, actionRemove]))
+     
         
     }
-
-    
-    
+  
 //
 //    func checkCollisions() {
 //        
