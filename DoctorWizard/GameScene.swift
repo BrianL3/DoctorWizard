@@ -11,12 +11,15 @@ import SpriteKit
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
+    //var rock : SKSpriteNode =  SKSpriteNode(imageNamed: "Rock")
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 1000.0
     var velocity = CGPointZero
     let playableRect: CGRect
     var lastTouchLocation: CGPoint?
+    var animator: UIDynamicAnimator!
+    var gravity: UIGravityBehavior!
     
     
     //MARK: INTIALIZER ===============================================================================
@@ -43,6 +46,11 @@ class GameScene: SKScene {
         dude.position = CGPoint(x: 400, y: 400)
         dude.setScale(0.75)
         addChild(dude)
+        
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnRock),
+                SKAction.waitForDuration(1.0)])))
+        
       
     }
     
@@ -56,7 +64,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-        println("\(dt*1000) milliseconds since last update")
+        //println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
@@ -80,7 +88,7 @@ class GameScene: SKScene {
         
         let amountToMove = velocity.y * CGFloat(dt)
         
-        println("Amount to move: \(amountToMove)")
+        //println("Amount to move: \(amountToMove)")
         
         sprite.position += CGPoint(x: 0, y: amountToMove)
     }
@@ -130,6 +138,34 @@ class GameScene: SKScene {
             velocity.y = 0
         } 
     }
+    
+    //MARK: SPAWN ROCKS ========================================================================
+    
+    func spawnRock() {
+        // 1
+        let rock = SKSpriteNode(imageNamed: "Rock")
+        rock.name = "rock"
+        rock.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect),
+                max: CGRectGetMaxX(playableRect)),
+            y: CGFloat.random(min: CGRectGetMinY(playableRect),
+                max: CGRectGetMaxY(playableRect)))
+        rock.setScale(0)
+        addChild(rock)
+        // 2
+        let appear = SKAction.scaleTo(0.5, duration: 1.2)
+        let actions = [appear]
+        rock.runAction(SKAction.sequence(actions))
+        
+        //applying gravity to rocks
+        //        animator = UIDynamicAnimator(referenceView: view)
+        //        gravity = UIGravityBehavior(items: [rock])
+        //        animator.addBehavior(gravity)
+        
+        
+        
+    }
+
     
     
 //
