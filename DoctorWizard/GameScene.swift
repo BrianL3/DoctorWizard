@@ -142,7 +142,6 @@ class GameScene: SKScene {
     //MARK: SPAWN ROCKS ========================================================================
     
     func spawnRock() {
-        // 1
         let rock = SKSpriteNode(imageNamed: "Rock")
         rock.name = "rock"
         rock.position = CGPoint(
@@ -151,11 +150,9 @@ class GameScene: SKScene {
             y: size.height)
         rock.setScale(0)
         addChild(rock)
-        // 2
         let appear = SKAction.scaleTo(1, duration: 2.0)
         let actions = [appear]
         rock.runAction(SKAction.sequence(actions))
-        
         let actionMove =
         SKAction.moveToY(-rock.size.height/2, duration: 2.0)
         let actionRemove = SKAction.removeFromParent()
