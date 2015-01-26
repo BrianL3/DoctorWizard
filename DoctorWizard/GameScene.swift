@@ -11,7 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
-    //let rock : SKSpriteNode =  SKSpriteNode(imageNamed: "Rock")
+    
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 1500.0
@@ -52,6 +52,13 @@ class GameScene: SKScene {
                 SKAction.waitForDuration(1.0)])))
         
     
+        //simulate SKSpriteNode for collision purposes
+        let fakeDude: SKSpriteNode = SKSpriteNode(imageNamed: "rock")
+        fakeDude.name = "fakeDude"
+        fakeDude.position = CGPoint(x: 400, y: 1200)
+        addChild(fakeDude)
+        dude.zPosition = 0
+        fakeDude.zPosition = 0
     }
     
     //called before each frame is rendered
@@ -167,6 +174,23 @@ class GameScene: SKScene {
 //        
 //        var hitBounds: [] = []
 //    }
+    //MARK: COLLISIONS ==========================================================================
+    
+    func checkCollisions() {
+        
+        var hitObstacle: [SKSpriteNode] = []
+        
+        enumerateChildNodesWithName("fakeDude", usingBlock: { (node: SKNode!, _: UnsafeMutablePointer<ObjCBool>) -> Void in
+            
+            let fakeDude = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(fakeDude.frame, self.dude.frame) {
+                
+                hitObstacle.append(fakeDude)
+                self.velocity = CGPoint(x:0, y:0)
+            }
+        })
+    }
 
 
 }
