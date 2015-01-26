@@ -14,7 +14,7 @@ class GameScene: SKScene {
     //let rock : SKSpriteNode =  SKSpriteNode(imageNamed: "Rock")
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    let dudeMovePointsPerSec: CGFloat = 1000.0
+    let dudeMovePointsPerSec: CGFloat = 1500.0
     var velocity = CGPointZero
     let playableRect: CGRect
     var lastTouchLocation: CGPoint?
@@ -22,7 +22,7 @@ class GameScene: SKScene {
     var gravity: UIGravityBehavior!
     
     
-    //MARK: INTIALIZER ===============================================================================
+    //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
         let maxAspectRatio:CGFloat = 16.0/9.0 // 1
@@ -81,6 +81,10 @@ class GameScene: SKScene {
         boundsCheckDude()
     }
     
+    override func didEvaluateActions() {
+        
+        checkCollisions()
+    }
     
     //MARK: MOVE THE DUDE ======================================================================
 
@@ -131,11 +135,11 @@ class GameScene: SKScene {
         
         if dude.position.y <= bottomLeft.y {
             dude.position.y = bottomLeft.y
-            velocity.y = 0
+            velocity.y = -velocity.y
         }
         if dude.position.y >= topRight.y {
             dude.position.y = topRight.y
-            velocity.y = 0
+            velocity.y = -velocity.y
         } 
     }
     
