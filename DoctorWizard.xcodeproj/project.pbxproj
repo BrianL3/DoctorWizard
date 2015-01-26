@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */; };
+		C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4D707CE1A76BEFB00A990A1 /* GameScene.sks */; };
+		C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707D01A76BEFB00A990A1 /* GameScene.swift */; };
+		C4D707D31A76BEFB00A990A1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707D21A76BEFB00A990A1 /* GameViewController.swift */; };
+		C4D707D61A76BEFB00A990A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4D707D41A76BEFB00A990A1 /* Main.storyboard */; };
+		C4D707D81A76BEFB00A990A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4D707D71A76BEFB00A990A1 /* Images.xcassets */; };
+		C4D707DB1A76BEFB00A990A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */; };
+		C4D707E71A76BEFC00A990A1 /* DoctorWizardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707E61A76BEFC00A990A1 /* DoctorWizardTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C4D707E11A76BEFC00A990A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4D707BF1A76BEFB00A990A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4D707C61A76BEFB00A990A1;
+			remoteInfo = DoctorWizard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoctorWizard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4D707CB1A76BEFB00A990A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C4D707CE1A76BEFB00A990A1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		C4D707D01A76BEFB00A990A1 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		C4D707D21A76BEFB00A990A1 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		C4D707D51A76BEFB00A990A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C4D707D71A76BEFB00A990A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C4D707DA1A76BEFB00A990A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		C4D707E01A76BEFC00A990A1 /* DoctorWizardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoctorWizardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4D707E51A76BEFC00A990A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4D707E61A76BEFC00A990A1 /* DoctorWizardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorWizardTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C4D707C41A76BEFB00A990A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4D707DD1A76BEFC00A990A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C4D707BE1A76BEFB00A990A1 = {
+			isa = PBXGroup;
+			children = (
+				C4D707C91A76BEFB00A990A1 /* DoctorWizard */,
+				C4D707E31A76BEFC00A990A1 /* DoctorWizardTests */,
+				C4D707C81A76BEFB00A990A1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C4D707C81A76BEFB00A990A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */,
+				C4D707E01A76BEFC00A990A1 /* DoctorWizardTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4D707C91A76BEFB00A990A1 /* DoctorWizard */ = {
+			isa = PBXGroup;
+			children = (
+				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
+				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
+				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
+				C4D707D21A76BEFB00A990A1 /* GameViewController.swift */,
+				C4D707D41A76BEFB00A990A1 /* Main.storyboard */,
+				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
+				C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */,
+				C4D707CA1A76BEFB00A990A1 /* Supporting Files */,
+			);
+			path = DoctorWizard;
+			sourceTree = "<group>";
+		};
+		C4D707CA1A76BEFB00A990A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C4D707CB1A76BEFB00A990A1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C4D707E31A76BEFC00A990A1 /* DoctorWizardTests */ = {
+			isa = PBXGroup;
+			children = (
+				C4D707E61A76BEFC00A990A1 /* DoctorWizardTests.swift */,
+				C4D707E41A76BEFC00A990A1 /* Supporting Files */,
+			);
+			path = DoctorWizardTests;
+			sourceTree = "<group>";
+		};
+		C4D707E41A76BEFC00A990A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C4D707E51A76BEFC00A990A1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C4D707C61A76BEFB00A990A1 /* DoctorWizard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4D707EA1A76BEFC00A990A1 /* Build configuration list for PBXNativeTarget "DoctorWizard" */;
+			buildPhases = (
+				C4D707C31A76BEFB00A990A1 /* Sources */,
+				C4D707C41A76BEFB00A990A1 /* Frameworks */,
+				C4D707C51A76BEFB00A990A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DoctorWizard;
+			productName = DoctorWizard;
+			productReference = C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C4D707DF1A76BEFC00A990A1 /* DoctorWizardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4D707ED1A76BEFC00A990A1 /* Build configuration list for PBXNativeTarget "DoctorWizardTests" */;
+			buildPhases = (
+				C4D707DC1A76BEFC00A990A1 /* Sources */,
+				C4D707DD1A76BEFC00A990A1 /* Frameworks */,
+				C4D707DE1A76BEFC00A990A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C4D707E21A76BEFC00A990A1 /* PBXTargetDependency */,
+			);
+			name = DoctorWizardTests;
+			productName = DoctorWizardTests;
+			productReference = C4D707E01A76BEFC00A990A1 /* DoctorWizardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4D707BF1A76BEFB00A990A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = codefellows;
+				TargetAttributes = {
+					C4D707C61A76BEFB00A990A1 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					C4D707DF1A76BEFC00A990A1 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = C4D707C61A76BEFB00A990A1;
+					};
+				};
+			};
+			buildConfigurationList = C4D707C21A76BEFB00A990A1 /* Build configuration list for PBXProject "DoctorWizard" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C4D707BE1A76BEFB00A990A1;
+			productRefGroup = C4D707C81A76BEFB00A990A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C4D707C61A76BEFB00A990A1 /* DoctorWizard */,
+				C4D707DF1A76BEFC00A990A1 /* DoctorWizardTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C4D707C51A76BEFB00A990A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4D707DB1A76BEFB00A990A1 /* LaunchScreen.xib in Resources */,
+				C4D707D81A76BEFB00A990A1 /* Images.xcassets in Resources */,
+				C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */,
+				C4D707D61A76BEFB00A990A1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4D707DE1A76BEFC00A990A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C4D707C31A76BEFB00A990A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
+				C4D707D31A76BEFB00A990A1 /* GameViewController.swift in Sources */,
+				C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4D707DC1A76BEFC00A990A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4D707E71A76BEFC00A990A1 /* DoctorWizardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C4D707E21A76BEFC00A990A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4D707C61A76BEFB00A990A1 /* DoctorWizard */;
+			targetProxy = C4D707E11A76BEFC00A990A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C4D707D41A76BEFB00A990A1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4D707D51A76BEFB00A990A1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4D707DA1A76BEFB00A990A1 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C4D707E81A76BEFC00A990A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C4D707E91A76BEFC00A990A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C4D707EB1A76BEFC00A990A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DoctorWizard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C4D707EC1A76BEFC00A990A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DoctorWizard/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C4D707EE1A76BEFC00A990A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DoctorWizardTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DoctorWizard.app/DoctorWizard";
+			};
+			name = Debug;
+		};
+		C4D707EF1A76BEFC00A990A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DoctorWizardTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DoctorWizard.app/DoctorWizard";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C4D707C21A76BEFB00A990A1 /* Build configuration list for PBXProject "DoctorWizard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4D707E81A76BEFC00A990A1 /* Debug */,
+				C4D707E91A76BEFC00A990A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4D707EA1A76BEFC00A990A1 /* Build configuration list for PBXNativeTarget "DoctorWizard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4D707EB1A76BEFC00A990A1 /* Debug */,
+				C4D707EC1A76BEFC00A990A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C4D707ED1A76BEFC00A990A1 /* Build configuration list for PBXNativeTarget "DoctorWizardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4D707EE1A76BEFC00A990A1 /* Debug */,
+				C4D707EF1A76BEFC00A990A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4D707BF1A76BEFB00A990A1 /* Project object */;
+}
