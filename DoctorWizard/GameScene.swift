@@ -52,7 +52,6 @@ class GameScene: SKScene {
         dude.setScale(0.75)
         addChild(dude)
         
-        //setup movingbackground
         
         
         runAction(SKAction.repeatActionForever(
@@ -61,6 +60,10 @@ class GameScene: SKScene {
     
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
+        
+        
+        //add background layers to to mainview
+        addMovingBackground()
     }
     
     //called before each frame is rendered
@@ -88,6 +91,8 @@ class GameScene: SKScene {
         }
         
         boundsCheckDude()
+        moveBackground()
+        moveStars()
     }
     
     override func didEvaluateActions() {
@@ -141,6 +146,11 @@ class GameScene: SKScene {
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
         sceneTouched(touchLocation)
+        
+        // set the background verticle scrolling direction
+        let previousY = touch.previousLocationInView(self.view).y
+        let currentY = touch.locationInView(self.view).y
+        self.backgroundVerticalDirection = currentY - previousY
     }
     
     
@@ -227,6 +237,144 @@ class GameScene: SKScene {
         self.starLayer.zPosition = -1
         self.addChild(backgroundLayer)
         self.addChild(starLayer)
-        
+        for i in 0...1 {
+            let bottomBackground = backgroundNode()
+            bottomBackground.position = CGPoint(
+                x: CGFloat(i) * bottomBackground.size.width,
+                y: 0)
+            bottomBackground.name = "background"
+            let topBackground = backgroundNode()
+            topBackground.position = CGPoint(
+                x: CGFloat(i) * bottomBackground.size.width,
+                y: bottomBackground.size.height)
+            topBackground.name = "background"
+            backgroundLayer.addChild(bottomBackground)
+            backgroundLayer.addChild(topBackground)
+            
+            
+            
+            let bottomStar = starsNode()
+            bottomStar.position = CGPoint(
+                x: CGFloat(i) * bottomBackground.size.width,
+                y: 0)
+            bottomStar.name = "stars"
+            let topStar = starsNode()
+            topStar.position = CGPoint(
+                x: CGFloat(i) * bottomBackground.size.width,
+                y: bottomBackground.size.height)
+            topStar.name = "stars"
+            
+            starLayer.addChild(bottomStar)
+            starLayer.addChild(topStar)
+            
+        }
     }
+    
+    func backgroundNode() -> SKSpriteNode {
+        let backgroundNode = SKSpriteNode()
+        backgroundNode.anchorPoint = CGPointZero
+        
+        let background1 = SKSpriteNode(imageNamed: "spaceTest")
+        background1.anchorPoint = CGPointZero
+        background1.position = CGPointZero
+        backgroundNode.addChild(background1)
+        
+        let background2 = SKSpriteNode(imageNamed: "spaceTest")
+        background2.anchorPoint = CGPointZero
+        background2.position = CGPoint(x: background1.size.width, y: 0)
+        backgroundNode.addChild(background2)
+        
+        let background3 = SKSpriteNode(imageNamed: "spaceTest")
+        background3.anchorPoint = CGPointZero
+        background3.position = CGPoint(x: 0, y: background3.size.height)
+        backgroundNode.addChild(background3)
+        
+        let background4 = SKSpriteNode(imageNamed: "spaceTest")
+        background4.anchorPoint = CGPointZero
+        background4.position = CGPoint(x: background4.size.width, y: background4.size.height)
+        backgroundNode.addChild(background4)
+        
+        backgroundNode.size = CGSize(
+            width: background1.size.width * 2,
+            height: background1.size.height * 2)
+        return backgroundNode
+    }
+    
+    func starsNode() -> SKSpriteNode {
+        let backgroundNode = SKSpriteNode()
+        backgroundNode.anchorPoint = CGPointZero
+        
+        let stars1 = SKSpriteNode(imageNamed: "starsTest")
+        stars1.anchorPoint = CGPointZero
+        stars1.position = CGPointZero
+        backgroundNode.addChild(stars1)
+        
+        let stars2 = SKSpriteNode(imageNamed: "starsTest")
+        stars2.anchorPoint = CGPointZero
+        stars2.position = CGPoint(x: stars1.size.width, y: 0)
+        backgroundNode.addChild(stars2)
+        
+        let stars3 = SKSpriteNode(imageNamed: "starsTest")
+        stars3.anchorPoint = CGPointZero
+        stars3.position = CGPoint(x: 0, y: stars1.size.height)
+        backgroundNode.addChild(stars3)
+        
+        let stars4 = SKSpriteNode(imageNamed: "starsTest")
+        stars4.anchorPoint = CGPointZero
+        stars4.position = CGPoint(x: stars1.size.width, y: stars1.size.height)
+        backgroundNode.addChild(stars4)
+        
+        backgroundNode.size = CGSize(
+            width: stars4.size.width * 2,
+            height: stars4.size.height * 2)
+        return backgroundNode
+    }
+    
+    func moveBackground(){
+        let backgroundVelocity = CGPoint(
+            x: -self.backgroundLayerMovePointsPerSec,
+            y: self.backgroundVerticalDirection *  60)
+        let ammountToMove = backgroundVelocity * CGFloat(dt)
+        self.backgroundLayer.position += ammountToMove
+        
+        backgroundLayer.enumerateChildNodesWithName("background", usingBlock: { (node, _) -> Void in
+            let background = node as SKSpriteNode
+            let backgroundScreenPos = self.backgroundLayer.convertPoint(background.position, toNode: self)
+            if backgroundScreenPos.x <= -background.size.width {
+                background.position.x = background.position.x + background.size.width*2
+            }
+            if backgroundScreenPos.y <= -background.size.height {
+                background.position.y = background.position.y + background.size.height*2
+            }
+            if backgroundScreenPos.y >= background.size.height {
+                background.position.y = background.position.y - background.size.height*2
+            }
+        })
+    }
+    
+    func moveStars(){
+        let backgroundVelocity = CGPoint(
+            x: -self.backgroundLayerMovePointsPerSec,
+            y: self.backgroundVerticalDirection *  100)
+        let ammountToMove = backgroundVelocity * CGFloat(dt)
+        self.starLayer.position += ammountToMove
+        
+        starLayer.enumerateChildNodesWithName("stars", usingBlock: { (node, _) -> Void in
+            let background = node as SKSpriteNode
+            let backgroundScreenPos = self.starLayer.convertPoint(background.position, toNode: self)
+            if backgroundScreenPos.x <= -background.size.width {
+                background.position.x = background.position.x + background.size.width*2
+            }
+            if backgroundScreenPos.y <= -background.size.height {
+                background.position.y = background.position.y + background.size.height*2
+            }
+            if backgroundScreenPos.y >= background.size.height {
+                background.position.y = background.position.y - background.size.height*2
+            }
+        })
+    }
+        
+    
+        
+    
 }
