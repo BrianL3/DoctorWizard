@@ -23,36 +23,25 @@ class PopUpMenuController: UIViewController {
     
     
     
+    //MARK: VIEW DID LOAD ==========================================================
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
-        // Do any additional setup after loading the view.
     }
-// the button labeled "Just go already" - should skip MediaPickerController and go direct to game
+
+    
+    //MARK: IBACTIONS ==============================================================
+    
+    // the button labeled "Just go already" - should skip MediaPickerController and go direct to game
     @IBAction func pressedPlayWithoutSong(sender: AnyObject) {
         self.delegate?.userDidPressPlayWithoutSong()
     }
     
-// the button labeled "choose muse" - shold launch mediaPickerController
+
+    // the button labeled "choose muse" - shold launch mediaPickerController
     @IBAction func pressedPickaSong(sender: AnyObject) {
         self.delegate?.userDidPressSelectSong()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
