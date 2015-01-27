@@ -11,6 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
+    let leftHandControl : SKSpriteNode = SKSpriteNode()
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -28,20 +29,42 @@ class GameScene: SKScene {
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
     
+    let leftHandControlRect : CGRect
+    
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
-        let maxAspectRatio:CGFloat = 16.0/9.0 // 1
-        let playableHeight = size.width / maxAspectRatio // 2
-        let playableMargin = (size.height-playableHeight)/2.0 // 3
+        let maxAspectRatio:CGFloat = 16.0/9.0
+        let playableHeight = size.width / maxAspectRatio
+        let playableMargin = (size.height-playableHeight)/2.0
+        let leftHandControlHeight = size.width / maxAspectRatio
+        let leftHandControlWidth = (size.width / 5)
+        
+        //leftHand countrol size, anticipated for dude control 1/27 ~Stephen
+        leftHandControlRect = CGRect(x:0, y: playableMargin,
+            width: leftHandControlWidth,
+            height: leftHandControlHeight)
+        
+        //Playable rectangle. Size = frame - leftHand control size 1/27 ~Stephen
         playableRect = CGRect(x: 0, y: playableMargin,
             width: size.width,
-            height: playableHeight) // 4
-        super.init(size: size) // 5
+            height: playableHeight)
+        super.init(size: size)
     }
-    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented") // 6
+    }
+    //MARK: DEBUG CONTROLLER SPACES ======================================================================
+    
+    func debugDrawLeftHandControllerArea() {
+        let shape = SKShapeNode()
+        let path = CGPathCreateMutable()
+        CGPathAddRect(path, nil, leftHandControlRect)
+        shape.path = path
+        shape.strokeColor = SKColor.blueColor()
+        shape.lineWidth = 14.0
+        addChild(shape)
     }
     
     //MARK: DID MOVE TO VIEW ======================================================================
@@ -92,7 +115,7 @@ class GameScene: SKScene {
                 moveSprite(dude, velocity: velocity)
             }
         }
-        
+        //debugDrawLeftHandControllerArea()
         boundsCheckDude()
         moveBackground()
         moveStars()
@@ -155,9 +178,21 @@ class GameScene: SKScene {
     
     func boundsCheckDude() {
         
-        let bottomLeft  = CGPoint(x: 0, y: CGRectGetMinY(playableRect))
-        let topRight    = CGPoint(x: size.width, y: CGRectGetMaxY(playableRect))
+        let bottomLeft = CGPoint(x: 0,
+        y: CGRectGetMinY(playableRect))
+        let topRight = CGPoint(x: size.width,
+        y: CGRectGetMaxY(playableRect))
         
+        
+        if dude.position.x <= bottomLeft.x + (size.width / 5) {
+            dude.position.x = bottomLeft.x + (size.width / 5)
+            velocity.x = 0
+            velocity.y = 0
+        }
+        if dude.position.x >= topRight.x {
+            dude.position.x = topRight.x
+            velocity.x = -velocity.x
+        }
         if dude.position.y <= bottomLeft.y {
             dude.position.y = bottomLeft.y
             velocity.y = -velocity.y
