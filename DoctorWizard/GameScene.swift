@@ -79,7 +79,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-        println("\(dt*1000) milliseconds since last update")
+       // println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
