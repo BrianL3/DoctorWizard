@@ -43,39 +43,28 @@
                                     <action selector="pressedPickaSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="li8-B9-7h6"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your selected song name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-hw-cNk">
-                                <rect key="frame" x="203" y="58" width="194" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHH-UH-BpJ">
-                                <rect key="frame" x="248" y="86" width="104" height="30"/>
-                                <state key="normal" title="REAAADYYYY!">
+                                <rect key="frame" x="231" y="58" width="138" height="30"/>
+                                <state key="normal" title="JUST GO ALREADY">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="userDidPlaySong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="OV2-Wf-UfM"/>
+                                    <action selector="pressedPlayWithoutSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="hIQ-u5-rUs"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="min-36-gcu" secondAttribute="bottom" constant="8" id="4zg-0f-H8k"/>
                             <constraint firstAttribute="centerX" secondItem="min-36-gcu" secondAttribute="centerX" id="7kR-jc-Jtv"/>
-                            <constraint firstAttribute="centerX" secondItem="S1T-hw-cNk" secondAttribute="centerX" id="c6n-7f-kQO"/>
                             <constraint firstAttribute="centerX" secondItem="ZHH-UH-BpJ" secondAttribute="centerX" id="gOy-nY-9FB"/>
-                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="S1T-hw-cNk" secondAttribute="bottom" constant="7.5" id="kCQ-Ih-7GM"/>
                             <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" id="lKD-bA-1v0"/>
-                            <constraint firstItem="S1T-hw-cNk" firstAttribute="top" secondItem="min-36-gcu" secondAttribute="bottom" constant="8" id="r9U-QB-AO6"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="songNameLabel" destination="S1T-hw-cNk" id="pci-f8-KOU"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="59Q-SM-SKD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="516" y="48"/>
+            <point key="canvasLocation" x="516" y="90"/>
         </scene>
     </scenes>
 </document>
