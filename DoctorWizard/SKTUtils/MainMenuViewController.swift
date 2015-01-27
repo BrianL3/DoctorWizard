@@ -21,8 +21,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     var didPickMusic = false
 
     
-    let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
-//MARK: ViewController Lyfecycle
+    //MARK: VIEW DID LOAD & APPEAR =============================================================
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,6 +74,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         self.scene?.paused = true
     }
     
+    //MARK: MediaPickerController Options
     
     //MARK: MEDIA PICKER CONTROLLER OPTIONS ================================================
     
