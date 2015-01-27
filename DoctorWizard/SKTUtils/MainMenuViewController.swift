@@ -82,11 +82,20 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
         didPickMusic = !didPickMusic
-        mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.presentViewController(GameViewController(), animated: true, completion: nil)
-            
+
+        self.playMusic(mediaItemCollection, completionHandler: { (genre, duration) -> () in
+            println("found songToPlay, duration of \(duration) and genre \(genre)")
+            mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
+                // create the GameViewController
+                let mainGameScene = GameViewController()
+                mainGameScene.songDuration = duration
+                mainGameScene.songGenre = genre
+                // set mainGameScene's song duration
+                let songToPlay = mediaItemCollection[0] as? MPMediaItem
+                self.presentViewController(mainGameScene, animated: true, completion: nil)
+                
+            })
         })
-        self.playMusic(mediaItemCollection)
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,15 +105,14 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
 //MARK: MPMusicPlayerController
     // the music will play
-    func playMusic(music: MPMediaItemCollection) -> () {
+    func playMusic(music: MPMediaItemCollection, completionHandler : (genre: String?, duration: NSTimeInterval?) -> () ) {
         let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
+        
         self.song = musicPlayer.nowPlayingItem
-        println("the current song is of mediaType: \(song?.mediaType)")
-        println("the current song is of genre: \(song?.genre)")
-        println("the current song has \(song?.beatsPerMinute) beats per minute")
-        println("the current song is \(song?.playbackDuration) seconds long")
+        
+        completionHandler(genre: song?.genre, duration: song?.playbackDuration)
     }
 
     // what happens when the user selects the pick a song button
