@@ -21,6 +21,10 @@ class GameScene: SKScene {
     var animator: UIDynamicAnimator!
     var gravity: UIGravityBehavior!
     var invincible = false
+    var backgroundLayer = SKNode()
+    var starLayer = SKNode()
+    var backgroundLayerMovePointsPerSec: CGFloat = 300
+    var backgroundVerticalDirection: CGFloat = 1.0
     
     
     //MARK: INTIALIZER ==============================================================================
@@ -47,6 +51,9 @@ class GameScene: SKScene {
         dude.position = CGPoint(x: 700, y: 400)
         dude.setScale(0.75)
         addChild(dude)
+        
+        //setup movingbackground
+        
         
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
@@ -204,5 +211,13 @@ class GameScene: SKScene {
             dudeHitRock(rock)
         }
 
+    }
+    
+    func addMovingBackground(){
+        self.backgroundLayer.zPosition = -2
+        self.starLayer.zPosition = -1
+        self.addChild(backgroundLayer)
+        self.addChild(starLayer)
+        
     }
 }
