@@ -43,7 +43,7 @@ class GameScene: SKScene {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented") // 6
     }
-        
+    
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -55,13 +55,18 @@ class GameScene: SKScene {
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
-    
+        
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnFireball),
+                SKAction.waitForDuration(2.0)])))
+        
+        
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
         
         //add background layers to to mainview
         addMovingBackground()
-  
+        
     }
     
     //called before each frame is rendered
@@ -79,7 +84,7 @@ class GameScene: SKScene {
         if let lastTouch = lastTouchLocation {
             
             let diff = lastTouch - dude.position
-         
+            
             if (diff.length() <= dudeMovePointsPerSec * CGFloat(dt)) {
                 dude.position = lastTouchLocation!
                 velocity = CGPointZero
@@ -99,7 +104,7 @@ class GameScene: SKScene {
     }
     
     //MARK: MOVE THE DUDE ======================================================================
-
+    
     func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
         
         
@@ -183,10 +188,28 @@ class GameScene: SKScene {
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
-  
+    //MARK:  SPAWN FIREBALLS ====================================================================
+    
+    
+    func spawnFireball() {
+        let fireBall = SKSpriteNode(imageNamed: "fireball")
+        fireBall.name = "fireball"
+        fireBall.position = CGPoint(x: size.width - fireBall.size.width/2, y: CGFloat.random(min: CGRectGetMinY(playableRect), max: CGRectGetMaxY(playableRect)))
+        fireBall.setScale(1)
+        fireBall.zPosition = 1
+        addChild(fireBall)
+        let appear = SKAction.scaleTo(3, duration: 4.0)
+        let actions = [appear]
+        fireBall.runAction(SKAction.sequence(actions))
+        let actionMove =
+        SKAction.moveToX(-fireBall.size.height/2, duration: 1.0)
+        let actionRemove = SKAction.removeFromParent()
+        fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
+    
+    
     //MARK: COLLISIONS ==========================================================================
     
-    func dudeHitRock(enemy: SKSpriteNode) {
+    func dudeHitObject(enemy: SKSpriteNode) {
         //here dude beceomes invincible and blinks when hit by a rock
         invincible = true
         
@@ -217,11 +240,21 @@ class GameScene: SKScene {
                 self.velocity = CGPoint(x:0, y:0)
             }
         }
-        //sets up dude for stunning and becoming invincible
-        for rock in hitObstacle {
-            dudeHitRock(rock)
+        
+        enumerateChildNodesWithName("fireball") { node, _ in
+            
+            let fireballHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(fireballHit.frame, self.dude.frame) {
+                hitObstacle.append(fireballHit)
+                self.velocity = CGPoint(x:0, y:0)
+            }
         }
-
+        //sets up dude for stunning and becoming invincible
+        for incomingObject in hitObstacle {
+            dudeHitObject(incomingObject)
+        }
+        
     }
     
     func addMovingBackground(){
@@ -295,7 +328,7 @@ class GameScene: SKScene {
     func starsNode() -> SKSpriteNode {
         let backgroundNode = SKSpriteNode()
         backgroundNode.anchorPoint = CGPointZero
-
+        
         
         
         var stars1 = SKSpriteNode(imageNamed: self.starsImageName)
@@ -367,8 +400,6 @@ class GameScene: SKScene {
             }
         })
     }
-        
-    
-        
+
     
 }
