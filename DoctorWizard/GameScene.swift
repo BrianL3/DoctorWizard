@@ -20,6 +20,7 @@ class GameScene: SKScene {
     var lastTouchLocation: CGPoint?
     var animator: UIDynamicAnimator!
     var gravity: UIGravityBehavior!
+    var invincible = false
     
     
     //MARK: INTIALIZER ==============================================================================
@@ -153,37 +154,55 @@ class GameScene: SKScene {
             x: CGFloat.random(min: CGRectGetMinX(playableRect),
                 max: CGRectGetMaxX(playableRect)),
             y: size.height)
-        rock.setScale(0)
+        rock.setScale(1)
+        rock.zPosition = 0
         addChild(rock)
-        let appear = SKAction.scaleTo(1, duration: 2.0)
+        let appear = SKAction.scaleTo(3, duration: 4.0)
         let actions = [appear]
         rock.runAction(SKAction.sequence(actions))
         let actionMove =
         SKAction.moveToY(-rock.size.height/2, duration: 2.0)
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
+    
   
-//
-//    func checkCollisions() {
-//
-//        var hitBounds: [] = []
-//    }
     //MARK: COLLISIONS ==========================================================================
+    
+    func dudeHitRock(enemy: SKSpriteNode) {
+        //here dude beceomes invincible and blinks when hit by a rock
+        invincible = true
+        
+        let blinkTimes = 10.0
+        let duration = 3.0
+        let blinkAction = SKAction.customActionWithDuration(duration) { node, elapsedTime in
+            let slice = duration / blinkTimes
+            let remainder = Double(elapsedTime) % slice
+            node.hidden = remainder > slice / 2
+        }
+        let setHidden = SKAction.runBlock() {
+            self.dude.hidden = false
+            self.invincible = false
+        }
+        dude.runAction(SKAction.sequence([blinkAction, setHidden]))
+    }
     
     func checkCollisions() {
         
         var hitObstacle: [SKSpriteNode] = []
         
-        enumerateChildNodesWithName("fakeDude", usingBlock: { (node: SKNode!, _: UnsafeMutablePointer<ObjCBool>) -> Void in
+        enumerateChildNodesWithName("rock") { node, _ in
             
-            let fakeDude = node as SKSpriteNode
+            let rockHit = node as SKSpriteNode
             
-            if CGRectIntersectsRect(fakeDude.frame, self.dude.frame) {
-                
-                hitObstacle.append(fakeDude)
+            if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
+                hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
             }
-        })
-    }
+        }
+        //sets up dude for stunning and becoming invincible
+        for rock in hitObstacle {
+            dudeHitRock(rock)
+        }
 
+    }
 }
