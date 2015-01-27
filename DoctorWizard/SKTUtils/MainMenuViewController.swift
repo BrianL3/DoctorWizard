@@ -14,12 +14,12 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     var song : MPMediaItem?
     
     var didPickMusic = false
+
     
-    let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
+    //MARK: VIEW DID LOAD & APPEAR =============================================================
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
     }
     
@@ -29,84 +29,70 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         //create pop up controller
         let popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
-        
         popUpVC.delegate = self
         
-        
-        
         // frame  is 40% of screen
-        let width = self.view.frame.width * 0.4
-        let height = self.view.frame.height * 0.4
-        
-        popUpVC.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        
+        let width           = self.view.frame.width * 0.4
+        let height          = self.view.frame.height * 0.4
+        popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
         popUpVC.view.center = self.view.center
-        
         
         self.view.addSubview(popUpVC.view)
     
-        //tell child and parent vcs that the child is being added to the parent
-        
         //told parent vc that child vc was added
         self.addChildViewController(popUpVC)
         
         //told child it has a parent
         popUpVC.didMoveToParentViewController(self)
         
-        
         //do animation
-        
-        popUpVC.view.alpha = 0
-        
-        //do trasform
-        popUpVC.view.transform = CGAffineTransformMakeScale(1.2, 1.2)
-        
-        //do animation
-        UIView.animateWithDuration(0.2, delay: 0.5, options: nil, animations: { () -> Void in
-            
-            popUpVC.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            popUpVC.view.alpha = 1
-
-            
-            
-        }) { (finished) -> Void in
-            
-        }
-        
+        AnimationController.singleton.simpleFadeInScale(popUpVC)
     }
     
-    //MARK: MediaPickerController Options
+    
+    //MARK: MEDIA PICKER CONTROLLER OPTIONS ================================================
+    
+    // if the user cancels out of choosing a song - dismisses the modal
     func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+    // if the user picks a song it (1) fires PlayMusic and (2) dismisses the MediaPicker and then (3) summons GameViewController
     func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
         didPickMusic = !didPickMusic
-        mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.presentViewController(GameViewController(), animated: true, completion: nil)
-            
+        // (1) firing playMusic
+        self.playMusic(mediaItemCollection, completionHandler: { (genre, duration) -> () in
+            //println("found songToPlay, duration of \(duration) and genre \(genre)")
+            // (2) dismissing the MediaPicker
+            mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
+                // create the GameViewController
+                let mainGameScene = GameViewController()
+                mainGameScene.songDuration = duration
+                mainGameScene.songGenre = genre
+                let songToPlay = mediaItemCollection[0] as? MPMediaItem
+                // (3) presenting the GameViewController
+                self.presentViewController(mainGameScene, animated: true, completion: nil)
+                
+            })
         })
-        self.playMusic(mediaItemCollection)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-//MARK: MPMusicPlayerController
+    //MARK: MP MUSIC PLAYER CONTROLLER ========================================================
+    
     // the music will play
-    func playMusic(music: MPMediaItemCollection) -> () {
+    func playMusic(music: MPMediaItemCollection, completionHandler : (genre: String?, duration: NSTimeInterval?) -> () ) {
         let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
+        
         self.song = musicPlayer.nowPlayingItem
-        println("the current song is of mediaType: \(song?.mediaType)")
-        println("the current song is of genre: \(song?.genre)")
-        println("the current song has \(song?.beatsPerMinute) beats per minute")
-        println("the current song is \(song?.playbackDuration) seconds long")
+        
+        completionHandler(genre: song?.genre, duration: song?.playbackDuration)
     }
+    
 
+    //MARK: POP UP MENU DELEGATE FUNCTIONS ===================================================
+    
     // what happens when the user selects the pick a song button
     func userDidPressSelectSong(){
         
@@ -117,10 +103,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         self.presentViewController(musicPickerController, animated: true, completion: nil)
     }
     
-    func userDidPlaySong(){
-        
-        
-        
+    func userDidPressPlayWithoutSong(){
+        let mainGameScene = GameViewController()
+        mainGameScene.songDuration = NSTimeInterval(100.00)
+        mainGameScene.songGenre = "Alternative"
+        self.presentViewController(mainGameScene, animated: true, completion: nil)
         
     }
     
