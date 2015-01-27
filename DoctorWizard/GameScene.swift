@@ -14,7 +14,7 @@ class GameScene: SKScene {
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    let dudeMovePointsPerSec: CGFloat = 5000.0
+    let dudeMovePointsPerSec: CGFloat = 2000.0
     var velocity = CGPointZero
     let playableRect: CGRect
     var lastTouchLocation: CGPoint?
@@ -57,7 +57,7 @@ class GameScene: SKScene {
     }
     
     //called before each frame is rendered
-    override func update(currentTime: CFTimeInterval) {
+    override func update(currentTime: NSTimeInterval) {
         
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -66,7 +66,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-        //println("\(dt*1000) milliseconds since last update")
+        println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
@@ -92,11 +92,20 @@ class GameScene: SKScene {
 
     func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
         
-        let amountToMove = velocity.y * CGFloat(dt)
+//        let amountToMove = velocity.y * CGFloat(dt)
+//        
+//        //println("Amount to move: \(amountToMove)")
+//        
+//        sprite.position += CGPoint(x: 0, y: amountToMove)
         
-        //println("Amount to move: \(amountToMove)")
-        
-        sprite.position += CGPoint(x: 0, y: amountToMove)
+        // 1
+        let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
+            y: velocity.y * CGFloat(dt))
+        println("Amount to move: \(amountToMove)")
+        // 2
+        sprite.position = CGPoint(
+            x: sprite.position.x + amountToMove.x,
+            y: sprite.position.y + amountToMove.y)
     }
     
     func moveDudeToward(location: CGPoint) {
