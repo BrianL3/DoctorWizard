@@ -28,8 +28,6 @@ class GameScene: SKScene {
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
     
-    
-    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -46,7 +44,6 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
-    
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -55,18 +52,21 @@ class GameScene: SKScene {
         dude.setScale(0.75)
         addChild(dude)
         
-        
-        
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
-    
+        
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnFireball),
+                SKAction.waitForDuration(2.0)])))
+        
+        
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
         
-        
         //add background layers to to mainview
         addMovingBackground()
+        
     }
     
     //called before each frame is rendered
@@ -79,12 +79,12 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-       // println("\(dt*1000) milliseconds since last update")
+        println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
             let diff = lastTouch - dude.position
-         
+            
             if (diff.length() <= dudeMovePointsPerSec * CGFloat(dt)) {
                 dude.position = lastTouchLocation!
                 velocity = CGPointZero
@@ -104,20 +104,14 @@ class GameScene: SKScene {
     }
     
     //MARK: MOVE THE DUDE ======================================================================
-
+    
     func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
         
-//        let amountToMove = velocity.y * CGFloat(dt)
-//        
-//        //println("Amount to move: \(amountToMove)")
-//        
-//        sprite.position += CGPoint(x: 0, y: amountToMove)
         
-        // 1
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-        //println("Amount to move: \(amountToMove)")
-        // 2
+        println("Amount to move: \(amountToMove)")
+        
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
             y: sprite.position.y + amountToMove.y)
@@ -194,10 +188,28 @@ class GameScene: SKScene {
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
-  
+    //MARK:  SPAWN FIREBALLS ====================================================================
+    
+    
+    func spawnFireball() {
+        let fireBall = SKSpriteNode(imageNamed: "fireball")
+        fireBall.name = "fireball"
+        fireBall.position = CGPoint(x: size.width - fireBall.size.width/2, y: CGFloat.random(min: CGRectGetMinY(playableRect), max: CGRectGetMaxY(playableRect)))
+        fireBall.setScale(1)
+        fireBall.zPosition = 1
+        addChild(fireBall)
+        let appear = SKAction.scaleTo(3, duration: 4.0)
+        let actions = [appear]
+        fireBall.runAction(SKAction.sequence(actions))
+        let actionMove =
+        SKAction.moveToX(-fireBall.size.height/2, duration: 1.0)
+        let actionRemove = SKAction.removeFromParent()
+        fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
+    
+    
     //MARK: COLLISIONS ==========================================================================
     
-    func dudeHitRock(enemy: SKSpriteNode) {
+    func dudeHitObject(enemy: SKSpriteNode) {
         //here dude beceomes invincible and blinks when hit by a rock
         invincible = true
         
@@ -228,11 +240,21 @@ class GameScene: SKScene {
                 self.velocity = CGPoint(x:0, y:0)
             }
         }
-        //sets up dude for stunning and becoming invincible
-        for rock in hitObstacle {
-            dudeHitRock(rock)
+        
+        enumerateChildNodesWithName("fireball") { node, _ in
+            
+            let fireballHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(fireballHit.frame, self.dude.frame) {
+                hitObstacle.append(fireballHit)
+                self.velocity = CGPoint(x:0, y:0)
+            }
         }
-
+        //sets up dude for stunning and becoming invincible
+        for incomingObject in hitObstacle {
+            dudeHitObject(incomingObject)
+        }
+        
     }
     
     func addMovingBackground(){
@@ -306,7 +328,7 @@ class GameScene: SKScene {
     func starsNode() -> SKSpriteNode {
         let backgroundNode = SKSpriteNode()
         backgroundNode.anchorPoint = CGPointZero
-
+        
         
         
         var stars1 = SKSpriteNode(imageNamed: self.starsImageName)
@@ -378,8 +400,6 @@ class GameScene: SKScene {
             }
         })
     }
-        
-    
-        
+
     
 }
