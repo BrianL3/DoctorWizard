@@ -17,6 +17,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     var songDuration : NSTimeInterval?
     var songGenre : String?
     var scene : GameScene?
+    var popUpVC = PopUpMenuController()
     
     var didPickMusic = false
 
@@ -34,7 +35,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         super.viewDidAppear(animated)
         
         //create pop up controller
-        let popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
+        popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
         popUpVC.delegate = self
         
         // frame  is 40% of screen
@@ -132,7 +133,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     func userDidPressPlayWithoutSong(){
         self.scene?.paused = false
-        
+       popUpVC.view.removeFromSuperview()
     }
     
     

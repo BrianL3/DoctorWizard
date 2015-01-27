@@ -116,7 +116,7 @@ class GameScene: SKScene {
         // 1
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-        println("Amount to move: \(amountToMove)")
+        //println("Amount to move: \(amountToMove)")
         // 2
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
