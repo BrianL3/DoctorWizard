@@ -28,8 +28,6 @@ class GameScene: SKScene {
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
     
-    
-    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -45,8 +43,7 @@ class GameScene: SKScene {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented") // 6
     }
-    
-    
+        
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -55,8 +52,6 @@ class GameScene: SKScene {
         dude.setScale(0.75)
         addChild(dude)
         
-        
-        
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
@@ -64,9 +59,9 @@ class GameScene: SKScene {
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
         
-        
         //add background layers to to mainview
         addMovingBackground()
+  
     }
     
     //called before each frame is rendered
@@ -107,17 +102,11 @@ class GameScene: SKScene {
 
     func moveSprite(sprite: SKSpriteNode, velocity: CGPoint) {
         
-//        let amountToMove = velocity.y * CGFloat(dt)
-//        
-//        //println("Amount to move: \(amountToMove)")
-//        
-//        sprite.position += CGPoint(x: 0, y: amountToMove)
         
-        // 1
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
         println("Amount to move: \(amountToMove)")
-        // 2
+        
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
             y: sprite.position.y + amountToMove.y)
