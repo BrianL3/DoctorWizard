@@ -76,22 +76,25 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
     
     //MARK: MediaPickerController Options
+    
+    // if the user cancels out of choosing a song - dismisses the modal
     func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+    // if the user picks a song it (1) fires PlayMusic and (2) dismisses the MediaPicker and then (3) summons GameViewController
     func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
         didPickMusic = !didPickMusic
-
+        // (1) firing playMusic
         self.playMusic(mediaItemCollection, completionHandler: { (genre, duration) -> () in
-            println("found songToPlay, duration of \(duration) and genre \(genre)")
+            //println("found songToPlay, duration of \(duration) and genre \(genre)")
+            // (2) dismissing the MediaPicker
             mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
                 // create the GameViewController
                 let mainGameScene = GameViewController()
                 mainGameScene.songDuration = duration
                 mainGameScene.songGenre = genre
-                // set mainGameScene's song duration
                 let songToPlay = mediaItemCollection[0] as? MPMediaItem
+                // (3) presenting the GameViewController
                 self.presentViewController(mainGameScene, animated: true, completion: nil)
                 
             })
