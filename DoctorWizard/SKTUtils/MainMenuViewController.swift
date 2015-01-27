@@ -25,7 +25,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.launchGame()
+        self.pauseGame()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -55,6 +56,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
 // MARK: Game Funcs
     func launchGame(){
+        self.songDuration = NSTimeInterval(100.00)
+        self.songGenre = "Alternative"
         self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
         let skView = SKView(frame: self.view.frame)
         self.view.addSubview(skView)
@@ -91,12 +94,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
             // (2) dismissing the MediaPicker
             mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
                 // create the GameViewController
-                self.songDuration = duration
-                self.songGenre = genre
                 let songToPlay = mediaItemCollection[0] as? MPMediaItem
                 // (3) presenting the GameViewController
                 self.launchGame()
-
+                self.songDuration = duration
+                self.songGenre = genre
             })
         })
     }
@@ -125,14 +127,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         let musicPickerController = MPMediaPickerController()
         musicPickerController.allowsPickingMultipleItems = false
         musicPickerController.delegate = self
-        self.launchGame()
+        self.presentViewController(musicPickerController, animated: true, completion: nil)
     }
     
     func userDidPressPlayWithoutSong(){
-        let mainGameScene = GameViewController()
-        mainGameScene.songDuration = NSTimeInterval(100.00)
-        mainGameScene.songGenre = "Alternative"
-        self.presentViewController(mainGameScene, animated: true, completion: nil)
+        self.scene?.paused = false
         
     }
     
