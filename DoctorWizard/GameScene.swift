@@ -25,6 +25,9 @@ class GameScene: SKScene {
     var starLayer = SKNode()
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
+    var backgroundImageName = "background_test"
+    var starsImageName = "stars_test"
+    
     
     
     //MARK: INTIALIZER ==============================================================================
@@ -274,22 +277,22 @@ class GameScene: SKScene {
         let backgroundNode = SKSpriteNode()
         backgroundNode.anchorPoint = CGPointZero
         
-        let background1 = SKSpriteNode(imageNamed: "spaceTest")
+        var background1 = SKSpriteNode(imageNamed: self.backgroundImageName)
         background1.anchorPoint = CGPointZero
         background1.position = CGPointZero
         backgroundNode.addChild(background1)
         
-        let background2 = SKSpriteNode(imageNamed: "spaceTest")
+        var background2 = SKSpriteNode(imageNamed: self.backgroundImageName)
         background2.anchorPoint = CGPointZero
         background2.position = CGPoint(x: background1.size.width, y: 0)
         backgroundNode.addChild(background2)
         
-        let background3 = SKSpriteNode(imageNamed: "spaceTest")
+        var background3 = SKSpriteNode(imageNamed: self.backgroundImageName)
         background3.anchorPoint = CGPointZero
         background3.position = CGPoint(x: 0, y: background3.size.height)
         backgroundNode.addChild(background3)
         
-        let background4 = SKSpriteNode(imageNamed: "spaceTest")
+        var background4 = SKSpriteNode(imageNamed: self.backgroundImageName)
         background4.anchorPoint = CGPointZero
         background4.position = CGPoint(x: background4.size.width, y: background4.size.height)
         backgroundNode.addChild(background4)
@@ -303,23 +306,25 @@ class GameScene: SKScene {
     func starsNode() -> SKSpriteNode {
         let backgroundNode = SKSpriteNode()
         backgroundNode.anchorPoint = CGPointZero
+
         
-        let stars1 = SKSpriteNode(imageNamed: "starsTest")
+        
+        var stars1 = SKSpriteNode(imageNamed: self.starsImageName)
         stars1.anchorPoint = CGPointZero
         stars1.position = CGPointZero
         backgroundNode.addChild(stars1)
         
-        let stars2 = SKSpriteNode(imageNamed: "starsTest")
+        var stars2 = SKSpriteNode(imageNamed: self.starsImageName)
         stars2.anchorPoint = CGPointZero
         stars2.position = CGPoint(x: stars1.size.width, y: 0)
         backgroundNode.addChild(stars2)
         
-        let stars3 = SKSpriteNode(imageNamed: "starsTest")
+        var stars3 = SKSpriteNode(imageNamed: self.starsImageName)
         stars3.anchorPoint = CGPointZero
         stars3.position = CGPoint(x: 0, y: stars1.size.height)
         backgroundNode.addChild(stars3)
         
-        let stars4 = SKSpriteNode(imageNamed: "starsTest")
+        var stars4 = SKSpriteNode(imageNamed: self.starsImageName)
         stars4.anchorPoint = CGPointZero
         stars4.position = CGPoint(x: stars1.size.width, y: stars1.size.height)
         backgroundNode.addChild(stars4)
