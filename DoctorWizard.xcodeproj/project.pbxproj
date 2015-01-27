@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		483339D21A76C3AF00344DC8 /* dude.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D11A76C3AF00344DC8 /* dude.png */; };
 		483339D61A76D32000344DC8 /* Rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D51A76D32000344DC8 /* Rock.png */; };
+		C0E64CBC1A781A2F009C8D10 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */; };
 		C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */; };
 		C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4D707CE1A76BEFB00A990A1 /* GameScene.sks */; };
 		C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707D01A76BEFB00A990A1 /* GameScene.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		483339D11A76C3AF00344DC8 /* dude.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dude.png; sourceTree = "<group>"; };
 		483339D51A76D32000344DC8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
+		C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoctorWizard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D707CB1A76BEFB00A990A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
 				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
+				C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
 				C4D707D21A76BEFB00A990A1 /* GameViewController.swift */,
@@ -291,6 +294,7 @@
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
 				C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */,
+				C0E64CBC1A781A2F009C8D10 /* AnimationController.swift in Sources */,
 				C4EA38611A76C0AB00EC284C /* SKAction+SpecialEffects.swift in Sources */,
 				C4EA385E1A76C0AB00EC284C /* CGVector+Extensions.swift in Sources */,
 				C4EA38601A76C0AB00EC284C /* SKAction+Extensions.swift in Sources */,

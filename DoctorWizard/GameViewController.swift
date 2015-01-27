@@ -9,6 +9,10 @@
 import UIKit
 import SpriteKit
 class GameViewController: UIViewController {
+    
+    var songDuration : NSTimeInterval?
+    var songGenre : String?
+    
     override func viewDidLoad() {
     super.viewDidLoad()
     let scene =

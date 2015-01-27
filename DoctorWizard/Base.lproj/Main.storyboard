@@ -74,7 +74,7 @@
                                     <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="userDidPlaySong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="OV2-Wf-UfM"/>
+                                    <action selector="pressedPlayWithoutSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="hIQ-u5-rUs"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -89,13 +89,10 @@
                             <constraint firstAttribute="centerX" secondItem="Xnp-oZ-YZj" secondAttribute="centerX" id="z5H-VW-Fi2"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="songNameLabel" destination="S1T-hw-cNk" id="pci-f8-KOU"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="59Q-SM-SKD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="516" y="48"/>
+            <point key="canvasLocation" x="516" y="90"/>
         </scene>
     </scenes>
     <resources>
