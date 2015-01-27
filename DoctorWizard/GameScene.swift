@@ -14,7 +14,7 @@ class GameScene: SKScene {
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    let dudeMovePointsPerSec: CGFloat = 1500.0
+    let dudeMovePointsPerSec: CGFloat = 5000.0
     var velocity = CGPointZero
     let playableRect: CGRect
     var lastTouchLocation: CGPoint?
@@ -43,22 +43,16 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        dude.position = CGPoint(x: 400, y: 400)
+        dude.position = CGPoint(x: 700, y: 400)
         dude.setScale(0.75)
         addChild(dude)
         
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
-        
     
         //simulate SKSpriteNode for collision purposes
-        let fakeDude: SKSpriteNode = SKSpriteNode(imageNamed: "rock")
-        fakeDude.name = "fakeDude"
-        fakeDude.position = CGPoint(x: 400, y: 1200)
-        addChild(fakeDude)
         dude.zPosition = 0
-        fakeDude.zPosition = 0
     }
     
     //called before each frame is rendered
@@ -147,7 +141,7 @@ class GameScene: SKScene {
         if dude.position.y >= topRight.y {
             dude.position.y = topRight.y
             velocity.y = -velocity.y
-        } 
+        }
     }
     
     //MARK: SPAWN ROCKS ========================================================================
@@ -171,7 +165,7 @@ class GameScene: SKScene {
   
 //
 //    func checkCollisions() {
-//        
+//
 //        var hitBounds: [] = []
 //    }
     //MARK: COLLISIONS ==========================================================================
@@ -191,6 +185,5 @@ class GameScene: SKScene {
             }
         })
     }
-
 
 }
