@@ -79,7 +79,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-       // println("\(dt*1000) milliseconds since last update")
+        println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
@@ -110,8 +110,8 @@ class GameScene: SKScene {
         
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-        //println("Amount to move: \(amountToMove)")
-        // 2
+        println("Amount to move: \(amountToMove)")
+        
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
             y: sprite.position.y + amountToMove.y)
