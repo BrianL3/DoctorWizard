@@ -11,6 +11,7 @@ import UIKit
 protocol popUpMenuDelegate {
 
         func userDidPressSelectSong()
+        func userDidPressPlayWithoutSong()
 }
     
 
@@ -28,23 +29,16 @@ class PopUpMenuController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-
-    @IBAction func userDidPlaySong(sender: AnyObject) {
-        
-        //self.delegate?.userDidPlaySong()
-        
-        
+// the button labeled "Just go already" - should skip MediaPickerController and go direct to game
+    @IBAction func pressedPlayWithoutSong(sender: AnyObject) {
+        self.delegate?.userDidPressPlayWithoutSong()
     }
     
-    
-    
+// the button labeled "choose muse" - shold launch mediaPickerController
     @IBAction func pressedPickaSong(sender: AnyObject) {
-        
-        
         self.delegate?.userDidPressSelectSong()
-        
-        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
