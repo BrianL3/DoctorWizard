@@ -100,6 +100,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
+        self.song = musicPlayer.nowPlayingItem
+        println("the current song is of mediaType: \(song?.mediaType)")
+        println("the current song is of genre: \(song?.genre)")
+        println("the current song has \(song?.beatsPerMinute) beats per minute")
+        println("the current song is \(song?.playbackDuration) seconds long")
     }
 
     // what happens when the user selects the pick a song button
