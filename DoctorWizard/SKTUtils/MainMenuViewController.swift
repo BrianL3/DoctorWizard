@@ -8,21 +8,26 @@
 
 import UIKit
 import MediaPlayer
+import SpriteKit
+
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate {
     
     var song : MPMediaItem?
+    var songDuration : NSTimeInterval?
+    var songGenre : String?
+    var scene : GameScene?
     
     var didPickMusic = false
     
     let menuAlertController = UIAlertController(title: NSLocalizedString("DoctorWizard", comment: "main menu title"), message: NSLocalizedString("GET READDDDDY", comment: "main menu message"), preferredStyle: UIAlertControllerStyle.ActionSheet)
-    
+//MARK: ViewController Lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
@@ -74,6 +79,26 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         }
         
     }
+// MARK: Game Funcs
+    func launchGame(){
+        self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
+        let skView = SKView(frame: self.view.frame)
+        self.view.addSubview(skView)
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        self.scene!.scaleMode = .AspectFill
+        skView.presentScene(scene)
+
+    }
+    // hides the status bar
+    override func prefersStatusBarHidden() -> Bool  {
+        return true
+    }
+    
+    func pauseGame(){
+        self.scene?.paused = true
+    }
     
     //MARK: MediaPickerController Options
     
@@ -90,13 +115,12 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
             // (2) dismissing the MediaPicker
             mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
                 // create the GameViewController
-                let mainGameScene = GameViewController()
-                mainGameScene.songDuration = duration
-                mainGameScene.songGenre = genre
+                self.songDuration = duration
+                self.songGenre = genre
                 let songToPlay = mediaItemCollection[0] as? MPMediaItem
                 // (3) presenting the GameViewController
-                self.presentViewController(mainGameScene, animated: true, completion: nil)
-                
+                self.launchGame()
+
             })
         })
     }
@@ -125,7 +149,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         let musicPickerController = MPMediaPickerController()
         musicPickerController.allowsPickingMultipleItems = false
         musicPickerController.delegate = self
-        self.presentViewController(musicPickerController, animated: true, completion: nil)
+        self.launchGame()
     }
     
     func userDidPlaySong(){
