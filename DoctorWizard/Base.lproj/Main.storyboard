@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BV1-FR-VrT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Main Menu View Controller-->
@@ -35,24 +35,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="min-36-gcu">
-                                <rect key="frame" x="244" y="20" width="112" height="30"/>
-                                <state key="normal" title="CHOOSE MUSE">
+                                <rect key="frame" x="349" y="260" width="58" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="58" id="5qt-xp-Sw2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="8"/>
+                                <state key="normal" title="Change Song" backgroundImage="ChooseSongBG">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="pressedPickaSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="li8-B9-7h6"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your selected song name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-hw-cNk">
-                                <rect key="frame" x="203" y="58" width="194" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Selected game song name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-hw-cNk">
+                                <rect key="frame" x="191" y="265" width="194" height="21"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xnp-oZ-YZj">
+                                <rect key="frame" x="180" y="59" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="C0W-iK-DHK"/>
+                                    <constraint firstAttribute="height" constant="128" id="L3P-xx-CO7"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHH-UH-BpJ">
-                                <rect key="frame" x="248" y="86" width="104" height="30"/>
-                                <state key="normal" title="REAAADYYYY!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="207" y="195" width="187" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="9W2-en-sMf"/>
+                                    <constraint firstAttribute="width" constant="187" id="z2g-SA-JYC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="21"/>
+                                <state key="normal" title="Play Game" backgroundImage="PlayGameBG.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="userDidPlaySong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="OV2-Wf-UfM"/>
@@ -61,12 +80,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="min-36-gcu" secondAttribute="centerX" id="7kR-jc-Jtv"/>
-                            <constraint firstAttribute="centerX" secondItem="S1T-hw-cNk" secondAttribute="centerX" id="c6n-7f-kQO"/>
-                            <constraint firstAttribute="centerX" secondItem="ZHH-UH-BpJ" secondAttribute="centerX" id="gOy-nY-9FB"/>
-                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="S1T-hw-cNk" secondAttribute="bottom" constant="7.5" id="kCQ-Ih-7GM"/>
-                            <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" id="lKD-bA-1v0"/>
-                            <constraint firstItem="S1T-hw-cNk" firstAttribute="top" secondItem="min-36-gcu" secondAttribute="bottom" constant="8" id="r9U-QB-AO6"/>
+                            <constraint firstItem="Xnp-oZ-YZj" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" constant="39" id="7JP-ug-fS0"/>
+                            <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="ZHH-UH-BpJ" secondAttribute="bottom" constant="37" id="KqG-FO-yAm"/>
+                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="centerX" secondItem="Xnp-oZ-YZj" secondAttribute="centerX" id="Ofz-od-ndo"/>
+                            <constraint firstAttribute="trailing" secondItem="min-36-gcu" secondAttribute="trailing" constant="193" id="QCm-Eh-gBg"/>
+                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="Xnp-oZ-YZj" secondAttribute="bottom" constant="8" symbolic="YES" id="Vf3-5o-9xo"/>
+                            <constraint firstItem="Di2-fV-jMz" firstAttribute="top" secondItem="min-36-gcu" secondAttribute="bottom" constant="308" id="kJK-j7-wZG"/>
+                            <constraint firstAttribute="centerX" secondItem="Xnp-oZ-YZj" secondAttribute="centerX" id="z5H-VW-Fi2"/>
                         </constraints>
                     </view>
                     <connections>
@@ -78,4 +98,8 @@
             <point key="canvasLocation" x="516" y="48"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ChooseSongBG" width="50" height="50"/>
+        <image name="PlayGameBG.png" width="240" height="34"/>
+    </resources>
 </document>
