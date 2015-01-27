@@ -117,7 +117,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         completionHandler(genre: song?.genre, duration: song?.playbackDuration)
     }
-
+    
+//MARK: PopUpMenuDelegateFunction
     // what happens when the user selects the pick a song button
     func userDidPressSelectSong(){
         
@@ -128,10 +129,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         self.presentViewController(musicPickerController, animated: true, completion: nil)
     }
     
-    func userDidPlaySong(){
-        
-        
-        
+    func userDidPressPlayWithoutSong(){
+        let mainGameScene = GameViewController()
+        mainGameScene.songDuration = NSTimeInterval(100.00)
+        mainGameScene.songGenre = "Alternative"
+        self.presentViewController(mainGameScene, animated: true, completion: nil)
         
     }
     
