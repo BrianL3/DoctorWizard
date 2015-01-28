@@ -128,7 +128,6 @@ class GameScene: SKScene {
         self.timePassed = round((currentTime - gameStartTime) * 10 )/10
         
         
-        
         if timePassed % 0.5 == 0 {
             if self.backgroundVerticalDirection < 0 {
                 self.altitude += 1
