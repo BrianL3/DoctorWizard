@@ -32,6 +32,7 @@ class GameScene: SKScene {
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
     
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -147,7 +148,6 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
