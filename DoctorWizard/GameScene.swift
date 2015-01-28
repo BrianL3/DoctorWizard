@@ -15,6 +15,7 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -75,6 +76,7 @@ class GameScene: SKScene {
         dude.position = CGPoint(x: 700, y: 400)
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
+        dude.name = "dude"
         addChild(dude)
         
         runAction(SKAction.repeatActionForever(
@@ -142,7 +144,7 @@ class GameScene: SKScene {
             }
         }
         
-        println(self.altitude)
+        //println(self.altitude)
         boundsCheckDude()
         moveBackground()
         moveStars()
@@ -154,6 +156,7 @@ class GameScene: SKScene {
             self.menuDelegate?.playerDidLose()
         }
         checkCollisions()
+        destroyedByBlackHole()
     }
     
     //MARK: MOVE THE DUDE ======================================================================
@@ -182,7 +185,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-//        println("song duration is : \(songDuration)")
+        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -261,7 +264,7 @@ class GameScene: SKScene {
         fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
     
-    //MARK: SPAWN ALIENS =======================================================================
+    //MARK: SPAWN ALIENS ======================================================================
     
     func spawnAlien() {
         let alien = SKSpriteNode(imageNamed: "alienspaceship")
@@ -292,7 +295,7 @@ class GameScene: SKScene {
     //MARK: BLACK HOLE =========================================================================
     
     func spawnBlackHole() {
-        let blackHole = SKSpriteNode(imageNamed: "blackhole")
+        //blackHole = SKSpriteNode(imageNamed: "blackhole")
         blackHole.name = "blackhole"
         //logic to detect where blackhole should land based on it massive size and powerful feature
         blackHole.position = CGPoint(
@@ -308,7 +311,8 @@ class GameScene: SKScene {
         let repeatSpin = SKAction.repeatActionForever(oneSpin)
         let appear = SKAction.scaleTo(4, duration: 15.0)
         let inplode = SKAction.scaleTo(0, duration: 15.0)
-        let actions = [appear, inplode]
+        let actionRemove = SKAction.removeFromParent()
+        let actions = [appear, inplode, actionRemove]
         blackHole.runAction(repeatSpin)
         blackHole.runAction((SKAction.sequence(actions)))}
     
@@ -365,6 +369,43 @@ class GameScene: SKScene {
     
     func destroyedByBlackHole() {
         
+        enumerateChildNodesWithName("rock") { node, _ in
+            
+            let rockHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
+                rockHit.removeFromParent()
+            }
+        }
+        
+        enumerateChildNodesWithName("fireball") { node, _ in
+            
+            let fireballHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(fireballHit.frame, self.blackHole.frame) {
+                fireballHit.removeFromParent()
+            }
+        }
+        
+        enumerateChildNodesWithName("dude") { node, _ in
+            
+            let dudeHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(dudeHit.frame, self.blackHole.frame) {
+                dudeHit.removeFromParent()
+            }
+        }
+        
+        enumerateChildNodesWithName("alienspaceship") { node, _ in
+            
+            let alienHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(alienHit.frame, self.blackHole.frame) {
+                alienHit.removeFromParent()
+            }
+        }
+
+
     }
     
     func addMovingBackground(){
