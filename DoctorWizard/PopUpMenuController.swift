@@ -16,8 +16,13 @@ protocol popUpMenuDelegate {
     
 
 class PopUpMenuController: UIViewController {
-
-    @IBOutlet weak var songNameLabel: UILabel!
+    
+    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var playGameButton: UIButton!
+    @IBOutlet weak var currentSongLabel: UILabel!
+    @IBOutlet weak var changeSongNameButton: UIButton!
+    
+    
     
     var delegate: popUpMenuDelegate?
     
@@ -27,7 +32,6 @@ class PopUpMenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     
