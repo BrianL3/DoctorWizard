@@ -24,6 +24,9 @@ class GameScene: SKScene {
     var invincible = false
     var backgroundLayer = SKNode()
     var starLayer = SKNode()
+    // song-related variables
+    var songDuration : NSTimeInterval!
+    var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
     var backgroundImageName = "background_test"
@@ -144,6 +147,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
