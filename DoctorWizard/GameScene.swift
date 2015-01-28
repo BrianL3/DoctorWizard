@@ -42,6 +42,9 @@ class GameScene: SKScene {
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
+    var didLose = false
+    var menuDelegate: MainMenuDelegate?
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
