@@ -11,7 +11,7 @@ import MediaPlayer
 import SpriteKit
 
 
-class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate {
+class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate {
     
     var song : MPMediaItem?
     var songDuration : NSTimeInterval?
@@ -28,12 +28,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         super.viewDidLoad()
         self.launchGame()
         self.pauseGame()
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        
-        super.viewDidAppear(animated)
-        
         //create pop up controller
         popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
         popUpVC.delegate = self
@@ -45,7 +39,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.view.center = self.view.center
         
         self.view.addSubview(popUpVC.view)
-    
+        
         //told parent vc that child vc was added
         self.addChildViewController(popUpVC)
         
@@ -54,6 +48,13 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         //do animation
         AnimationController.singleton.enterStageRight(popUpVC)
+
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
     }
     
     
@@ -130,12 +131,14 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     // what happens when the user selects the pick a song button
     func userDidPressSelectSong(){
-        
-        // setting up the MediaPickerController as the MPMediaPlayerDelegate
-        let musicPickerController = MPMediaPickerController()
-        musicPickerController.allowsPickingMultipleItems = false
-        musicPickerController.delegate = self
-        self.presentViewController(musicPickerController, animated: true, completion: nil)
+        let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("MEDIA_VC") as MediaItemTableViewController    
+        destinationVC.delegate = self
+        self.presentViewController(destinationVC, animated: true, completion: nil)
+// setting up the MediaPickerController as the MPMediaPlayerDelegate
+//        let musicPickerController = MPMediaPickerController()
+//        musicPickerController.allowsPickingMultipleItems = false
+//        musicPickerController.delegate = self
+//        self.presentViewController(musicPickerController, animated: true, completion: nil)
     }
     
     func userDidPressPlayWithoutSong(){
@@ -146,5 +149,14 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     
     
+    //MARK: SongPickerDelegate
+    func userDidSelectSong(song : MPMediaItemCollection){
+        playMPMusic(song, completionHandler: { (genre, duration) -> () in
+            self.launchGame()
+            self.songDuration = duration
+            self.songGenre = genre
+        })
+        popUpVC.view.removeFromSuperview()
+    }
     
 }

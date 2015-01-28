@@ -50,6 +50,7 @@
 		FA4116EB1A78463700FCC212 /* tick_one.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116D91A78463700FCC212 /* tick_one.wav */; };
 		FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116DA1A78463700FCC212 /* tick_two.wav */; };
 		FA4116ED1A78463700FCC212 /* lux.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116DC1A78463700FCC212 /* lux.wav */; };
+		FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */; };
 		FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		FA4116D91A78463700FCC212 /* tick_one.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tick_one.wav; sourceTree = "<group>"; };
 		FA4116DA1A78463700FCC212 /* tick_two.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tick_two.wav; sourceTree = "<group>"; };
 		FA4116DC1A78463700FCC212 /* lux.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lux.wav; sourceTree = "<group>"; };
+		FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemTableViewController.swift; sourceTree = "<group>"; };
 		FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
 				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
+				FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */,
 				C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
@@ -384,6 +387,7 @@
 				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
+				FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
 				C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */,
