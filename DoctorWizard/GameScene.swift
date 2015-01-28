@@ -10,6 +10,8 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
+    func relaunchGameWithSameSong()
+    func chooseNewSong()
 }
 
 class GameScene: SKScene {
@@ -33,7 +35,7 @@ class GameScene: SKScene {
     var songDuration : NSTimeInterval!
     var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
-    var backgroundVerticalDirection: CGFloat = 1.0
+    var backgroundVerticalDirection: CGFloat = 6.0
     var gameStartTime : NSTimeInterval = 0
     var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background0"
@@ -41,6 +43,8 @@ class GameScene: SKScene {
     
     var altitude: CGFloat = 0
     var curLevel : Level = .First
+    
+    var healthPoints :CGFloat = 742
 
     var didLose = false
     var menuDelegate: MainMenuDelegate?
@@ -172,6 +176,16 @@ class GameScene: SKScene {
             println("DefaultLevel")
         }
         
+        if self.healthPoints <= 0 {
+            self.healthPoints = 0
+            println("you have lost")
+            let lostGame = LooserScene(size: self.size)
+            lostGame.mainDelegate = self.menuDelegate
+            self.view?.presentScene(lostGame)
+        } else {
+  //          println("healthPoints\(self.healthPoints)")
+        }
+        
         //println(self.altitude)
         boundsCheckDude()
         moveBackground()
@@ -213,7 +227,6 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -376,6 +389,9 @@ class GameScene: SKScene {
             if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
+                if self.invincible == false {
+                    self.healthPoints -= CGFloat.random(min: 50, max: 100)
+                }
             }
         }
         
@@ -386,6 +402,9 @@ class GameScene: SKScene {
             if CGRectIntersectsRect(fireballHit.frame, self.dude.frame) {
                 hitObstacle.append(fireballHit)
                 self.velocity = CGPoint(x:0, y:0)
+                if self.invincible == false {
+                    self.healthPoints -= CGFloat.random(min: 80, max: 140)
+                }
             }
         }
         //sets up dude for stunning and becoming invincible
@@ -403,7 +422,9 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
                 rockHit.removeFromParent()
+                
             }
+            
         }
         
         enumerateChildNodesWithName("fireball") { node, _ in
@@ -412,6 +433,7 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(fireballHit.frame, self.blackHole.frame) {
                 fireballHit.removeFromParent()
+                
             }
         }
         
@@ -421,6 +443,9 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(dudeHit.frame, self.blackHole.frame) {
                 dudeHit.removeFromParent()
+                if self.invincible == false {
+                    self.healthPoints = 0
+                }
             }
         }
         
@@ -430,6 +455,7 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(alienHit.frame, self.blackHole.frame) {
                 alienHit.removeFromParent()
+                
             }
         }
 
