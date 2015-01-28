@@ -13,12 +13,22 @@ protocol SongPickerDelegate {
     func userDidSelectSong(song : MPMediaItemCollection)
 }
 
-class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate {
     
     var mediaQuery : MPMediaQuery?
     var delegate : SongPickerDelegate?
     
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet var navBar: UINavigationBar!
+    @IBAction func cancelAction(sender: UIBarButtonItem) {
+    
+        println("cancel")
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+//MARK: VIEW DID LOAD ============================================
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,31 +36,47 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
         self.tableView.delegate = self
         // populate the tableview
         fetchItemsFromDeviceLibrary()
-
-        // Do any additional setup after loading the view.
+        
+        navBar.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    func fetchItemsFromDeviceLibrary(){
-        self.mediaQuery = MPMediaQuery.songsQuery()
-        mediaQuery?.items
-    }
-//MARK: TableViewDataSource functions
+//MARK: TableViewDataSource functions ============================
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = self.mediaQuery?.items[indexPath.row].title
-        cell.detailTextLabel?.text = self.mediaQuery?.items[indexPath.row].artist
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as MediaItemCell
+        
+        var mediaItem = mediaQuery?.items[indexPath.row] as MPMediaItem
+        
+        if let songName = mediaItem.title {
+            cell.song.text = songName
+        }
+        
+        if let artistName = mediaItem.artist {
+            cell.artist.text = artistName
+        }
+        
+        if let songImage = mediaItem.artwork {
+            cell.songImage.image = songImage.imageWithSize(CGSize(width: 50, height: 50))
+        } else {
+            cell.songImage.image = UIImage(named: "dude.png")
+        }
+        
+        if let songDuration = mediaItem.playbackDuration/60 as NSTimeInterval? {
+            cell.songDuration.text = "\(songDuration)"
+        }
+        
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mediaQuery!.items.count
     }
-//MARK: TableViewDelegate
+    
+    
+//MARK: TableViewDelegate ========================================
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let song = mediaQuery!.items[indexPath.row] as MPMediaItem
         let songCollection = MPMediaItemCollection(items: [song])
@@ -59,15 +85,15 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+//MARK: METHODS ==================================================
+
+    func fetchItemsFromDeviceLibrary(){
+        self.mediaQuery = MPMediaQuery.songsQuery()
+        mediaQuery?.items
     }
-    */
+    
+
 
 }
