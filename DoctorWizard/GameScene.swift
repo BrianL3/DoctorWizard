@@ -40,8 +40,7 @@ class GameScene: SKScene {
     var starsImageName = "starsFinal"
     
     var altitude: CGFloat = 0
-    var didLose = false
-    var menuDelegate: MainMenuDelegate?
+    var curLevel : Level = .First
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -558,4 +557,41 @@ class GameScene: SKScene {
     func playAlienCollisionSound(){
         SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
     }
+    
+    //MARK: LEVEL
+    
+    enum Level {
+        case First
+        case Second
+        case Third
+        case Fourth
+        case Fifth
+    }
+    
+    func currentLevelIs() -> Level {
+        let timeAsFloat = self.songDuration as Double
+        let timePassedAsFloat = self.timePassed as Double
+        let twentyPercent = timeAsFloat/5
+        let fortyPercent = (timeAsFloat/2) * 2
+        let sixtyPercent = (timeAsFloat/2) * 3
+        let eightyPercent = (timeAsFloat/2) * 5
+        
+        switch timePassedAsFloat {
+            //first 20% of the song
+        case 0...twentyPercent :
+            self.curLevel = .First
+        case twentyPercent...fortyPercent :
+            self.curLevel = .Second
+        case fortyPercent...sixtyPercent :
+            self.curLevel = .Third
+        case sixtyPercent...eightyPercent :
+            self.curLevel = .Fourth
+        case eightyPercent...timeAsFloat :
+            self.curLevel = .Fifth
+        default:
+            self.curLevel = .First
+        }
+        return self.curLevel
+    }
+
 }
