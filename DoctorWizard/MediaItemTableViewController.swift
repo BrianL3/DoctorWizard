@@ -63,8 +63,20 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
             cell.songImage.image = UIImage(named: "dude.png")
         }
         
-        if let songDuration = mediaItem.playbackDuration/60 as NSTimeInterval? {
-            cell.songDuration.text = "\(songDuration)"
+        if let songDuration = mediaItem.playbackDuration as NSTimeInterval? {
+            
+            var minutesFormatter = NSNumberFormatter()
+            minutesFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+            
+            var minutes = minutesFormatter.stringFromNumber(floor(songDuration/60))!
+            
+            var secondsFormatter = NSNumberFormatter()
+            secondsFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+            secondsFormatter.roundingMode = NSNumberFormatterRoundingMode.RoundUp
+            
+            var seconds = songDuration - floor(songDuration/60)*60
+            
+            cell.songDuration.text = "\(minutes)m \(secondsFormatter.stringFromNumber(seconds)!)s"
         }
         
         return cell
