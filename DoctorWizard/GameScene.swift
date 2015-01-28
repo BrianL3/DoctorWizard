@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+protocol MainMenuDelegate {
+    func playerDidLose()
+}
+
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
@@ -33,6 +37,10 @@ class GameScene: SKScene {
     var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
+    // lose conditions
+    var didLose = false
+    //delegate
+    var menuDelegate : MainMenuDelegate?
     
     var altitude: CGFloat = 0
     
@@ -61,6 +69,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
+
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -137,7 +146,10 @@ class GameScene: SKScene {
     }
     
     override func didEvaluateActions() {
-        
+        if self.didLose == true{
+            self.scene?.paused = true
+            self.menuDelegate?.playerDidLose()
+        }
         checkCollisions()
     }
     
@@ -246,7 +258,7 @@ class GameScene: SKScene {
         fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
     
-    //MARK: SPAWN ALIENS
+    //MARK: SPAWN ALIENS ======================================================================
     
     func spawnAlien() {
         let alien = SKSpriteNode(imageNamed: "alienspaceship")
@@ -468,6 +480,11 @@ class GameScene: SKScene {
             }
         })
     }
-
+    //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
+    func playRockCollisionSound(){
+    }
     
+    func playAlienCollisionSound(){
+        SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+    }
 }
