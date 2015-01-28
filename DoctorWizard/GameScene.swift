@@ -304,7 +304,7 @@ class GameScene: SKScene {
             y: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.height,
                 max: (CGRectGetMaxX(playableRect) - (5 * blackHole.frame.height))))
         blackHole.setScale(0)
-        blackHole.zPosition = 2
+        blackHole.zPosition = -1
         addChild(blackHole)
         let angle : CGFloat = -CGFloat(M_PI)
         let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
