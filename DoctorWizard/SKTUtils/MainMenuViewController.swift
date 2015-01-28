@@ -139,6 +139,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     // what happens when the user selects the pick a song button
     func userDidPressSelectSong(){
+        SKTAudio.sharedInstance().playSoundEffect("tick_one.wav")
         let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("MEDIA_VC") as MediaItemTableViewController    
         destinationVC.delegate = self
         self.presentViewController(destinationVC, animated: true, completion: nil)
@@ -150,6 +151,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
     
     func userDidPressPlayWithoutSong(){
+        SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
         self.playSKMusic()
         self.scene?.paused = false
        popUpVC.view.removeFromSuperview()
