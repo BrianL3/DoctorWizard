@@ -41,9 +41,15 @@ class GameScene: SKScene {
     
     var altitude: CGFloat = 0
     var curLevel : Level = .First
-    
+
     var didLose = false
     var menuDelegate: MainMenuDelegate?
+    
+    //booleans to determine if enemies are on the field of play
+    var rocksOn : Bool = false
+    var fireBallOn : Bool = false
+    var alienOn : Bool = false
+    var blackHoleOn : Bool = false
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -63,7 +69,10 @@ class GameScene: SKScene {
         }
         
         self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
-        super.init(size: size) // 5
+        
+        super.init(size: size)
+        
+        
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -80,25 +89,7 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
         addChild(dude)
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnRock),
-                SKAction.waitForDuration(1.0)])))
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnFireball),
-                SKAction.waitForDuration(2.0)])))
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnAlien),
-                SKAction.waitForDuration(7)])))
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
-                SKAction.waitForDuration(45)])))
 
-        
-        
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
         
@@ -137,13 +128,48 @@ class GameScene: SKScene {
         self.timePassed = round((currentTime - gameStartTime) * 10 )/10
         
         
-        
         if timePassed % 0.5 == 0 {
             if self.backgroundVerticalDirection < 0 {
                 self.altitude += 1
             } else if self.backgroundVerticalDirection > 0 {
                 self.altitude -= 1
             }
+        }
+        
+        
+        //Sections that determines which enemmies come to playing field based on Level of tune
+        
+        switch currentLevelIs()
+        {
+            
+        case .First:
+            if !rocksOn {
+                actionToSpawnRocks()
+                println("First scene on now")
+            }
+            
+        case .Second:
+            if !fireBallOn {
+                actionToSpawnFireBalls()
+                println("Second scene on now")
+            }
+
+        case .Third:
+            if !alienOn {
+                actionToSpawnAlien()
+                println("Third scene on now")
+            }
+            
+        case .Fourth:
+            if !blackHoleOn {
+                actionToSpawnBlackHole()
+                println("Fourth scene on now")
+            }
+        case .Fifth:
+            println("Fifth scene on now")
+            
+        default:
+            println("DefaultLevel")
         }
         
         //println(self.altitude)
@@ -306,7 +332,7 @@ class GameScene: SKScene {
             y: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.height,
                 max: (CGRectGetMaxX(playableRect) - (5 * blackHole.frame.height))))
         blackHole.setScale(0)
-        blackHole.zPosition = 2
+        blackHole.zPosition = -1
         addChild(blackHole)
         let angle : CGFloat = -CGFloat(M_PI)
         let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
@@ -596,5 +622,41 @@ class GameScene: SKScene {
         }
         return self.curLevel
     }
+    
+    //MARK: SKACTION TO SPAWN ENEMIES
+    
+    func actionToSpawnRocks() {
+        rocksOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnRock),
+                SKAction.waitForDuration(1.0)])))
+        println("Rock on  scene on now")
+    }
+    
+    func actionToSpawnFireBalls() {
+        fireBallOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnFireball),
+                SKAction.waitForDuration(2.0)])))
+        println("FireBall on scene on now")
+    }
+    
+    func actionToSpawnAlien() {
+        alienOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnAlien),
+                SKAction.waitForDuration(7)])))
+        println("Alien on scene on now")
+    }
+    
+    func actionToSpawnBlackHole() {
+        blackHoleOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
+                SKAction.waitForDuration(45)])))
+        println("BlackHole on scene on now")
+    }
+    
+    
 
 }
