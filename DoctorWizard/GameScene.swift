@@ -10,7 +10,8 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
+    let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
+    let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -37,6 +38,15 @@ class GameScene: SKScene {
         playableRect = CGRect(x: 0, y: playableMargin,
             width: size.width,
             height: playableHeight) // 4
+        
+        
+        // setup dude_animation
+        var textures: [SKTexture] = []
+        for i in 0...10 {
+            textures.append(SKTexture(imageNamed: "dude\(i)"))
+        }
+        
+        self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
         super.init(size: size) // 5
     }
     
@@ -50,6 +60,7 @@ class GameScene: SKScene {
         
         dude.position = CGPoint(x: 700, y: 400)
         dude.setScale(0.75)
+        dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         addChild(dude)
         
         runAction(SKAction.repeatActionForever(
