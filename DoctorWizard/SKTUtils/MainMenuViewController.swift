@@ -62,7 +62,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
 // MARK: Game Funcs
     func launchGame(){
         self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
+        println(self.songGenre)
         scene?.songGenre = self.songGenre
+        println(self.songDuration)
         scene?.songDuration = self.songDuration
         scene?.menuDelegate = self
         let skView = SKView(frame: self.view.frame)
@@ -159,10 +161,10 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         playMPMusic(song, completionHandler: { (genre, duration) -> () in
             self.unpauseGame()
             if duration != nil{
-                self.songDuration = duration!
+                self.scene!.songDuration = duration!
             }
             if genre != nil{
-                self.songGenre = genre!
+                self.scene!.songGenre = genre!
             }
         })
         popUpVC.view.removeFromSuperview()
