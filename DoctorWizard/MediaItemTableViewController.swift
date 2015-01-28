@@ -24,6 +24,7 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        // populate the tableview
         fetchItemsFromDeviceLibrary()
 
         // Do any additional setup after loading the view.
@@ -53,7 +54,7 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let song = mediaQuery!.items[indexPath.row] as MPMediaItem
         let songCollection = MPMediaItemCollection(items: [song])
-        println(self.delegate)
+        println(self.delegate?)
         delegate?.userDidSelectSong(songCollection)
         self.dismissViewControllerAnimated(true, completion: nil)
         

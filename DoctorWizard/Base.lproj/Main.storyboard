@@ -48,7 +48,6 @@
                                 </state>
                                 <connections>
                                     <action selector="pressedPickaSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="li8-B9-7h6"/>
-                                    <segue destination="wKW-yp-r5X" kind="presentation" identifier="PICK_SONG" id="PJm-4J-B3R"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Selected game song name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-hw-cNk">
@@ -106,7 +105,7 @@
         <!--Media Item Table View Controller-->
         <scene sceneID="A1I-Sl-zFo">
             <objects>
-                <viewController id="wKW-yp-r5X" customClass="MediaItemTableViewController" customModule="DoctorWizard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MEDIA_VC" id="wKW-yp-r5X" customClass="MediaItemTableViewController" customModule="DoctorWizard" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ODU-iz-xuB"/>
                         <viewControllerLayoutGuide type="bottom" id="92J-cZ-h7Z"/>
