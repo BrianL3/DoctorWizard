@@ -15,7 +15,7 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -624,25 +624,27 @@ class GameScene: SKScene {
     func currentLevelIs() -> Level {
         let timeAsFloat = self.songDuration as Double
         let timePassedAsFloat = self.timePassed as Double
-        let twentyPercent = timeAsFloat/5
-        let fortyPercent = (timeAsFloat/2) * 2
-        let sixtyPercent = (timeAsFloat/2) * 3
-        let eightyPercent = (timeAsFloat/2) * 5
-        
-        switch timePassedAsFloat {
-            //first 20% of the song
-        case 0...twentyPercent :
-            self.curLevel = .First
-        case twentyPercent...fortyPercent :
-            self.curLevel = .Second
-        case fortyPercent...sixtyPercent :
-            self.curLevel = .Third
-        case sixtyPercent...eightyPercent :
-            self.curLevel = .Fourth
-        case eightyPercent...timeAsFloat :
-            self.curLevel = .Fifth
-        default:
-            self.curLevel = .First
+        if timeAsFloat <= timePassedAsFloat{
+            let twentyPercent = timeAsFloat/5
+            let fortyPercent = (timeAsFloat/2) * 2
+            let sixtyPercent = (timeAsFloat/2) * 3
+            let eightyPercent = (timeAsFloat/2) * 5
+            
+            switch timePassedAsFloat {
+                //first 20% of the song
+            case 0...twentyPercent :
+                self.curLevel = .First
+            case twentyPercent...fortyPercent :
+                self.curLevel = .Second
+            case fortyPercent...sixtyPercent :
+                self.curLevel = .Third
+            case sixtyPercent...eightyPercent :
+                self.curLevel = .Fourth
+            case eightyPercent...timeAsFloat :
+                self.curLevel = .Fifth
+            default:
+                self.curLevel = .First
+            }
         }
         return self.curLevel
     }
