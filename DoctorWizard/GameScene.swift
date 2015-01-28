@@ -45,6 +45,9 @@ class GameScene: SKScene {
     var didLose = false
     var menuDelegate: MainMenuDelegate?
     
+    var didLose = false
+    var menuDelegate: MainMenuDelegate?
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -80,6 +83,7 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
         addChild(dude)
+        
         
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
@@ -135,7 +139,6 @@ class GameScene: SKScene {
         }
         
         self.timePassed = round((currentTime - gameStartTime) * 10 )/10
-        
         
         
         if timePassed % 0.5 == 0 {
