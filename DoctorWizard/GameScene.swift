@@ -10,6 +10,8 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
+    func relaunchGameWithSameSong()
+    func chooseNewSong()
 }
 
 class GameScene: SKScene {
@@ -178,9 +180,10 @@ class GameScene: SKScene {
             self.healthPoints = 0
             println("you have lost")
             let lostGame = LooserScene(size: self.size)
+            lostGame.mainDelegate = self.menuDelegate
             self.view?.presentScene(lostGame)
         } else {
-            println("healthPoints\(self.healthPoints)")
+  //          println("healthPoints\(self.healthPoints)")
         }
         
         //println(self.altitude)
@@ -224,7 +227,6 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
