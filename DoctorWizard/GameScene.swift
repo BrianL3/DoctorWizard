@@ -15,7 +15,7 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0

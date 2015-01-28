@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		483339D21A76C3AF00344DC8 /* dude.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D11A76C3AF00344DC8 /* dude.png */; };
 		483339D61A76D32000344DC8 /* Rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D51A76D32000344DC8 /* Rock.png */; };
-		487D5DE71A78221300359556 /* Spike.png in Resources */ = {isa = PBXBuildFile; fileRef = 487D5DE61A78221300359556 /* Spike.png */; };
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
+		48D415611A799D1D005CE91C /* blackhole2.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415601A799D1D005CE91C /* blackhole2.png */; };
 		55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55228CDE1A798F1100E573D1 /* WinnerScene.swift */; };
 		55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D7F6C81A79914E006E8753 /* LooserScene.swift */; };
 		C0E2189F1A795DE300880E41 /* MediaItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2189E1A795DE300880E41 /* MediaItemCell.swift */; };
@@ -70,9 +70,9 @@
 /* Begin PBXFileReference section */
 		483339D11A76C3AF00344DC8 /* dude.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dude.png; sourceTree = "<group>"; };
 		483339D51A76D32000344DC8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
-		487D5DE61A78221300359556 /* Spike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spike.png; sourceTree = "<group>"; };
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
+		48D415601A799D1D005CE91C /* blackhole2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackhole2.png; sourceTree = "<group>"; };
 		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
 		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
 		C0E2189E1A795DE300880E41 /* MediaItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemCell.swift; sourceTree = "<group>"; };
@@ -185,9 +185,9 @@
 			isa = PBXGroup;
 			children = (
 				483339D11A76C3AF00344DC8 /* dude.png */,
+				48D415601A799D1D005CE91C /* blackhole2.png */,
 				48D415581A787019005CE91C /* alienspaceship.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
-				487D5DE61A78221300359556 /* Spike.png */,
 				483339D51A76D32000344DC8 /* Rock.png */,
 				C4D707CB1A76BEFB00A990A1 /* Info.plist */,
 			);
@@ -359,7 +359,6 @@
 				483339D61A76D32000344DC8 /* Rock.png in Resources */,
 				FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */,
 				FA4116E01A78463700FCC212 /* blop_seven.wav in Resources */,
-				487D5DE71A78221300359556 /* Spike.png in Resources */,
 				FA4116E51A78463700FCC212 /* chom_two.wav in Resources */,
 				FA4116E11A78463700FCC212 /* blop_thirteen.wav in Resources */,
 				FA4116E31A78463700FCC212 /* chaos.wav in Resources */,
@@ -373,6 +372,7 @@
 				C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */,
 				FA4116E81A78463700FCC212 /* clicks_two.wav in Resources */,
 				FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */,
+				48D415611A799D1D005CE91C /* blackhole2.png in Resources */,
 				FA4116DF1A78463700FCC212 /* blop_nine.wav in Resources */,
 				FA4116E21A78463700FCC212 /* blop_three.wav in Resources */,
 				C4D707D61A76BEFB00A990A1 /* Main.storyboard in Resources */,
