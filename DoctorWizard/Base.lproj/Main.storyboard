@@ -56,13 +56,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrWizzard3DLogoBlackBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xnp-oZ-YZj">
-                                <rect key="frame" x="180" y="59" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="C0W-iK-DHK"/>
-                                    <constraint firstAttribute="height" constant="128" id="L3P-xx-CO7"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHH-UH-BpJ">
                                 <rect key="frame" x="207" y="195" width="187" height="28"/>
                                 <constraints>
@@ -78,16 +71,23 @@
                                     <action selector="pressedPlayWithoutSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="hIQ-u5-rUs"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrWizzard3DLogoClearBG_Large" translatesAutoresizingMaskIntoConstraints="NO" id="Xnp-oZ-YZj">
+                                <rect key="frame" x="27" y="74" width="547" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="547" id="C0W-iK-DHK"/>
+                                    <constraint firstAttribute="height" constant="128" id="L3P-xx-CO7"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="min-36-gcu" secondAttribute="centerX" constant="-78" id="A6j-6e-Ohe"/>
                             <constraint firstItem="S1T-hw-cNk" firstAttribute="top" secondItem="ZHH-UH-BpJ" secondAttribute="bottom" constant="42" id="SOR-GT-3Xm"/>
                             <constraint firstAttribute="centerX" secondItem="S1T-hw-cNk" secondAttribute="centerX" constant="34" id="Yuq-At-KOq"/>
-                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="Xnp-oZ-YZj" secondAttribute="bottom" constant="8" id="mag-Ix-h8G"/>
+                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="Xnp-oZ-YZj" secondAttribute="bottom" constant="-7" id="mag-Ix-h8G"/>
                             <constraint firstAttribute="centerX" secondItem="ZHH-UH-BpJ" secondAttribute="centerX" id="rd2-Zu-TBs"/>
                             <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="ZHH-UH-BpJ" secondAttribute="bottom" constant="37" id="x7r-8b-PF4"/>
-                            <constraint firstItem="Xnp-oZ-YZj" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" constant="39" id="xbH-kZ-DuP"/>
+                            <constraint firstItem="Xnp-oZ-YZj" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" constant="54" id="xbH-kZ-DuP"/>
                             <constraint firstAttribute="centerX" secondItem="Xnp-oZ-YZj" secondAttribute="centerX" id="zdG-uv-XU8"/>
                         </constraints>
                     </view>
@@ -161,7 +161,7 @@
     </scenes>
     <resources>
         <image name="ChooseSongBG" width="25" height="25"/>
-        <image name="DrWizzard3DLogoBlackBackground.png" width="240" height="128"/>
+        <image name="DrWizzard3DLogoClearBG_Large" width="273" height="64"/>
         <image name="PlayGameBG.png" width="240" height="34"/>
     </resources>
 </document>
