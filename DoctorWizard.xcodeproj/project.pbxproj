@@ -11,6 +11,7 @@
 		483339D61A76D32000344DC8 /* Rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D51A76D32000344DC8 /* Rock.png */; };
 		487D5DE71A78221300359556 /* Spike.png in Resources */ = {isa = PBXBuildFile; fileRef = 487D5DE61A78221300359556 /* Spike.png */; };
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
+		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
 		C0E64CBC1A781A2F009C8D10 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */; };
 		C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */; };
 		C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4D707CE1A76BEFB00A990A1 /* GameScene.sks */; };
@@ -49,6 +50,7 @@
 		FA4116EB1A78463700FCC212 /* tick_one.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116D91A78463700FCC212 /* tick_one.wav */; };
 		FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116DA1A78463700FCC212 /* tick_two.wav */; };
 		FA4116ED1A78463700FCC212 /* lux.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116DC1A78463700FCC212 /* lux.wav */; };
+		FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */; };
 		FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,7 @@
 		483339D51A76D32000344DC8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
 		487D5DE61A78221300359556 /* Spike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spike.png; sourceTree = "<group>"; };
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
+		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
 		C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoctorWizard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D707CB1A76BEFB00A990A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		FA4116D91A78463700FCC212 /* tick_one.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tick_one.wav; sourceTree = "<group>"; };
 		FA4116DA1A78463700FCC212 /* tick_two.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tick_two.wav; sourceTree = "<group>"; };
 		FA4116DC1A78463700FCC212 /* lux.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lux.wav; sourceTree = "<group>"; };
+		FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemTableViewController.swift; sourceTree = "<group>"; };
 		FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +159,7 @@
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
 				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
+				FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */,
 				C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
@@ -171,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				483339D11A76C3AF00344DC8 /* dude.png */,
+				48D415581A787019005CE91C /* alienspaceship.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
 				487D5DE61A78221300359556 /* Spike.png */,
 				483339D51A76D32000344DC8 /* Rock.png */,
@@ -351,6 +357,7 @@
 				C4D707DB1A76BEFB00A990A1 /* LaunchScreen.xib in Resources */,
 				FA4116DE1A78463700FCC212 /* blop_four.wav in Resources */,
 				483339D21A76C3AF00344DC8 /* dude.png in Resources */,
+				48D415591A787019005CE91C /* alienspaceship.png in Resources */,
 				C4D707D81A76BEFB00A990A1 /* Images.xcassets in Resources */,
 				FA4116E71A78463700FCC212 /* clicks_three.wav in Resources */,
 				FA4116ED1A78463700FCC212 /* lux.wav in Resources */,
@@ -380,6 +387,7 @@
 				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
+				FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
 				C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */,

@@ -10,7 +10,8 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude")
+    let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
+    let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -23,10 +24,14 @@ class GameScene: SKScene {
     var invincible = false
     var backgroundLayer = SKNode()
     var starLayer = SKNode()
+    // song-related variables
+    var songDuration : NSTimeInterval!
+    var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
+    
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -37,6 +42,15 @@ class GameScene: SKScene {
         playableRect = CGRect(x: 0, y: playableMargin,
             width: size.width,
             height: playableHeight) // 4
+        
+        
+        // setup dude_animation
+        var textures: [SKTexture] = []
+        for i in 0...10 {
+            textures.append(SKTexture(imageNamed: "dude\(i)"))
+        }
+        
+        self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
         super.init(size: size) // 5
     }
     
@@ -50,6 +64,7 @@ class GameScene: SKScene {
         
         dude.position = CGPoint(x: 700, y: 400)
         dude.setScale(0.75)
+        dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         addChild(dude)
         
         runAction(SKAction.repeatActionForever(
@@ -59,6 +74,10 @@ class GameScene: SKScene {
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnFireball),
                 SKAction.waitForDuration(2.0)])))
+        
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnAlien),
+                SKAction.waitForDuration(7)])))
         
         
         //simulate SKSpriteNode for collision purposes
@@ -79,7 +98,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
-        println("\(dt*1000) milliseconds since last update")
+        //println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
             
@@ -196,7 +215,7 @@ class GameScene: SKScene {
         fireBall.name = "fireball"
         fireBall.position = CGPoint(x: size.width - fireBall.size.width/2, y: CGFloat.random(min: CGRectGetMinY(playableRect), max: CGRectGetMaxY(playableRect)))
         fireBall.setScale(1)
-        fireBall.zPosition = 1
+        fireBall.zPosition = 0
         addChild(fireBall)
         let appear = SKAction.scaleTo(3, duration: 4.0)
         let actions = [appear]
@@ -205,6 +224,35 @@ class GameScene: SKScene {
         SKAction.moveToX(-fireBall.size.height/2, duration: 1.0)
         let actionRemove = SKAction.removeFromParent()
         fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
+    
+    
+    //MARK: SPAWN ALIENS
+    
+    func spawnAlien() {
+        let alien = SKSpriteNode(imageNamed: "alienspaceship")
+        alien.name = "alienspaceship"
+        alien.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect) + alien.frame.size.width,
+                max: CGRectGetMaxX(playableRect)),
+            y: size.height)
+        alien.setScale(1)
+        alien.zPosition = 0
+        addChild(alien)
+        var randomXPosition = CGFloat.random(min: 0, max: size.width)
+        var randomYPosition = CGFloat.random(min: 0, max: size.height)
+        let appear = SKAction.scaleTo(1, duration: 2.0)
+        let actions = [appear]
+        alien.runAction(SKAction.sequence(actions))
+        let actionMoveYDown =
+        SKAction.moveToY(0, duration: 2.0)
+        let actionMoveX =
+        SKAction.moveToX(randomXPosition, duration: 0.5)
+        let actionMoveYUp =
+        SKAction.moveToY(size.height - alien.frame.height / 2, duration: 4.0)
+
+        let actionRemove = SKAction.removeFromParent()
+        alien.runAction(SKAction.sequence([actionMoveYDown, actionMoveX, actionMoveYUp, actionRemove]))}
+    
     
     
     //MARK: COLLISIONS ==========================================================================
