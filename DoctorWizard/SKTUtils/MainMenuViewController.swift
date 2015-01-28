@@ -14,8 +14,8 @@ import SpriteKit
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate {
     
     var song : MPMediaItem?
-    var songDuration : NSTimeInterval?
-    var songGenre : String?
+    var songDuration : NSTimeInterval = 100.0
+    var songGenre : String = "Alternative"
     var scene : GameScene?
     var popUpVC = PopUpMenuController()
     
@@ -60,9 +60,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
 // MARK: Game Funcs
     func launchGame(){
-        self.songDuration = NSTimeInterval(100.00)
-        self.songGenre = "Alternative"
         self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
+        scene?.songGenre = self.songGenre
+        scene?.songDuration = self.songDuration
         let skView = SKView(frame: self.view.frame)
         self.view.addSubview(skView)
         skView.showsFPS = true
@@ -79,6 +79,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     func pauseGame(){
         self.scene?.paused = true
+    }
+    func unpauseGame(){
+        self.scene?.paused = false
     }
     
     //MARK: MediaPickerController Options
@@ -100,9 +103,14 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
                 // create the GameViewController
                 let songToPlay = mediaItemCollection[0] as? MPMediaItem
                 // (3) presenting the GameViewController
-                self.launchGame()
-                self.songDuration = duration
-                self.songGenre = genre
+                if duration != nil{
+                    self.songDuration = duration!
+                }
+                if genre != nil{
+                    self.songGenre = genre!
+                }
+                self.unpauseGame()
+
             })
         })
     }
@@ -152,9 +160,13 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     //MARK: SongPickerDelegate
     func userDidSelectSong(song : MPMediaItemCollection){
         playMPMusic(song, completionHandler: { (genre, duration) -> () in
-            self.launchGame()
-            self.songDuration = duration
-            self.songGenre = genre
+            self.unpauseGame()
+            if duration != nil{
+                self.songDuration = duration!
+            }
+            if genre != nil{
+                self.songGenre = genre!
+            }
         })
         popUpVC.view.removeFromSuperview()
     }
