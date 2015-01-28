@@ -39,7 +39,8 @@ class GameScene: SKScene {
     var starsImageName = "starsFinal"
     
     var altitude: CGFloat = 0
-    
+    var didLose = false
+    var menuDelegate: MainMenuDelegate?
     
     //MARK: INTIALIZER ==============================================================================
     
