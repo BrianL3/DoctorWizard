@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+protocol MainMenuDelegate {
+    func playerDidLose()
+}
+
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
@@ -24,10 +28,21 @@ class GameScene: SKScene {
     var invincible = false
     var backgroundLayer = SKNode()
     var starLayer = SKNode()
+    // song-related variables
+    var songDuration : NSTimeInterval!
+    var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
+    var gameStartTime : NSTimeInterval = 0
+    var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
+    // lose conditions
+    var didLose = false
+    //delegate
+    var menuDelegate : MainMenuDelegate?
+    
+    var altitude: CGFloat = 0
     
     
     //MARK: INTIALIZER ==============================================================================
@@ -55,6 +70,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
+
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -92,6 +108,9 @@ class GameScene: SKScene {
     
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
+        if gameStartTime == 0 {
+            gameStartTime = currentTime
+        }
         
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -114,13 +133,29 @@ class GameScene: SKScene {
             }
         }
         
+        self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        
+        
+        
+        if timePassed % 0.5 == 0 {
+            if self.backgroundVerticalDirection < 0 {
+                self.altitude += 1
+            } else if self.backgroundVerticalDirection > 0 {
+                self.altitude -= 1
+            }
+        }
+        
+        println(self.altitude)
         boundsCheckDude()
         moveBackground()
         moveStars()
     }
     
     override func didEvaluateActions() {
-        
+        if self.didLose == true{
+            self.scene?.paused = true
+            self.menuDelegate?.playerDidLose()
+        }
         checkCollisions()
     }
     
@@ -131,7 +166,7 @@ class GameScene: SKScene {
         
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-        println("Amount to move: \(amountToMove)")
+//        println("Amount to move: \(amountToMove)")
         
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
@@ -150,6 +185,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+//        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -477,6 +513,11 @@ class GameScene: SKScene {
             }
         })
     }
-
+    //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
+    func playRockCollisionSound(){
+    }
     
+    func playAlienCollisionSound(){
+        SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+    }
 }
