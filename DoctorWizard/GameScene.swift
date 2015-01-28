@@ -12,7 +12,8 @@ class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let dudeAnimation : SKAction
-    
+    let remainingTimeInSongLabel : SKLabelNode = SKLabelNode()
+    var currentTime: NSTimeInterval = 0.00
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 2000.0
@@ -96,8 +97,18 @@ class GameScene: SKScene {
             dt = 0
         }
         
+        
         lastUpdateTime = currentTime
         //println("\(dt*1000) milliseconds since last update")
+        
+        self.currentTime = currentTime
+        
+        
+        
+        
+        
+        
+        
         
         if let lastTouch = lastTouchLocation {
             
@@ -186,6 +197,7 @@ class GameScene: SKScene {
             velocity.y = -velocity.y
         }
     }
+
     
     //MARK: SPAWN ROCKS ========================================================================
     
