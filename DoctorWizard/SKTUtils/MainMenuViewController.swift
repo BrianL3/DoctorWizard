@@ -11,7 +11,7 @@ import MediaPlayer
 import SpriteKit
 
 
-class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate {
+class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate {
     
     var song : MPMediaItem?
     var songDuration : NSTimeInterval?
@@ -130,10 +130,10 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     func userDidPressSelectSong(){
         
         // setting up the MediaPickerController as the MPMediaPlayerDelegate
-        let musicPickerController = MPMediaPickerController()
-        musicPickerController.allowsPickingMultipleItems = false
-        musicPickerController.delegate = self
-        self.presentViewController(musicPickerController, animated: true, completion: nil)
+//        let musicPickerController = MPMediaPickerController()
+//        musicPickerController.allowsPickingMultipleItems = false
+//        musicPickerController.delegate = self
+//        self.presentViewController(musicPickerController, animated: true, completion: nil)
     }
     
     func userDidPressPlayWithoutSong(){
@@ -142,7 +142,24 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
        popUpVC.view.removeFromSuperview()
     }
     
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "PICK_SONG" {
+            println("prepare for segue properly fired")
+            let destinationVC = segue.destinationViewController as MediaItemTableViewController
+            destinationVC.delegate = self
+        }
+    }
     
     
+    
+    //MARK: SongPickerDelegate
+    func userDidSelectSong(song : MPMediaItemCollection){
+        println(song.items)
+        playMPMusic(song, completionHandler: { (genre, duration) -> () in
+            //println("found songToPlay, duration of \(duration) and genre \(genre)")
+            // (2) dismissing the MediaPicker
+        })
+    }
     
 }
