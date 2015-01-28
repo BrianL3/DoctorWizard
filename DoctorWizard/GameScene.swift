@@ -31,8 +31,8 @@ class GameScene: SKScene {
     var backgroundVerticalDirection: CGFloat = 1.0
     var gameStartTime : NSTimeInterval = 0
     var timePassed : NSTimeInterval = 0
-    var backgroundImageName = "background_test"
-    var starsImageName = "stars_test"
+    var backgroundImageName = "background0"
+    var starsImageName = "starsFinal"
     
     var altitude: CGFloat = 0
     
