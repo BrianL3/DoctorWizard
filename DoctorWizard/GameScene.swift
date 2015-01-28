@@ -33,6 +33,8 @@ class GameScene: SKScene {
     var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
+    var gameStartTime : NSTimeInterval = 0
+    var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
     // lose conditions
@@ -40,6 +42,7 @@ class GameScene: SKScene {
     //delegate
     var menuDelegate : MainMenuDelegate?
     
+    var altitude: CGFloat = 0
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -99,6 +102,9 @@ class GameScene: SKScene {
     
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
+        if gameStartTime == 0 {
+            gameStartTime = currentTime
+        }
         
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -121,6 +127,19 @@ class GameScene: SKScene {
             }
         }
         
+        self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        
+        
+        
+        if timePassed % 0.5 == 0 {
+            if self.backgroundVerticalDirection < 0 {
+                self.altitude += 1
+            } else if self.backgroundVerticalDirection > 0 {
+                self.altitude -= 1
+            }
+        }
+        
+        println(self.altitude)
         boundsCheckDude()
         moveBackground()
         moveStars()
@@ -141,7 +160,7 @@ class GameScene: SKScene {
         
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-        println("Amount to move: \(amountToMove)")
+//        println("Amount to move: \(amountToMove)")
         
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
@@ -160,6 +179,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+//        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
