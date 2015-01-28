@@ -40,4 +40,31 @@ class AnimationController {
         }
         
     }
+    
+    
+    //ANIMATE MENU: MAKE IT SLIDE IN AND BECOME SEMI OPAQUE ======================================================
+    
+    func enterStageRight(vc: UIViewController) {
+        
+        //do animation
+        vc.view.alpha = 1
+        
+        let enterStageRight = CGAffineTransformMakeTranslation(-10,0)
+        
+        
+        //do animation
+        UIView.animateWithDuration(1.2, delay: 0.5, options: nil, animations: { () -> Void in
+
+            vc.view.transform = enterStageRight
+            vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
+            
+            }) { (finished) -> Void in
+                
+        }
+        
+    }
+
+
+    
+    
 }

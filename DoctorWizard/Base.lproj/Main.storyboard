@@ -36,8 +36,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="min-36-gcu">
-                                <rect key="frame" x="244" y="20" width="112" height="30"/>
-                                <state key="normal" title="CHOOSE MUSE">
+                                <rect key="frame" x="349" y="260" width="58" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="FHH-Z2-me8"/>
+                                    <constraint firstAttribute="width" constant="58" id="jPr-0Q-0NA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="8"/>
+                                <state key="normal" title="Change Song" backgroundImage="ChooseSongBG">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -45,24 +51,53 @@
                                     <segue destination="wKW-yp-r5X" kind="presentation" identifier="PICK_SONG" id="PJm-4J-B3R"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Selected game song name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1T-hw-cNk">
+                                <rect key="frame" x="191" y="265" width="150" height="21"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrWizzard3DLogoBlackBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xnp-oZ-YZj">
+                                <rect key="frame" x="180" y="59" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="C0W-iK-DHK"/>
+                                    <constraint firstAttribute="height" constant="128" id="L3P-xx-CO7"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHH-UH-BpJ">
-                                <rect key="frame" x="231" y="58" width="138" height="30"/>
-                                <state key="normal" title="JUST GO ALREADY">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="207" y="195" width="187" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="9W2-en-sMf"/>
+                                    <constraint firstAttribute="width" constant="187" id="z2g-SA-JYC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="21"/>
+                                <state key="normal" title="Play Game" backgroundImage="PlayGameBG.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="pressedPlayWithoutSong:" destination="oEe-LF-YWh" eventType="touchUpInside" id="hIQ-u5-rUs"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="min-36-gcu" secondAttribute="bottom" constant="8" id="4zg-0f-H8k"/>
-                            <constraint firstAttribute="centerX" secondItem="min-36-gcu" secondAttribute="centerX" id="7kR-jc-Jtv"/>
-                            <constraint firstAttribute="centerX" secondItem="ZHH-UH-BpJ" secondAttribute="centerX" id="gOy-nY-9FB"/>
-                            <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" id="lKD-bA-1v0"/>
+                            <constraint firstAttribute="centerX" secondItem="min-36-gcu" secondAttribute="centerX" constant="-78" id="A6j-6e-Ohe"/>
+                            <constraint firstItem="S1T-hw-cNk" firstAttribute="top" secondItem="ZHH-UH-BpJ" secondAttribute="bottom" constant="42" id="SOR-GT-3Xm"/>
+                            <constraint firstAttribute="centerX" secondItem="S1T-hw-cNk" secondAttribute="centerX" constant="34" id="Yuq-At-KOq"/>
+                            <constraint firstItem="ZHH-UH-BpJ" firstAttribute="top" secondItem="Xnp-oZ-YZj" secondAttribute="bottom" constant="8" id="mag-Ix-h8G"/>
+                            <constraint firstAttribute="centerX" secondItem="ZHH-UH-BpJ" secondAttribute="centerX" id="rd2-Zu-TBs"/>
+                            <constraint firstItem="min-36-gcu" firstAttribute="top" secondItem="ZHH-UH-BpJ" secondAttribute="bottom" constant="37" id="x7r-8b-PF4"/>
+                            <constraint firstItem="Xnp-oZ-YZj" firstAttribute="top" secondItem="nGi-vx-6oz" secondAttribute="bottom" constant="39" id="xbH-kZ-DuP"/>
+                            <constraint firstAttribute="centerX" secondItem="Xnp-oZ-YZj" secondAttribute="centerX" id="zdG-uv-XU8"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="changeSongNameButton" destination="min-36-gcu" id="eCe-hL-Rk2"/>
+                        <outlet property="currentSongLabel" destination="S1T-hw-cNk" id="Klf-TO-pQ5"/>
+                        <outlet property="logoImageView" destination="Xnp-oZ-YZj" id="jU1-WD-d4F"/>
+                        <outlet property="playGameButton" destination="ZHH-UH-BpJ" id="e0F-Gc-TKa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="59Q-SM-SKD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -125,4 +160,9 @@
             <point key="canvasLocation" x="1168" y="90"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ChooseSongBG" width="25" height="25"/>
+        <image name="DrWizzard3DLogoBlackBackground.png" width="240" height="128"/>
+        <image name="PlayGameBG.png" width="240" height="34"/>
+    </resources>
 </document>
