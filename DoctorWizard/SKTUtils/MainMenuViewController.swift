@@ -54,7 +54,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         //do animation
         AnimationController.singleton.enterStageRight(popUpVC)
-        //AnimationController.singleton.enterStageLeft(popUpVC)
     }
     
     
