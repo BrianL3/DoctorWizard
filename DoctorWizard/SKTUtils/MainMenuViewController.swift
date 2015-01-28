@@ -93,7 +93,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
         didPickMusic = !didPickMusic
         // (1) firing playMusic
-        self.playMusic(mediaItemCollection, completionHandler: { (genre, duration) -> () in
+        self.playMPMusic(mediaItemCollection, completionHandler: { (genre, duration) -> () in
             //println("found songToPlay, duration of \(duration) and genre \(genre)")
             // (2) dismissing the MediaPicker
             mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -108,10 +108,10 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
 
     
-    //MARK: MP MUSIC PLAYER CONTROLLER ========================================================
+    //MARK: MUSIC PLAYER CONTROLLER ========================================================
     
     // the music will play
-    func playMusic(music: MPMediaItemCollection, completionHandler : (genre: String?, duration: NSTimeInterval?) -> () ) {
+    func playMPMusic(music: MPMediaItemCollection, completionHandler : (genre: String?, duration: NSTimeInterval?) -> () ) {
         let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
@@ -119,6 +119,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         self.song = musicPlayer.nowPlayingItem
         
         completionHandler(genre: song?.genre, duration: song?.playbackDuration)
+    }
+
+    // play music with SKAudio
+    func playSKMusic(){
+        SKTAudio.sharedInstance().playBackgroundMusic("lux.wav")
     }
     
 
@@ -135,6 +140,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
     
     func userDidPressPlayWithoutSong(){
+        self.playSKMusic()
         self.scene?.paused = false
        popUpVC.view.removeFromSuperview()
     }
