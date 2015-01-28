@@ -39,8 +39,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.delegate = self
         
         // frame  is 40% of screen
-        let width           = self.view.frame.width * 0.4
-        let height          = self.view.frame.height * 0.4
+        let width           = self.view.frame.width * 0.9
+        let height          = self.view.frame.height * 0.9
         popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
         popUpVC.view.center = self.view.center
         
@@ -53,8 +53,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.didMoveToParentViewController(self)
         
         //do animation
-        AnimationController.singleton.simpleFadeInScale(popUpVC)
+        AnimationController.singleton.enterStageRight(popUpVC)
+        //AnimationController.singleton.enterStageLeft(popUpVC)
     }
+    
+    
 // MARK: Game Funcs
     func launchGame(){
         self.songDuration = NSTimeInterval(100.00)

@@ -32,8 +32,6 @@
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
 		FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */; };
-		FF4F3A941A7813F3009CCA76 /* PlayGameBG.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4F3A931A7813F3009CCA76 /* PlayGameBG.png */; };
-		FF4F3A961A781402009CCA76 /* ChooseSongBG.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = FF4F3A951A781402009CCA76 /* ChooseSongBG.jpeg */; };
 		FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,8 +75,6 @@
 		C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = SKTUtils/MainMenuViewController.swift; sourceTree = "<group>"; };
-		FF4F3A931A7813F3009CCA76 /* PlayGameBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayGameBG.png; sourceTree = "<group>"; };
-		FF4F3A951A781402009CCA76 /* ChooseSongBG.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ChooseSongBG.jpeg; sourceTree = "<group>"; };
 		FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,8 +126,6 @@
 				C4D707D41A76BEFB00A990A1 /* Main.storyboard */,
 				FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */,
 				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
-				FF4F3A951A781402009CCA76 /* ChooseSongBG.jpeg */,
-				FF4F3A931A7813F3009CCA76 /* PlayGameBG.png */,
 				C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */,
 				C4D707CA1A76BEFB00A990A1 /* Supporting Files */,
 			);
@@ -268,12 +262,11 @@
 			files = (
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
 				483339D61A76D32000344DC8 /* Rock.png in Resources */,
-				FF4F3A941A7813F3009CCA76 /* PlayGameBG.png in Resources */,
+				487D5DE71A78221300359556 /* Spike.png in Resources */,
 				C4D707DB1A76BEFB00A990A1 /* LaunchScreen.xib in Resources */,
 				483339D21A76C3AF00344DC8 /* dude.png in Resources */,
 				C4D707D81A76BEFB00A990A1 /* Images.xcassets in Resources */,
 				C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */,
-				FF4F3A961A781402009CCA76 /* ChooseSongBG.jpeg in Resources */,
 				C4D707D61A76BEFB00A990A1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
