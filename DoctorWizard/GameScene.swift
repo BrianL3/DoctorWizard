@@ -81,6 +81,7 @@ class GameScene: SKScene {
         dude.name = "dude"
         addChild(dude)
         
+        
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
@@ -135,7 +136,6 @@ class GameScene: SKScene {
         }
         
         self.timePassed = round((currentTime - gameStartTime) * 10 )/10
-        
         
         
         if timePassed % 0.5 == 0 {
