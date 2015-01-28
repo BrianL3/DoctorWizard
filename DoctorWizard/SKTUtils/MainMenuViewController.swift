@@ -11,7 +11,8 @@ import MediaPlayer
 import SpriteKit
 
 
-class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate {
+
+class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate {
     
     var song : MPMediaItem?
     var songDuration : NSTimeInterval = 100.0
@@ -63,6 +64,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
         scene?.songGenre = self.songGenre
         scene?.songDuration = self.songDuration
+        scene?.menuDelegate = self
         let skView = SKView(frame: self.view.frame)
         self.view.addSubview(skView)
         skView.showsFPS = true
@@ -83,8 +85,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     func unpauseGame(){
         self.scene?.paused = false
     }
-    
-    //MARK: MediaPickerController Options
     
     //MARK: MEDIA PICKER CONTROLLER OPTIONS ================================================
     
@@ -143,11 +143,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("MEDIA_VC") as MediaItemTableViewController    
         destinationVC.delegate = self
         self.presentViewController(destinationVC, animated: true, completion: nil)
-// setting up the MediaPickerController as the MPMediaPlayerDelegate
-//        let musicPickerController = MPMediaPickerController()
-//        musicPickerController.allowsPickingMultipleItems = false
-//        musicPickerController.delegate = self
-//        self.presentViewController(musicPickerController, animated: true, completion: nil)
     }
     
     func userDidPressPlayWithoutSong(){
@@ -173,4 +168,29 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.view.removeFromSuperview()
     }
     
+    //MARK: MAIN MENU DELEGATE
+    func playerDidLose(){
+        self.pauseGame()
+        //create pop up controller
+        popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
+        popUpVC.delegate = self
+        
+        // frame  is 40% of screen
+        let width           = self.view.frame.width * 0.9
+        let height          = self.view.frame.height * 0.9
+        popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
+        popUpVC.view.center = self.view.center
+        
+        self.view.addSubview(popUpVC.view)
+        
+        //told parent vc that child vc was added
+        self.addChildViewController(popUpVC)
+        
+        //told child it has a parent
+        popUpVC.didMoveToParentViewController(self)
+        
+        //do animation
+        AnimationController.singleton.enterStageRight(popUpVC)
+
+    }
 }

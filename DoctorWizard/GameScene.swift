@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+protocol MainMenuDelegate {
+    func playerDidLose()
+}
+
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
@@ -34,8 +38,13 @@ class GameScene: SKScene {
     var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
+    // lose conditions
+    var didLose = false
+    //delegate
+    var menuDelegate : MainMenuDelegate?
     
     var altitude: CGFloat = 0
+    
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -62,6 +71,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
+
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -82,6 +92,11 @@ class GameScene: SKScene {
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnAlien),
                 SKAction.waitForDuration(7)])))
+        
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
+                SKAction.waitForDuration(45)])))
+
         
         
         //simulate SKSpriteNode for collision purposes
@@ -148,7 +163,10 @@ class GameScene: SKScene {
     }
     
     override func didEvaluateActions() {
-        
+        if self.didLose == true{
+            self.scene?.paused = true
+            self.menuDelegate?.playerDidLose()
+        }
         checkCollisions()
     }
     
@@ -258,7 +276,7 @@ class GameScene: SKScene {
         fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
     
-    //MARK: SPAWN ALIENS
+    //MARK: SPAWN ALIENS =======================================================================
     
     func spawnAlien() {
         let alien = SKSpriteNode(imageNamed: "alienspaceship")
@@ -285,6 +303,29 @@ class GameScene: SKScene {
         let actionRemove = SKAction.removeFromParent()
         alien.runAction(SKAction.sequence([actionMoveYDown, actionMoveX, actionMoveYUp, actionRemove]))}
     
+    
+    //MARK: BLACK HOLE =========================================================================
+    
+    func spawnBlackHole() {
+        let blackHole = SKSpriteNode(imageNamed: "blackhole")
+        blackHole.name = "blackhole"
+        //logic to detect where blackhole should land based on it massive size and powerful feature
+        blackHole.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.width,
+                max: CGRectGetMaxX(playableRect) - blackHole.frame.width),
+            y: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.height,
+                max: (CGRectGetMaxX(playableRect) - (5 * blackHole.frame.height))))
+        blackHole.setScale(0)
+        blackHole.zPosition = 2
+        addChild(blackHole)
+        let angle : CGFloat = -CGFloat(M_PI)
+        let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
+        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+        let appear = SKAction.scaleTo(4, duration: 15.0)
+        let inplode = SKAction.scaleTo(0, duration: 15.0)
+        let actions = [appear, inplode]
+        blackHole.runAction(repeatSpin)
+        blackHole.runAction((SKAction.sequence(actions)))}
     
     
     //MARK: COLLISIONS ==========================================================================
@@ -334,6 +375,10 @@ class GameScene: SKScene {
         for incomingObject in hitObstacle {
             dudeHitObject(incomingObject)
         }
+        
+    }
+    
+    func destroyedByBlackHole() {
         
     }
     
@@ -480,6 +525,11 @@ class GameScene: SKScene {
             }
         })
     }
-
+    //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
+    func playRockCollisionSound(){
+    }
     
+    func playAlienCollisionSound(){
+        SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+    }
 }
