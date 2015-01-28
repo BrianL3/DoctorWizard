@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+protocol MainMenuDelegate {
+    func playerDidLose()
+}
+
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
@@ -24,10 +28,22 @@ class GameScene: SKScene {
     var invincible = false
     var backgroundLayer = SKNode()
     var starLayer = SKNode()
+    // song-related variables
+    var songDuration : NSTimeInterval!
+    var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
+    var gameStartTime : NSTimeInterval = 0
+    var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background_test"
     var starsImageName = "stars_test"
+    // lose conditions
+    var didLose = false
+    //delegate
+    var menuDelegate : MainMenuDelegate?
+    
+    var altitude: CGFloat = 0
+    
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -54,6 +70,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
+
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -75,6 +92,11 @@ class GameScene: SKScene {
             SKAction.sequence([SKAction.runBlock(spawnAlien),
                 SKAction.waitForDuration(7)])))
         
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
+                SKAction.waitForDuration(45)])))
+
+        
         
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
@@ -86,6 +108,9 @@ class GameScene: SKScene {
     
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
+        if gameStartTime == 0 {
+            gameStartTime = currentTime
+        }
         
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -108,13 +133,29 @@ class GameScene: SKScene {
             }
         }
         
+        self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        
+        
+        
+        if timePassed % 0.5 == 0 {
+            if self.backgroundVerticalDirection < 0 {
+                self.altitude += 1
+            } else if self.backgroundVerticalDirection > 0 {
+                self.altitude -= 1
+            }
+        }
+        
+        println(self.altitude)
         boundsCheckDude()
         moveBackground()
         moveStars()
     }
     
     override func didEvaluateActions() {
-        
+        if self.didLose == true{
+            self.scene?.paused = true
+            self.menuDelegate?.playerDidLose()
+        }
         checkCollisions()
     }
     
@@ -125,7 +166,7 @@ class GameScene: SKScene {
         
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-        println("Amount to move: \(amountToMove)")
+//        println("Amount to move: \(amountToMove)")
         
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
@@ -144,6 +185,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+//        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -222,7 +264,7 @@ class GameScene: SKScene {
         fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
     
-    //MARK: SPAWN ALIENS
+    //MARK: SPAWN ALIENS =======================================================================
     
     func spawnAlien() {
         let alien = SKSpriteNode(imageNamed: "alienspaceship")
@@ -249,6 +291,29 @@ class GameScene: SKScene {
         let actionRemove = SKAction.removeFromParent()
         alien.runAction(SKAction.sequence([actionMoveYDown, actionMoveX, actionMoveYUp, actionRemove]))}
     
+    
+    //MARK: BLACK HOLE =========================================================================
+    
+    func spawnBlackHole() {
+        let blackHole = SKSpriteNode(imageNamed: "blackhole")
+        blackHole.name = "blackhole"
+        //logic to detect where blackhole should land based on it massive size and powerful feature
+        blackHole.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.width,
+                max: CGRectGetMaxX(playableRect) - blackHole.frame.width),
+            y: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.height,
+                max: (CGRectGetMaxX(playableRect) - (5 * blackHole.frame.height))))
+        blackHole.setScale(0)
+        blackHole.zPosition = 2
+        addChild(blackHole)
+        let angle : CGFloat = -CGFloat(M_PI)
+        let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
+        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+        let appear = SKAction.scaleTo(4, duration: 15.0)
+        let inplode = SKAction.scaleTo(0, duration: 15.0)
+        let actions = [appear, inplode]
+        blackHole.runAction(repeatSpin)
+        blackHole.runAction((SKAction.sequence(actions)))}
     
     
     //MARK: COLLISIONS ==========================================================================
@@ -298,6 +363,10 @@ class GameScene: SKScene {
         for incomingObject in hitObstacle {
             dudeHitObject(incomingObject)
         }
+        
+    }
+    
+    func destroyedByBlackHole() {
         
     }
     
@@ -444,6 +513,11 @@ class GameScene: SKScene {
             }
         })
     }
-
+    //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
+    func playRockCollisionSound(){
+    }
     
+    func playAlienCollisionSound(){
+        SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+    }
 }
