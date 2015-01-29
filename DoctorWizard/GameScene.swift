@@ -17,7 +17,7 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -98,7 +98,10 @@ class GameScene: SKScene {
         dude.zPosition = 0
         
         //add background layers to to mainview
-        addMovingBackground()
+        addMovingBackground(self.backgroundImageName)
+        self.addChild(backgroundLayer)
+        self.addChild(starLayer)
+       
         
     }
     
@@ -154,25 +157,52 @@ class GameScene: SKScene {
             
         case .Second:
             if !fireBallOn {
+                if self.backgroundImageName == "background0" {
+                    println("switch to background 2")
+                    
+                    self.backgroundImageName = "background1"
+                    addMovingBackground(self.backgroundImageName)
+                }
+                
                 actionToSpawnFireBalls()
                 println("Second scene on now")
             }
 
         case .Third:
             if !alienOn {
+                if self.backgroundImageName == "background1" {
+                    self.backgroundImageName = "background2"
+                    addMovingBackground(self.backgroundImageName)
+                }
+                
                 actionToSpawnAlien()
                 println("Third scene on now")
             }
             
         case .Fourth:
             if !blackHoleOn {
+                if self.backgroundImageName == "background2" {
+                    self.backgroundImageName = "background3"
+                    addMovingBackground(self.backgroundImageName)
+                }
+                
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
+            if self.backgroundImageName == "background3" {
+                self.backgroundImageName = "background4"
+                addMovingBackground(self.backgroundImageName)
+            }
+            
             println("Fifth scene on now")
             
         default:
+            if self.backgroundImageName == "background4" {
+                self.backgroundImageName = "background0"
+                addMovingBackground(self.backgroundImageName)
+            }
+            
             println("DefaultLevel")
         }
         
@@ -229,6 +259,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+//        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -461,18 +492,17 @@ class GameScene: SKScene {
         }
     }
     
-    func addMovingBackground(){
+    func addMovingBackground(backgroundName:String ){
+        self.backgroundLayer.removeAllChildren()
         self.backgroundLayer.zPosition = -2
         self.starLayer.zPosition = -1
-        self.addChild(backgroundLayer)
-        self.addChild(starLayer)
         for i in 0...1 {
-            let bottomBackground = backgroundNode()
+            let bottomBackground = backgroundNode(backgroundName)
             bottomBackground.position = CGPoint(
                 x: CGFloat(i) * bottomBackground.size.width,
                 y: 0)
             bottomBackground.name = "background"
-            let topBackground = backgroundNode()
+            let topBackground = backgroundNode(backgroundName)
             topBackground.position = CGPoint(
                 x: CGFloat(i) * bottomBackground.size.width,
                 y: bottomBackground.size.height)
@@ -499,26 +529,26 @@ class GameScene: SKScene {
         }
     }
     
-    func backgroundNode() -> SKSpriteNode {
+    func backgroundNode(backgroundName: String) -> SKSpriteNode {
         let backgroundNode = SKSpriteNode()
         backgroundNode.anchorPoint = CGPointZero
         
-        var background1 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background1 = SKSpriteNode(imageNamed: backgroundName)
         background1.anchorPoint = CGPointZero
         background1.position = CGPointZero
         backgroundNode.addChild(background1)
         
-        var background2 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background2 = SKSpriteNode(imageNamed: backgroundName)
         background2.anchorPoint = CGPointZero
         background2.position = CGPoint(x: background1.size.width, y: 0)
         backgroundNode.addChild(background2)
         
-        var background3 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background3 = SKSpriteNode(imageNamed: backgroundName)
         background3.anchorPoint = CGPointZero
         background3.position = CGPoint(x: 0, y: background3.size.height)
         backgroundNode.addChild(background3)
         
-        var background4 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background4 = SKSpriteNode(imageNamed: backgroundName)
         background4.anchorPoint = CGPointZero
         background4.position = CGPoint(x: background4.size.width, y: background4.size.height)
         backgroundNode.addChild(background4)
