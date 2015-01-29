@@ -62,6 +62,8 @@ class GameScene: SKScene {
     var blackHoleOn : Bool = false
     var dragonOn : Bool = false
     
+    var sequenceDragonActions : [SKAction] = []
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -118,7 +120,7 @@ class GameScene: SKScene {
                     self.backgroundVerticalDirection = CGFloat(verticleData * 50.0)
                     self.backgroundHorizontalDirection = CGFloat(horizontalData * 50.0)
                     
-                  //  println("we got acceleromiter data : \(verticleData)")
+                    //println("we got acceleromiter data : \(verticleData)")
                 }
             })
         }
@@ -172,11 +174,6 @@ class GameScene: SKScene {
         {
             
         case .First:
-//            if !dragonOn {
-//                actionToSpawnDragon()
-//                println("First scene on now")
-//            }
-            
             if !rocksOn {
                 actionToSpawnRocks()
                 println("First scene on now")
@@ -440,6 +437,30 @@ class GameScene: SKScene {
     //MARK: DRAGON ==============================================================================
     
     func spawnDragon() {
+
+        for index in 1...60 {
+        //random variable for dragon movement
+        var randomXChooser = CGFloat(Int.random(0...Int(size.width)))
+        println(randomXChooser)
+        println(size.width)
+        var randomYChooser = CGFloat(Int.random(0...Int(size.height)))
+        
+        switch generateRandomDragonOrientation() {
+            
+        case 1...5:
+            var actionX = SKAction.moveToX(randomYChooser +  (dragon.frame.width / 2), duration: 0.3)
+            sequenceDragonActions.append(actionX)
+            
+        case 6...10:
+            
+            var actionY = SKAction.moveToY(randomYChooser -  (dragon.frame.height / 2), duration: 0.3)
+            sequenceDragonActions.append(actionY)
+            
+        default:
+            println("DefaultLevel")
+  
+            }
+        }
         dragon.name = "dragon"
         println("I made it to spawnDragon")
         dragon.position = CGPoint(
@@ -447,16 +468,36 @@ class GameScene: SKScene {
                 max: CGRectGetMaxX(playableRect) - dragon.frame.width),
             y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.height,
                 max: (CGRectGetMaxX(playableRect) - (5 * dragon.frame.height))))
-        println(dragon.position)
         dragon.setScale(0)
-        dragon.zPosition = -1
+        dragon.zPosition = 4
         addChild(dragon)
-        let appear = SKAction.scaleTo(1.3, duration: 5.0)
-        //let actionRemove = SKAction.removeFromParent()
-        //let actions = [appear, actionRemove]
-        let actions = [appear]
-        dragon.runAction((SKAction.sequence(actions)))
+        let appear = SKAction.scaleTo(1.3, duration: 1.0)
+        dragon.runAction(appear)
+        
+        let actionDragonAttack = SKAction.sequence(sequenceDragonActions)
+        
+        //dragon.runAction(SKAction.sequence(sequenceDragonActions))
+        
+        let actionRemove = SKAction.removeFromParent()
+        
+        let dragonKillEverything = [actionDragonAttack, actionRemove]
+        
+        dragon.runAction(SKAction.sequence(dragonKillEverything))
+        
+    // MAARK: END OF DRAGON SECTION ==============================================================
+
+    }
     
+    func generateRandomDragonOrientation() -> Int {
+        
+        return Int.random(1...10)
+        
+    }
+    
+    func runDragonActions(dragonActions : [SKAction]) {
+        for index in 0...19 {
+            dragon.runAction(dragonActions[index])
+        }
     }
     
     
@@ -845,7 +886,7 @@ class GameScene: SKScene {
         dragonOn = true
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnDragon),
-                SKAction.waitForDuration(30)])))
+                SKAction.waitForDuration(20)])))
         println("Dragon on scene on now")
     }
     
