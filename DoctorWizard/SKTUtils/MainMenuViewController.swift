@@ -26,16 +26,18 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     //MARK: VIEW DID LOAD & APPEAR =============================================================
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.launchGame()
         self.pauseGame()
+        
         //create pop up controller
         popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
         popUpVC.delegate = self
         
-        // frame  is 40% of screen
-        let width           = self.view.frame.width * 0.9
-        let height          = self.view.frame.height * 0.9
+        // create frame
+        let width           = self.view.frame.width * 0.95
+        let height          = self.view.frame.height * 0.95
         popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
         popUpVC.view.center = self.view.center
         
@@ -47,8 +49,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         //told child it has a parent
         popUpVC.didMoveToParentViewController(self)
         
-        //do animation
-        AnimationController.singleton.enterStageRight(popUpVC)
+        //AnimationController.singleton.slideOnViewController(popUpVC)
+        AnimationController.singleton.bounceInViewController(popUpVC)
 
     }
 
@@ -152,7 +154,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
         self.playSKMusic()
         self.scene?.paused = false
-       popUpVC.view.removeFromSuperview()
+        AnimationController.singleton.slideOffViewController(popUpVC)
+        //popUpVC.view.removeFromSuperview()
     }
     
     
@@ -179,9 +182,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
         popUpVC.delegate = self
         
-        // frame  is 40% of screen
-        let width           = self.view.frame.width * 0.9
-        let height          = self.view.frame.height * 0.9
+    //MARK: MAIN MENU
+        let width           = self.view.frame.width * 0.95
+        let height          = self.view.frame.height * 0.95
         popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
         popUpVC.view.center = self.view.center
         
@@ -194,7 +197,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.didMoveToParentViewController(self)
         
         //do animation
-        AnimationController.singleton.enterStageRight(popUpVC)
+        AnimationController.singleton.bounceInViewController(popUpVC)
 
     }
     

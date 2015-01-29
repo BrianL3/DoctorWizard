@@ -57,9 +57,11 @@ class GameScene: SKScene {
     var alienOn : Bool = false
     var blackHoleOn : Bool = false
     
-     var doctorWizardsAltitude : SKLabelNode?
-     var playTimeRemaining : SKLabelNode?
-    
+    //console display labels
+     var playTimeRemainingLabel : SKLabelNode?
+     var doctorWizardsAltitudeLabel : SKLabelNode?
+     var playTimeRemainingTicker: NSTimeInterval = 0
+     var playButtonPressed : Bool = false
     
     
     
@@ -102,24 +104,20 @@ class GameScene: SKScene {
         dude.name = "dude"
         addChild(dude)
         
+
+        playTimeRemainingLabel = SKLabelNode(fontNamed:"System")
+        playTimeRemainingLabel?.fontColor = SKColor.redColor()
+        playTimeRemainingLabel?.fontSize = 65;
+        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
+        playTimeRemainingLabel?.zPosition = 14
+        self.addChild(playTimeRemainingLabel!)
         
-        
-        playTimeRemaining = SKLabelNode(fontNamed:"System")
-        playTimeRemaining?.text = "TTP: \(0)"
-        playTimeRemaining?.fontColor = SKColor.redColor()
-        playTimeRemaining?.fontSize = 65;
-        //playTimeRemaining?.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
-        playTimeRemaining?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
-        playTimeRemaining?.zPosition = 14
-        self.addChild(playTimeRemaining!)
-        
-        doctorWizardsAltitude = SKLabelNode(fontNamed:"System")
-        //doctorWizardsAltitude?.text = "Altitude: \(0)"
-        doctorWizardsAltitude?.fontColor = SKColor.redColor()
-        doctorWizardsAltitude?.fontSize = 65;
-        doctorWizardsAltitude?.position = CGPoint(x:CGRectGetMinX(self.frame)+300,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsAltitude?.zPosition = 14
-        self.addChild(doctorWizardsAltitude!)
+        doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"System")
+        doctorWizardsAltitudeLabel?.fontColor = SKColor.redColor()
+        doctorWizardsAltitudeLabel?.fontSize = 65;
+        doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+300,y:CGRectGetMinY(self.frame)+1250)
+        doctorWizardsAltitudeLabel?.zPosition = 14
+        self.addChild(doctorWizardsAltitudeLabel!)
         
         
         runAction(SKAction.repeatActionForever(
@@ -190,23 +188,39 @@ class GameScene: SKScene {
         }
         
         
-        //Sections that determines which enemmies come to playing field based on Level of tune
+        
         //MARK: CONSOLE DISPLAY LABELS ======================================================================
 
         
-        doctorWizardsAltitude?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
+            doctorWizardsAltitudeLabel?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
         
-        if ( timePassed == songDuration ){
+        //I want to start playTimeRemainingTicker after play button was pressed not when game starts
+        //if ( playButtonPressed == true ){}
         
-            playTimeRemaining?.text = "TTP: \(0)"
-            self.didLose = true // and show the you loose label or image
+            playTimeRemainingTicker = songDuration - timePassed
          
-        }else{
+        
+        
+            if ( playTimeRemainingTicker > 0 ){
+        
+                
+                playTimeRemainingLabel?.text = "TTP: \(playTimeRemainingTicker)"
+         
+            }else{
             
-            playTimeRemaining?.text = "TTP: \( songDuration - timePassed )"
-        }
+
+                playTimeRemainingLabel?.text = "TTP: \(0)"
+                
+                self.didLose = true // and show the you loose label or image
+                
+                // will create "You Loose" Label or show Duncan Artwork
+                
+                
+            }
+      
         
         
+      //Sections that determines which enemmies come to playing field based on Level of tune
         
       switch currentLevelIs()
         {
