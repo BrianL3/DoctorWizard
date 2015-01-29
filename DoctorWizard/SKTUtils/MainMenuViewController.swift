@@ -16,7 +16,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     var song : MPMediaItem?
     var songDuration : NSTimeInterval = 100.0
-    var songGenre : String = "Alternative"
+    var songGenre : String = "DefaultDuncanSong"
     var scene : GameScene?
     var popUpVC = PopUpMenuController()
     
@@ -193,6 +193,13 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         //do animation
         AnimationController.singleton.enterStageRight(popUpVC)
-
+    }
+    
+    func restartWithSameSong(){
+        
+    }
+    
+    func restartWithDifferentSong(){
+        
     }
 }

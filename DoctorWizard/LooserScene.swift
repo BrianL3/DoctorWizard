@@ -9,8 +9,14 @@
 import SpriteKit
 
 class LooserScene: SKScene {
+    
+    var isDefaultSong = false
+    var currentSong : String?
+    var mainMenuDelegate : MainMenuDelegate?
+    
     let retryButton = SKSpriteNode(imageNamed: "Rock")
     var touchLocation :CGPoint = CGPointZero
+
     
     override func didMoveToView(view: SKView) {
         let background = SKSpriteNode(imageNamed: "youLost")
@@ -37,8 +43,7 @@ class LooserScene: SKScene {
             
 
             if CGRectIntersectsRect(button.frame, CGRect(origin: self.touchLocation, size: CGSize(width: 50, height: 50))) {
-                let game = GameScene(size: self.size)
-                self.view?.presentScene(game)
+                    self.mainMenuDelegate?.restartWithSameSong()
             }
             
         })
