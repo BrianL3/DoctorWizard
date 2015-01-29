@@ -180,7 +180,7 @@ class GameScene: SKScene {
             let lostGame = LooserScene(size: self.size)
             self.view?.presentScene(lostGame)
         } else {
-            println("healthPoints\(self.healthPoints)")
+           // println("healthPoints\(self.healthPoints)")
         }
         
         //println(self.altitude)
@@ -224,7 +224,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
+      //  println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -384,7 +384,7 @@ class GameScene: SKScene {
             
             let rockHit = node as SKSpriteNode
             
-            if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
+            if CGRectIntersectsRect(CGRectInset(rockHit.frame, 1, 1), self.dude.frame) {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
                 if self.invincible == false {
