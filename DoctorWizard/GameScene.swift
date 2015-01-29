@@ -186,7 +186,7 @@ class GameScene: SKScene {
         //MARK: CONSOLE DISPLAY LABELS ======================================================================
 
         
-            doctorWizardsAltitudeLabel?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
+            doctorWizardsAltitudeLabel?.text = "Altitude: \(altitude)"
         
         //I want to start playTimeRemainingTicker after play button was pressed not when game starts
         //if ( playButtonPressed == true ){}
@@ -212,12 +212,10 @@ class GameScene: SKScene {
                 
             }
       
-        
-        
+
       //Sections that determines which enemmies come to playing field based on Level of tune
         
-      switch currentLevelIs()
-        {
+        switch currentLevelIs(){
             
         case .First:
             if !rocksOn {
@@ -244,9 +242,10 @@ class GameScene: SKScene {
             }
         case .Fifth:
             println("Fifth scene on now")
-            
+           
         default:
             println("DefaultLevel")
+        
         }
         
         if self.healthPoints <= 0 {
@@ -761,7 +760,5 @@ class GameScene: SKScene {
                 SKAction.waitForDuration(45)])))
         println("BlackHole on scene on now")
     }
-    
-    
     
 }
