@@ -493,7 +493,12 @@ class GameScene: SKScene {
                 self.velocity = CGPoint(x:0, y:0)
                 if self.invincible == false {
                     self.healthPoints -= CGFloat.random(min: 50, max: 100)
-                    self.playRockCollisionSound()
+                    // SKAction that lowers volume and plays collision sound
+                    SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 0.5
+                    let action = SKAction.waitForDuration(1.0)
+                    self.dude.runAction(action, completion: { () -> Void in
+                        self.playRockCollisionSound()
+                    })
                 }
             }
         }
@@ -731,7 +736,6 @@ class GameScene: SKScene {
     }
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
     func playRockCollisionSound(){
-        SKTAudio.sharedInstance().pauseBackgroundMusic()
         let randomNum = CGFloat.random(min: 0, max: 4)
         switch randomNum{
         case 0..<1 :
@@ -746,8 +750,8 @@ class GameScene: SKScene {
         default:
             println("fucked something up")
         }
-    //    runAction(, completion: <#(() -> Void)!##() -> Void#>)
-        SKTAudio.sharedInstance().resumeBackgroundMusic()
+
+        SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 1.0
     }
     
     func playAlienCollisionSound(){
