@@ -58,6 +58,7 @@ class GameScene: SKScene {
     //console display labels
      var playTimeRemainingLabel : SKLabelNode?
      var doctorWizardsAltitudeLabel : SKLabelNode?
+     var doctorWizardsHealthLabel : SKLabelNode?
      var playTimeRemainingTicker: NSTimeInterval = 0
      var playButtonPressed : Bool = false
     
@@ -103,21 +104,30 @@ class GameScene: SKScene {
         addChild(dude)
         
 
-        playTimeRemainingLabel = SKLabelNode(fontNamed:"System")
+        playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
         playTimeRemainingLabel?.fontColor = SKColor.redColor()
-        playTimeRemainingLabel?.fontSize = 65;
-        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
+        playTimeRemainingLabel?.fontSize = 60;
+        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+250,y:CGRectGetMinY(self.frame)+1250)
         playTimeRemainingLabel?.zPosition = 14
         self.addChild(playTimeRemainingLabel!)
         
-        doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"System")
+        doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"Futura")
         doctorWizardsAltitudeLabel?.fontColor = SKColor.redColor()
-        doctorWizardsAltitudeLabel?.fontSize = 65;
-        doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+300,y:CGRectGetMinY(self.frame)+1250)
+        doctorWizardsAltitudeLabel?.fontSize = 60;
+        doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
         doctorWizardsAltitudeLabel?.zPosition = 14
         self.addChild(doctorWizardsAltitudeLabel!)
         
-        
+
+        doctorWizardsHealthLabel = SKLabelNode(fontNamed:"Futura")
+        doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
+        doctorWizardsHealthLabel?.fontSize = 60;
+        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1800,y:CGRectGetMinY(self.frame)+1250)
+        doctorWizardsHealthLabel?.zPosition = 14
+        self.addChild(doctorWizardsHealthLabel!)
+    
+
+
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
@@ -211,6 +221,9 @@ class GameScene: SKScene {
                 
                 
             }
+
+            
+             doctorWizardsHealthLabel?.text = "Health: \(healthPoints)"
       
 
       //Sections that determines which enemmies come to playing field based on Level of tune
