@@ -10,14 +10,15 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
-    func restartWithSameSong()
+    func restartWithSameSong(usingDefaultSong: Bool)
     func restartWithDifferentSong()
 }
 
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
+    let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -54,6 +55,7 @@ class GameScene: SKScene {
     var fireBallOn : Bool = false
     var alienOn : Bool = false
     var blackHoleOn : Bool = false
+    var dragonOn : Bool = false
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -93,12 +95,15 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
         addChild(dude)
-
+        
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
         
         //add background layers to to mainview
-        addMovingBackground()
+        addMovingBackground(self.backgroundImageName)
+        self.addChild(backgroundLayer)
+        self.addChild(starLayer)
+       
         
     }
     
@@ -147,6 +152,11 @@ class GameScene: SKScene {
         {
             
         case .First:
+//            if !dragonOn {
+//                actionToSpawnDragon()
+//                println("First scene on now")
+//            }
+            
             if !rocksOn {
                 actionToSpawnRocks()
                 println("First scene on now")
@@ -154,25 +164,57 @@ class GameScene: SKScene {
             
         case .Second:
             if !fireBallOn {
+                if self.backgroundImageName == "background0" {
+                    println("switch to background 2")
+                    
+                    self.backgroundImageName = "background1"
+                    addMovingBackground(self.backgroundImageName)
+                }
+                
                 actionToSpawnFireBalls()
                 println("Second scene on now")
             }
 
         case .Third:
             if !alienOn {
+                if self.backgroundImageName == "background1" {
+                    self.backgroundImageName = "background2"
+                    addMovingBackground(self.backgroundImageName)
+                }
+                
                 actionToSpawnAlien()
                 println("Third scene on now")
             }
             
         case .Fourth:
             if !blackHoleOn {
+                if self.backgroundImageName == "background2" {
+                    self.backgroundImageName = "background3"
+                    addMovingBackground(self.backgroundImageName)
+                }
+                
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
+            if self.backgroundImageName == "background3" {
+                self.backgroundImageName = "background4"
+                addMovingBackground(self.backgroundImageName)
+            }
+            if !dragonOn{
+                actionToSpawnDragon()
+                println("Fifth scene on now")
+            }
+            
             println("Fifth scene on now")
             
+            
         default:
+            if self.backgroundImageName == "background4" {
+                self.backgroundImageName = "background0"
+                addMovingBackground(self.backgroundImageName)
+            }
+            
             println("DefaultLevel")
         }
         
@@ -194,9 +236,8 @@ class GameScene: SKScene {
             lostGameScene.mainMenuDelegate = self.menuDelegate
             if self.songGenre == "DefaultDuncanSong"{
                 lostGameScene.isDefaultSong = true
-            }else{
- //               lostGameScene.currentSong
             }
+            
             self.view?.presentScene(lostGameScene)
 
         }
@@ -360,6 +401,28 @@ class GameScene: SKScene {
         blackHole.runAction(repeatSpin)
         blackHole.runAction((SKAction.sequence(actions)))}
     
+    //MARK: DRAGON ==============================================================================
+    
+    func spawnDragon() {
+        dragon.name = "dragon"
+        println("I made it to spawnDragon")
+        dragon.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.width,
+                max: CGRectGetMaxX(playableRect) - dragon.frame.width),
+            y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.height,
+                max: (CGRectGetMaxX(playableRect) - (5 * dragon.frame.height))))
+        println(dragon.position)
+        dragon.setScale(0)
+        dragon.zPosition = -1
+        addChild(dragon)
+        let appear = SKAction.scaleTo(1.3, duration: 5.0)
+        //let actionRemove = SKAction.removeFromParent()
+        //let actions = [appear, actionRemove]
+        let actions = [appear]
+        dragon.runAction((SKAction.sequence(actions)))
+    
+    }
+    
     
     //MARK: COLLISIONS ==========================================================================
     
@@ -463,18 +526,17 @@ class GameScene: SKScene {
         }
     }
     
-    func addMovingBackground(){
+    func addMovingBackground(backgroundName:String ){
+        self.backgroundLayer.removeAllChildren()
         self.backgroundLayer.zPosition = -2
         self.starLayer.zPosition = -1
-        self.addChild(backgroundLayer)
-        self.addChild(starLayer)
         for i in 0...1 {
-            let bottomBackground = backgroundNode()
+            let bottomBackground = backgroundNode(backgroundName)
             bottomBackground.position = CGPoint(
                 x: CGFloat(i) * bottomBackground.size.width,
                 y: 0)
             bottomBackground.name = "background"
-            let topBackground = backgroundNode()
+            let topBackground = backgroundNode(backgroundName)
             topBackground.position = CGPoint(
                 x: CGFloat(i) * bottomBackground.size.width,
                 y: bottomBackground.size.height)
@@ -501,26 +563,26 @@ class GameScene: SKScene {
         }
     }
     
-    func backgroundNode() -> SKSpriteNode {
+    func backgroundNode(backgroundName: String) -> SKSpriteNode {
         let backgroundNode = SKSpriteNode()
         backgroundNode.anchorPoint = CGPointZero
         
-        var background1 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background1 = SKSpriteNode(imageNamed: backgroundName)
         background1.anchorPoint = CGPointZero
         background1.position = CGPointZero
         backgroundNode.addChild(background1)
         
-        var background2 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background2 = SKSpriteNode(imageNamed: backgroundName)
         background2.anchorPoint = CGPointZero
         background2.position = CGPoint(x: background1.size.width, y: 0)
         backgroundNode.addChild(background2)
         
-        var background3 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background3 = SKSpriteNode(imageNamed: backgroundName)
         background3.anchorPoint = CGPointZero
         background3.position = CGPoint(x: 0, y: background3.size.height)
         backgroundNode.addChild(background3)
         
-        var background4 = SKSpriteNode(imageNamed: self.backgroundImageName)
+        var background4 = SKSpriteNode(imageNamed: backgroundName)
         background4.anchorPoint = CGPointZero
         background4.position = CGPoint(x: background4.size.width, y: background4.size.height)
         backgroundNode.addChild(background4)
@@ -682,6 +744,14 @@ class GameScene: SKScene {
             SKAction.sequence([SKAction.runBlock(spawnBlackHole),
                 SKAction.waitForDuration(45)])))
         println("BlackHole on scene on now")
+    }
+    
+    func actionToSpawnDragon() {
+        dragonOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnDragon),
+                SKAction.waitForDuration(30)])))
+        println("Dragon on scene on now")
     }
     
     
