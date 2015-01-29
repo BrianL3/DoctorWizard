@@ -513,7 +513,6 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
                 rockHit.removeFromParent()
-                
             }
             
         }
@@ -524,7 +523,6 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(fireballHit.frame, self.blackHole.frame) {
                 fireballHit.removeFromParent()
-                
             }
         }
         
@@ -533,55 +531,19 @@ class GameScene: SKScene {
             let dudeHit = node as SKSpriteNode
             
             if CGRectIntersectsRect(dudeHit.frame, self.blackHole.frame) {
-                
-//                let fireBall = SKSpriteNode(imageNamed: "fireball")
-//                let oldPosition = fireBall.position
-//                let upPosition = oldPosition + CGPoint(x: 0, y: 80)
-//                let upEffect = SKTMoveEffect(node: fireBall, duration: 0.9, startPosition: oldPosition, endPosition: upPosition)
-//                upEffect.timingFunction = { t in pow(1, -1 * t) * (sin(t * π * 3))}
-//                let upAction = SKAction.actionWithEffect(upEffect)
-//                let upActionRepeat = SKAction.repeatActionForever(upAction)
-//                fireBall.name = "fireball"
-//                fireBall.position = CGPoint(x: size.width - fireBall.size.width/2, y: CGFloat.random(min: CGRectGetMinY(playableRect), max: CGRectGetMaxY(playableRect)))
-//                fireBall.setScale(1)
-//                fireBall.zPosition = 0
-//                addChild(fireBall)
-//                let appear = SKAction.scaleTo(3, duration: 4.0)
-//                let actions = [appear]
-//                fireBall.runAction(SKAction.sequence(actions))
-//                let actionMove =
-//                SKAction.moveToX(-fireBall.size.height/2, duration: 1.0)
-//                let actionRemove = SKAction.removeFromParent()
-//                fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
-
-                
-                
-//                func moveDudeToward(location: CGPoint) {
-//                    
-//                    let offset = location - dude.position
-//                    let direction = offset.normalized()
-//                    
-//                    velocity = direction * dudeMovePointsPerSec
-//                }
-                
-               
-//                let angle : CGFloat = -CGFloat(M_PI)
-//                let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
-//                let repeatSpin = SKAction.repeatActionForever(oneSpin)
-//                let appear = SKAction.scaleTo(4, duration: 15.0)
-//                let inplode = SKAction.scaleTo(0, duration: 15.0)
-//                let actionRemove = SKAction.removeFromParent()
-//                let actions = [appear, inplode, actionRemove]
-//                blackHole.runAction(repeatSpin)
-//                blackHole.runAction((SKAction.sequence(actions)))}
-                
-                self.moveDudeToward(self.blackHole.position)
-                
-
-                dudeHit.removeFromParent()
-                if self.invincible == false {
-                    self.healthPoints = 0
-                }
+     
+                let angle : CGFloat = -CGFloat(M_PI)
+                let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+                let repeatSpin = SKAction.repeatActionForever(oneSpin)
+                let implode = SKAction.scaleTo(0, duration: 2.0)
+                let actionRemove = SKAction.removeFromParent()
+                let actions = [implode, actionRemove]
+                dudeHit.runAction(repeatSpin)
+                dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
+                    if self.invincible == false {
+                        self.healthPoints = 0
+                    }
+                })
             }
         }
         
@@ -594,6 +556,17 @@ class GameScene: SKScene {
                 
             }
         }
+    }
+    /* in progress */
+    func actionSpiralIntoBlackHole (passedInNode: SKSpriteNode ) {
+        let angle : CGFloat = -CGFloat(M_PI)
+        let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+        let implode = SKAction.scaleTo(0, duration: 2.0)
+        let actionRemove = SKAction.removeFromParent()
+        let actions = [implode, actionRemove]
+        passedInNode.runAction(repeatSpin)
+        passedInNode.runAction(SKAction.sequence(actions))
     }
     
     func addMovingBackground(backgroundName:String ){
