@@ -358,8 +358,9 @@ class GameScene: SKScene {
         let appear = SKAction.scaleTo(3, duration: 4.0)
         let actions = [appear]
         rock.runAction(SKAction.sequence(actions))
-        let actionMove =
-        SKAction.moveToY(-100, duration: 4.0)
+//        let actionMove = SKAction.moveToY(-100, duration: 4.0)
+        let moveToPoint = CGPoint(x: rock.position.x, y: -300)
+        let actionMove = SKAction.moveTo(backgroundLayer.convertPoint(moveToPoint, fromNode: self), duration: 4.0)
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
@@ -368,21 +369,25 @@ class GameScene: SKScene {
     func spawnFireball() {
         let fireBall = SKSpriteNode(imageNamed: "fireball")
         let oldPosition = fireBall.position
-        let upPosition = oldPosition + CGPoint(x: 0, y: 80)
+        let upPosition = oldPosition + CGPoint(x: 0, y: 20)
         let upEffect = SKTMoveEffect(node: fireBall, duration: 0.9, startPosition: oldPosition, endPosition: upPosition)
         upEffect.timingFunction = { t in pow(1, -1 * t) * (sin(t * π * 3))}
         let upAction = SKAction.actionWithEffect(upEffect)
         let upActionRepeat = SKAction.repeatActionForever(upAction)
+        
+        
+        
         fireBall.name = "fireball"
-        fireBall.position = CGPoint(x: size.width - fireBall.size.width/2, y: CGFloat.random(min: CGRectGetMinY(playableRect), max: CGRectGetMaxY(playableRect)))
+        let screenPosition = CGPoint(x: size.width + 100, y: CGFloat.random(min: 0, max: size.height))
+        fireBall.position = backgroundLayer.convertPoint(screenPosition, fromNode: self)
         fireBall.setScale(1)
         fireBall.zPosition = 0
-        addChild(fireBall)
+        self.backgroundLayer.addChild(fireBall)
         let appear = SKAction.scaleTo(3, duration: 4.0)
         let actions = [appear]
         fireBall.runAction(SKAction.sequence(actions))
         let actionMove =
-        SKAction.moveToX(-fireBall.size.height/2, duration: 1.0)
+        SKAction.moveToX(-fireBall.size.height/2, duration: 2.0)
         let actionRemove = SKAction.removeFromParent()
         fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
     }
