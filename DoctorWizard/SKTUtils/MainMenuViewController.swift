@@ -9,10 +9,10 @@
 import UIKit
 import MediaPlayer
 import SpriteKit
+import GameKit
 
 
-
-class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate {
+class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate, GKGameCenterControllerDelegate {
     
     var song : MPMediaItem?
     var songDuration : NSTimeInterval = 100.0
@@ -22,6 +22,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     var didPickMusic = false
 
+//    var leaderboardIdentifier: String?
+//    var gameCenterEnabled: Bool?
+//
     
     //MARK: VIEW DID LOAD & APPEAR =============================================================
     
@@ -50,14 +53,21 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         //do animation
         AnimationController.singleton.enterStageRight(popUpVC)
 
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        
-        super.viewDidAppear(animated)
-        
+        //display game center
+        GameCenterController.singleton.authenticateLocalPlayer(self)
     }
     
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    
+    //MARK: Game Center Protocol Conformation
+    
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
     
 // MARK: Game Funcs
     func launchGame(){
