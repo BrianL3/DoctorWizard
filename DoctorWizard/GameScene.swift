@@ -524,7 +524,6 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
                 rockHit.removeFromParent()
-                
             }
             
         }
@@ -535,7 +534,6 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(fireballHit.frame, self.blackHole.frame) {
                 fireballHit.removeFromParent()
-                
             }
         }
         
@@ -544,10 +542,19 @@ class GameScene: SKScene {
             let dudeHit = node as SKSpriteNode
             
             if CGRectIntersectsRect(dudeHit.frame, self.blackHole.frame) {
-                dudeHit.removeFromParent()
-                if self.invincible == false {
-                    self.healthPoints = 0
-                }
+     
+                let angle : CGFloat = -CGFloat(M_PI)
+                let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+                let repeatSpin = SKAction.repeatActionForever(oneSpin)
+                let implode = SKAction.scaleTo(0, duration: 2.0)
+                let actionRemove = SKAction.removeFromParent()
+                let actions = [implode, actionRemove]
+                dudeHit.runAction(repeatSpin)
+                dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
+                    if self.invincible == false {
+                        self.healthPoints = 0
+                    }
+                })
             }
         }
         
@@ -560,6 +567,17 @@ class GameScene: SKScene {
                 
             }
         }
+    }
+    /* in progress */
+    func actionSpiralIntoBlackHole (passedInNode: SKSpriteNode ) {
+        let angle : CGFloat = -CGFloat(M_PI)
+        let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+        let implode = SKAction.scaleTo(0, duration: 2.0)
+        let actionRemove = SKAction.removeFromParent()
+        let actions = [implode, actionRemove]
+        passedInNode.runAction(repeatSpin)
+        passedInNode.runAction(SKAction.sequence(actions))
     }
     
     func addMovingBackground(backgroundName:String ){
