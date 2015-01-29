@@ -49,9 +49,10 @@ class GameScene: SKScene {
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
-    var healthPoints :CGFloat = 742
+    var healthPoints :CGFloat = 74200
 
     var didLose = false
+    var didWin = false
     var menuDelegate: MainMenuDelegate?
     
     //booleans to determine if enemies are on the field of play
@@ -718,11 +719,16 @@ class GameScene: SKScene {
     
     func currentLevelIs() -> Level {
         let songTimeAsFloat = self.songDuration as Double
-        let timePassedAsFloat = self.timePassed as Double
+        var timePassedAsFloat : Double
+        if (self.timePassed as Double) < songTimeAsFloat{
+            timePassedAsFloat = self.timePassed as Double
+        }else{
+            timePassedAsFloat = songTimeAsFloat
+        }
         let twentyPercent = songTimeAsFloat/5
-        let fortyPercent = (songTimeAsFloat/2) * 2
-        let sixtyPercent = (songTimeAsFloat/2) * 3
-        let eightyPercent = (songTimeAsFloat/2) * 5
+        let fortyPercent = (songTimeAsFloat/5) * 2
+        let sixtyPercent = (songTimeAsFloat/5) * 3
+        let eightyPercent = (songTimeAsFloat/5) * 4
         
         switch timePassedAsFloat {
             //first 20% of the song
@@ -738,6 +744,8 @@ class GameScene: SKScene {
             self.curLevel = .Fifth
         default:
             self.curLevel = .First
+            self.didWin = true
+            println("you win:")
         }
         return self.curLevel
     }
