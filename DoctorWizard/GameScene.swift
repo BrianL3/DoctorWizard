@@ -728,6 +728,7 @@ class GameScene: SKScene {
         default:
             println("fucked something up")
         }
+    //    runAction(, completion: <#(() -> Void)!##() -> Void#>)
         SKTAudio.sharedInstance().resumeBackgroundMusic()
     }
     
