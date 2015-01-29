@@ -7,6 +7,8 @@
 //
 
 import SpriteKit
+import CoreMotion
+
 
 protocol MainMenuDelegate {
     func playerDidLose()
@@ -36,18 +38,21 @@ class GameScene: SKScene {
     var songDuration : NSTimeInterval!
     var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
-    var backgroundVerticalDirection: CGFloat = 6.0
+    var backgroundVerticalDirection: CGFloat = 1.0
+    var backgroundHorizontalDirection: CGFloat = 1.0
     var gameStartTime : NSTimeInterval = 0
     var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
+    let motionManager = CMMotionManager()
     
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
-    var healthPoints :CGFloat = 742
+    var healthPoints :CGFloat = 74200
 
     var didLose = false
+    var didWin = false
     var menuDelegate: MainMenuDelegate?
     
     //booleans to determine if enemies are on the field of play
@@ -103,6 +108,20 @@ class GameScene: SKScene {
         addMovingBackground(self.backgroundImageName)
         self.addChild(backgroundLayer)
         self.addChild(starLayer)
+        
+        if motionManager.accelerometerAvailable {
+            self.motionManager.accelerometerUpdateInterval = 0.01
+            self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
+                if error == nil {
+                    let verticleData = data.acceleration.x
+                    let horizontalData = data.acceleration.y
+                    self.backgroundVerticalDirection = CGFloat(verticleData * 50.0)
+                    self.backgroundHorizontalDirection = CGFloat(horizontalData * 50.0)
+                    
+                    println("we got acceleromiter data : \(verticleData)")
+                }
+            })
+        }
        
         
     }
@@ -144,6 +163,7 @@ class GameScene: SKScene {
                 self.altitude -= 1
             }
         }
+        
         
         
         //Sections that determines which enemmies come to playing field based on Level of tune
@@ -289,7 +309,7 @@ class GameScene: SKScene {
         // set the background verticle scrolling direction
         let previousY = touch.previousLocationInView(self.view).y
         let currentY = touch.locationInView(self.view).y
-        self.backgroundVerticalDirection = currentY - previousY
+//        self.backgroundVerticalDirection = currentY - previousY
     }
     
     
@@ -678,7 +698,7 @@ class GameScene: SKScene {
     
     func moveBackground(){
         let backgroundVelocity = CGPoint(
-            x: -self.backgroundLayerMovePointsPerSec,
+            x: self.backgroundHorizontalDirection * 60,
             y: self.backgroundVerticalDirection *  60)
         let ammountToMove = backgroundVelocity * CGFloat(dt)
         self.backgroundLayer.position += ammountToMove
@@ -688,6 +708,9 @@ class GameScene: SKScene {
             let backgroundScreenPos = self.backgroundLayer.convertPoint(background.position, toNode: self)
             if backgroundScreenPos.x <= -background.size.width {
                 background.position.x = background.position.x + background.size.width*2
+            }
+            if backgroundScreenPos.x >= background.size.width {
+                background.position.x = background.position.x - background.size.width*2
             }
             if backgroundScreenPos.y <= -background.size.height {
                 background.position.y = background.position.y + background.size.height*2
@@ -700,7 +723,7 @@ class GameScene: SKScene {
     
     func moveStars(){
         let backgroundVelocity = CGPoint(
-            x: -self.backgroundLayerMovePointsPerSec,
+            x: self.backgroundHorizontalDirection * 100,
             y: self.backgroundVerticalDirection *  100)
         let ammountToMove = backgroundVelocity * CGFloat(dt)
         self.starLayer.position += ammountToMove
@@ -710,6 +733,9 @@ class GameScene: SKScene {
             let backgroundScreenPos = self.starLayer.convertPoint(background.position, toNode: self)
             if backgroundScreenPos.x <= -background.size.width {
                 background.position.x = background.position.x + background.size.width*2
+            }
+            if backgroundScreenPos.x >= background.size.width {
+                background.position.x = background.position.x - background.size.width*2
             }
             if backgroundScreenPos.y <= -background.size.height {
                 background.position.y = background.position.y + background.size.height*2
@@ -739,11 +765,16 @@ class GameScene: SKScene {
     
     func currentLevelIs() -> Level {
         let songTimeAsFloat = self.songDuration as Double
-        let timePassedAsFloat = self.timePassed as Double
+        var timePassedAsFloat : Double
+        if (self.timePassed as Double) < songTimeAsFloat{
+            timePassedAsFloat = self.timePassed as Double
+        }else{
+            timePassedAsFloat = songTimeAsFloat
+        }
         let twentyPercent = songTimeAsFloat/5
-        let fortyPercent = (songTimeAsFloat/2) * 2
-        let sixtyPercent = (songTimeAsFloat/2) * 3
-        let eightyPercent = (songTimeAsFloat/2) * 5
+        let fortyPercent = (songTimeAsFloat/5) * 2
+        let sixtyPercent = (songTimeAsFloat/5) * 3
+        let eightyPercent = (songTimeAsFloat/5) * 4
         
         switch timePassedAsFloat {
             //first 20% of the song
@@ -759,6 +790,8 @@ class GameScene: SKScene {
             self.curLevel = .Fifth
         default:
             self.curLevel = .First
+            self.didWin = true
+            println("you win:")
         }
         return self.curLevel
     }
@@ -804,6 +837,12 @@ class GameScene: SKScene {
                 SKAction.waitForDuration(30)])))
         println("Dragon on scene on now")
     }
+    
+    //MARK: start acceleromiter updates
+    
+
+
+
     
     
 
