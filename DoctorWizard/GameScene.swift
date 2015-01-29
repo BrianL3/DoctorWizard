@@ -388,8 +388,8 @@ class GameScene: SKScene {
         enumerateChildNodesWithName("rock") { node, _ in
             
             let rockHit = node as SKSpriteNode
-            
-            if CGRectIntersectsRect(CGRectInset(rockHit.frame, 1, 1), self.dude.frame) {
+
+            if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
                 if self.invincible == false {
