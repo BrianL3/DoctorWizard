@@ -10,6 +10,7 @@
 		483339D21A76C3AF00344DC8 /* dude.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D11A76C3AF00344DC8 /* dude.png */; };
 		483339D61A76D32000344DC8 /* Rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D51A76D32000344DC8 /* Rock.png */; };
 		487D5DE71A78221300359556 /* Spike.png in Resources */ = {isa = PBXBuildFile; fileRef = 487D5DE61A78221300359556 /* Spike.png */; };
+		4887AEE81A7ABEF7004FA530 /* dragon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4887AEE71A7ABEF7004FA530 /* dragon2.png */; };
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
 		55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55228CDE1A798F1100E573D1 /* WinnerScene.swift */; };
@@ -71,6 +72,7 @@
 		483339D11A76C3AF00344DC8 /* dude.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dude.png; sourceTree = "<group>"; };
 		483339D51A76D32000344DC8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
 		487D5DE61A78221300359556 /* Spike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spike.png; sourceTree = "<group>"; };
+		4887AEE71A7ABEF7004FA530 /* dragon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragon2.png; sourceTree = "<group>"; };
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
 		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			children = (
 				483339D11A76C3AF00344DC8 /* dude.png */,
 				48D415581A787019005CE91C /* alienspaceship.png */,
+				4887AEE71A7ABEF7004FA530 /* dragon2.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
 				487D5DE61A78221300359556 /* Spike.png */,
 				483339D51A76D32000344DC8 /* Rock.png */,
@@ -365,6 +368,7 @@
 				FA4116E31A78463700FCC212 /* chaos.wav in Resources */,
 				C4D707DB1A76BEFB00A990A1 /* LaunchScreen.xib in Resources */,
 				FA4116DE1A78463700FCC212 /* blop_four.wav in Resources */,
+				4887AEE81A7ABEF7004FA530 /* dragon2.png in Resources */,
 				483339D21A76C3AF00344DC8 /* dude.png in Resources */,
 				48D415591A787019005CE91C /* alienspaceship.png in Resources */,
 				C4D707D81A76BEFB00A990A1 /* Images.xcassets in Resources */,
