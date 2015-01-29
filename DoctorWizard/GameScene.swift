@@ -10,6 +10,8 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
+    func restartWithSameSong()
+    func restartWithDifferentSong()
 }
 
 class GameScene: SKScene {
@@ -192,7 +194,15 @@ class GameScene: SKScene {
     override func didEvaluateActions() {
         if self.didLose == true{
             self.scene?.paused = true
-            self.menuDelegate?.playerDidLose()
+            let lostGameScene = LooserScene(size: self.size)
+            lostGameScene.mainMenuDelegate = self.menuDelegate
+            if self.songGenre == "DefaultDuncanSong"{
+                lostGameScene.isDefaultSong = true
+            }else{
+ //               lostGameScene.currentSong
+            }
+            self.view?.presentScene(lostGameScene)
+
         }
         checkCollisions()
         destroyedByBlackHole()
@@ -238,7 +248,6 @@ class GameScene: SKScene {
         
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
-        sceneTouched(touchLocation)
         
         // set the background verticle scrolling direction
         let previousY = touch.previousLocationInView(self.view).y
@@ -456,8 +465,6 @@ class GameScene: SKScene {
                 
             }
         }
-
-
     }
     
     func addMovingBackground(){
