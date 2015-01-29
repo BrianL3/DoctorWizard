@@ -14,7 +14,6 @@ import SpriteKit
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate {
     
-    var song : MPMediaItem?
     var songDuration : NSTimeInterval = 100.0
     var songGenre : String = "DefaultDuncanSong"
     var scene : GameScene?
@@ -98,7 +97,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
         
-        self.song = musicPlayer.nowPlayingItem
+        let song = musicPlayer.nowPlayingItem
         
         completionHandler(genre: song?.genre, duration: song?.playbackDuration)
     }
@@ -127,8 +126,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         AnimationController.singleton.slideOffViewController(popUpVC)
         
     }
-    
-    
     
     //MARK: SongPickerDelegate
     func userDidSelectSong(song : MPMediaItemCollection){
@@ -174,6 +171,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
             self.launchGame()
             pauseGame()
             userDidPressPlayWithoutSong()
+            unpauseGame()
+
         }else{
             self.launchGame()
             pauseGame()
