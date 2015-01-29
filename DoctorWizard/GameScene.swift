@@ -335,18 +335,20 @@ class GameScene: SKScene {
     func spawnRock() {
         let rock = SKSpriteNode(imageNamed: "Rock")
         rock.name = "rock"
-        rock.position = CGPoint(
-            x: CGFloat.random(min: CGRectGetMinX(playableRect),
-                max: CGRectGetMaxX(playableRect)),
-            y: size.height)
+        let positionOnScreen = CGPoint(
+            x: CGFloat.random(min: -100,
+                max: self.size.width + 100),
+            y: size.height + 200)
+        
+        rock.position = backgroundLayer.convertPoint(positionOnScreen, fromNode: self)
         rock.setScale(1)
         rock.zPosition = 0
-        addChild(rock)
+        self.backgroundLayer.addChild(rock)
         let appear = SKAction.scaleTo(3, duration: 4.0)
         let actions = [appear]
         rock.runAction(SKAction.sequence(actions))
         let actionMove =
-        SKAction.moveToY(-rock.size.height/2, duration: 2.0)
+        SKAction.moveToY(-100, duration: 4.0)
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
