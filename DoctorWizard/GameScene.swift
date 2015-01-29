@@ -17,8 +17,9 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
     let dudeAnimation : SKAction
+    
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 2000.0
@@ -40,14 +41,11 @@ class GameScene: SKScene {
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
     
-    var currentTime: NSTimeInterval = 0.00
-    
-    
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
     var healthPoints :CGFloat = 742
-
+    
     var didLose = false
     var menuDelegate: MainMenuDelegate?
     
@@ -56,12 +54,6 @@ class GameScene: SKScene {
     var fireBallOn : Bool = false
     var alienOn : Bool = false
     var blackHoleOn : Bool = false
-    
-     var doctorWizardsAltitude : SKLabelNode?
-     var playTimeRemaining : SKLabelNode?
-    
-    
-    
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -91,7 +83,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
-
+    
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -101,43 +93,6 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
         addChild(dude)
-        
-        
-        
-        playTimeRemaining = SKLabelNode(fontNamed:"System")
-        playTimeRemaining?.text = "TTP: \(0)"
-        playTimeRemaining?.fontColor = SKColor.redColor()
-        playTimeRemaining?.fontSize = 65;
-        //playTimeRemaining?.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
-        playTimeRemaining?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
-        playTimeRemaining?.zPosition = 14
-        self.addChild(playTimeRemaining!)
-        
-        doctorWizardsAltitude = SKLabelNode(fontNamed:"System")
-        //doctorWizardsAltitude?.text = "Altitude: \(0)"
-        doctorWizardsAltitude?.fontColor = SKColor.redColor()
-        doctorWizardsAltitude?.fontSize = 65;
-        doctorWizardsAltitude?.position = CGPoint(x:CGRectGetMinX(self.frame)+300,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsAltitude?.zPosition = 14
-        self.addChild(doctorWizardsAltitude!)
-        
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnRock),
-                SKAction.waitForDuration(1.0)])))
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnFireball),
-                SKAction.waitForDuration(2.0)])))
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnAlien),
-                SKAction.waitForDuration(7)])))
-        
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
-                SKAction.waitForDuration(45)])))
-
         
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
@@ -159,12 +114,8 @@ class GameScene: SKScene {
             dt = 0
         }
         
-        
         lastUpdateTime = currentTime
         //println("\(dt*1000) milliseconds since last update")
-        
-        self.currentTime = currentTime
-        
         
         if let lastTouch = lastTouchLocation {
             
@@ -191,24 +142,8 @@ class GameScene: SKScene {
         
         
         //Sections that determines which enemmies come to playing field based on Level of tune
-        //MARK: CONSOLE DISPLAY LABELS ======================================================================
-
         
-        doctorWizardsAltitude?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
-        
-        if ( timePassed == songDuration ){
-        
-            playTimeRemaining?.text = "TTP: \(0)"
-            self.didLose = true // and show the you loose label or image
-         
-        }else{
-            
-            playTimeRemaining?.text = "TTP: \( songDuration - timePassed )"
-        }
-        
-        
-        
-      switch currentLevelIs()
+        switch currentLevelIs()
         {
             
         case .First:
@@ -217,48 +152,40 @@ class GameScene: SKScene {
                 println("First scene on now")
             }
             
-        
         case .Second:
             if !fireBallOn {
                 actionToSpawnFireBalls()
                 println("Second scene on now")
             }
-
-        
+            
         case .Third:
             if !alienOn {
                 actionToSpawnAlien()
                 println("Third scene on now")
             }
             
-        
         case .Fourth:
             if !blackHoleOn {
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
-        
         case .Fifth:
             println("Fifth scene on now")
             
         default:
             println("DefaultLevel")
         }
-
-        
         
         if self.healthPoints <= 0 {
             self.healthPoints = 0
             println("you have lost")
             let lostGame = LooserScene(size: self.size)
-            lostGame.mainDelegate = self.menuDelegate
             self.view?.presentScene(lostGame)
         } else {
-  //          println("healthPoints\(self.healthPoints)")
+            println("healthPoints\(self.healthPoints)")
         }
         
         //println(self.altitude)
-        println(self.altitude)
         boundsCheckDude()
         moveBackground()
         moveStars()
@@ -280,7 +207,7 @@ class GameScene: SKScene {
         
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-//        println("Amount to move: \(amountToMove)")
+        //        println("Amount to move: \(amountToMove)")
         
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
@@ -299,6 +226,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -337,7 +265,6 @@ class GameScene: SKScene {
             velocity.y = -velocity.y
         }
     }
-
     
     //MARK: SPAWN ROCKS ========================================================================
     
@@ -401,7 +328,7 @@ class GameScene: SKScene {
         SKAction.moveToX(randomXPosition, duration: 0.5)
         let actionMoveYUp =
         SKAction.moveToY(size.height - alien.frame.height / 2, duration: 4.0)
-
+        
         let actionRemove = SKAction.removeFromParent()
         alien.runAction(SKAction.sequence([actionMoveYDown, actionMoveX, actionMoveYUp, actionRemove]))}
     
@@ -531,8 +458,8 @@ class GameScene: SKScene {
                 
             }
         }
-
-
+        
+        
     }
     
     func addMovingBackground(){
@@ -688,16 +615,6 @@ class GameScene: SKScene {
     
     //MARK: LEVEL
     
-    func displayAltitudeTickerOnConsole(flt: CGFloat) -> String{
-        
-        let string = NSString(format: "%.2f", flt)
-        
-        let nf = NSNumberFormatter()
-        nf.numberStyle = .DecimalStyle
-        let s2 = nf.stringFromNumber(flt)
-        return s2!
-    }
-    
     enum Level {
         case First
         case Second
@@ -769,5 +686,5 @@ class GameScene: SKScene {
     }
     
     
-
+    
 }
