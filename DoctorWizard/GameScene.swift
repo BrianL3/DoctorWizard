@@ -152,15 +152,15 @@ class GameScene: SKScene {
         {
             
         case .First:
-            if !dragonOn {
-                actionToSpawnDragon()
-                println("First scene on now")
-            }
-            
-//            if !rocksOn {
-//                actionToSpawnRocks()
+//            if !dragonOn {
+//                actionToSpawnDragon()
 //                println("First scene on now")
 //            }
+            
+            if !rocksOn {
+                actionToSpawnRocks()
+                println("First scene on now")
+            }
             
         case .Second:
             if !fireBallOn {
