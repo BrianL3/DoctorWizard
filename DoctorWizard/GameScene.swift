@@ -16,6 +16,7 @@ class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let dragon = Dragon()
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
