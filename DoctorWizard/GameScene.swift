@@ -7,6 +7,8 @@
 //
 
 import SpriteKit
+import CoreMotion
+
 
 protocol MainMenuDelegate {
     func playerDidLose()
@@ -41,6 +43,7 @@ class GameScene: SKScene {
     var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
+    let motionManager = CMMotionManager()
     
     var altitude: CGFloat = 0
     var curLevel : Level = .First
@@ -103,6 +106,17 @@ class GameScene: SKScene {
         addMovingBackground(self.backgroundImageName)
         self.addChild(backgroundLayer)
         self.addChild(starLayer)
+        
+        if motionManager.accelerometerAvailable {
+            self.motionManager.accelerometerUpdateInterval = 0.01
+            self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
+                if error == nil {
+                    let verticleData = data.acceleration.x
+                    
+                    println("we got acceleromiter data : \(verticleData)")
+                }
+            })
+        }
        
         
     }
@@ -144,6 +158,7 @@ class GameScene: SKScene {
                 self.altitude -= 1
             }
         }
+        
         
         
         //Sections that determines which enemmies come to playing field based on Level of tune
@@ -753,6 +768,12 @@ class GameScene: SKScene {
                 SKAction.waitForDuration(30)])))
         println("Dragon on scene on now")
     }
+    
+    //MARK: start acceleromiter updates
+    
+
+
+
     
     
 
