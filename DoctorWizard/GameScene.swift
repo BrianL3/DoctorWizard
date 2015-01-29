@@ -108,9 +108,6 @@ class GameScene: SKScene {
         self.addChild(doctorWizardsAltitude!)
         
         
-       
-        
-        /*
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
@@ -127,7 +124,6 @@ class GameScene: SKScene {
             SKAction.sequence([SKAction.runBlock(spawnBlackHole),
                 SKAction.waitForDuration(45)])))
 
-        */
         
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
@@ -181,7 +177,8 @@ class GameScene: SKScene {
         }
         
         
-        //~~~console display code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //MARK: CONSOLE DISPLAY LABELS ======================================================================
+
         
         doctorWizardsAltitude?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
         
@@ -197,11 +194,6 @@ class GameScene: SKScene {
             
         }
 
-        //~~~console display code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        
-        
-        
         println(self.altitude)
         boundsCheckDude()
         moveBackground()
