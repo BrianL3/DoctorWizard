@@ -37,29 +37,31 @@ class GameScene: SKScene {
     var backgroundVerticalDirection: CGFloat = 6.0
     var gameStartTime : NSTimeInterval = 0
     var timePassed : NSTimeInterval = 0
-    var backgroundImageName = "background_test"
-    var starsImageName = "stars_test"
-    // lose conditions
-    var didLose = false
-    //delegate
-    var menuDelegate : MainMenuDelegate?
-    //console window variables
-    //var remainingTimeInSongLabel = SKLabelNode()
-    var playTimeRemaining : SKLabelNode?
-    var doctorWizardsAltitude : SKLabelNode?
+    var backgroundImageName = "background0"
+    var starsImageName = "starsFinal"
     
     var currentTime: NSTimeInterval = 0.00
     
     
     var altitude: CGFloat = 0
-
+    var curLevel : Level = .First
     
+    var healthPoints :CGFloat = 742
+
+    var didLose = false
+    var menuDelegate: MainMenuDelegate?
     
     //booleans to determine if enemies are on the field of play
     var rocksOn : Bool = false
     var fireBallOn : Bool = false
     var alienOn : Bool = false
     var blackHoleOn : Bool = false
+    
+     var doctorWizardsAltitude : SKLabelNode?
+     var playTimeRemaining : SKLabelNode?
+    
+    
+    
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -101,15 +103,15 @@ class GameScene: SKScene {
         addChild(dude)
         
         
-        //func showGameOverScreen(){
-            playTimeRemaining = SKLabelNode(fontNamed:"System")
-            playTimeRemaining?.text = "TTP: \(0)"
-            playTimeRemaining?.fontColor = SKColor.redColor()
-            playTimeRemaining?.fontSize = 65;
-            //playTimeRemaining?.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
-            playTimeRemaining?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
-            playTimeRemaining?.zPosition = 14
-            self.addChild(playTimeRemaining!)
+        
+        playTimeRemaining = SKLabelNode(fontNamed:"System")
+        playTimeRemaining?.text = "TTP: \(0)"
+        playTimeRemaining?.fontColor = SKColor.redColor()
+        playTimeRemaining?.fontSize = 65;
+        //playTimeRemaining?.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+        playTimeRemaining?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
+        playTimeRemaining?.zPosition = 14
+        self.addChild(playTimeRemaining!)
         
         doctorWizardsAltitude = SKLabelNode(fontNamed:"System")
         //doctorWizardsAltitude?.text = "Altitude: \(0)"
@@ -188,23 +190,74 @@ class GameScene: SKScene {
         }
         
         
+        //Sections that determines which enemmies come to playing field based on Level of tune
         //MARK: CONSOLE DISPLAY LABELS ======================================================================
 
         
         doctorWizardsAltitude?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
         
         if ( timePassed == songDuration ){
-            
+        
             playTimeRemaining?.text = "TTP: \(0)"
-            
             self.didLose = true // and show the you loose label or image
-
+         
         }else{
             
-            playTimeRemaining?.text = "TTP: \(songDuration-timePassed)"
+            playTimeRemaining?.text = "TTP: \( songDuration - timePassed )"
+        }
+        
+        
+        
+      switch currentLevelIs()
+        {
             
+        case .First:
+            if !rocksOn {
+                actionToSpawnRocks()
+                println("First scene on now")
+            }
+            
+        
+        case .Second:
+            if !fireBallOn {
+                actionToSpawnFireBalls()
+                println("Second scene on now")
+            }
+
+        
+        case .Third:
+            if !alienOn {
+                actionToSpawnAlien()
+                println("Third scene on now")
+            }
+            
+        
+        case .Fourth:
+            if !blackHoleOn {
+                actionToSpawnBlackHole()
+                println("Fourth scene on now")
+            }
+        
+        case .Fifth:
+            println("Fifth scene on now")
+            
+        default:
+            println("DefaultLevel")
         }
 
+        
+        
+        if self.healthPoints <= 0 {
+            self.healthPoints = 0
+            println("you have lost")
+            let lostGame = LooserScene(size: self.size)
+            lostGame.mainDelegate = self.menuDelegate
+            self.view?.presentScene(lostGame)
+        } else {
+  //          println("healthPoints\(self.healthPoints)")
+        }
+        
+        //println(self.altitude)
         println(self.altitude)
         boundsCheckDude()
         moveBackground()
@@ -633,6 +686,7 @@ class GameScene: SKScene {
         SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
     }
     
+    //MARK: LEVEL
     
     func displayAltitudeTickerOnConsole(flt: CGFloat) -> String{
         
@@ -642,11 +696,78 @@ class GameScene: SKScene {
         nf.numberStyle = .DecimalStyle
         let s2 = nf.stringFromNumber(flt)
         return s2!
-        
+    }
+    
+    enum Level {
+        case First
+        case Second
+        case Third
+        case Fourth
+        case Fifth
+    }
+    
+    func currentLevelIs() -> Level {
+        let timeAsFloat = self.songDuration as Double
+        let timePassedAsFloat = self.timePassed as Double
+        if timeAsFloat <= timePassedAsFloat{
+            let twentyPercent = timeAsFloat/5
+            let fortyPercent = (timeAsFloat/2) * 2
+            let sixtyPercent = (timeAsFloat/2) * 3
+            let eightyPercent = (timeAsFloat/2) * 5
+            
+            switch timePassedAsFloat {
+                //first 20% of the song
+            case 0...twentyPercent :
+                self.curLevel = .First
+            case twentyPercent...fortyPercent :
+                self.curLevel = .Second
+            case fortyPercent...sixtyPercent :
+                self.curLevel = .Third
+            case sixtyPercent...eightyPercent :
+                self.curLevel = .Fourth
+            case eightyPercent...timeAsFloat :
+                self.curLevel = .Fifth
+            default:
+                self.curLevel = .First
+            }
+        }
+        return self.curLevel
+    }
+    
+    //MARK: SKACTION TO SPAWN ENEMIES
+    
+    func actionToSpawnRocks() {
+        rocksOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnRock),
+                SKAction.waitForDuration(1.0)])))
+        println("Rock on  scene on now")
+    }
+    
+    func actionToSpawnFireBalls() {
+        fireBallOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnFireball),
+                SKAction.waitForDuration(2.0)])))
+        println("FireBall on scene on now")
+    }
+    
+    func actionToSpawnAlien() {
+        alienOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnAlien),
+                SKAction.waitForDuration(7)])))
+        println("Alien on scene on now")
+    }
+    
+    func actionToSpawnBlackHole() {
+        blackHoleOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
+                SKAction.waitForDuration(45)])))
+        println("BlackHole on scene on now")
     }
     
     
-    
-    
-    
+
 }

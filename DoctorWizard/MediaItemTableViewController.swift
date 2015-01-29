@@ -44,9 +44,44 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
 //MARK: TableViewDataSource functions ============================
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as UITableViewCell
-       // cell.textLabel?.text = self.mediaQuery?.items[indexPath.row].title
-        cell.detailTextLabel?.text = self.mediaQuery?.items[indexPath.row].artist
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as MediaItemCell
+        
+        var mediaItem = mediaQuery?.items[indexPath.row] as MPMediaItem
+        
+        if let songName = mediaItem.title {
+            cell.song.text = songName
+        }
+        
+        if let artistName = mediaItem.artist {
+            cell.artist.text = artistName
+        } else {
+            cell.artist.text = nil
+        }
+        
+        if let songImage = mediaItem.artwork {
+            cell.songImage.image = songImage.imageWithSize(CGSize(width: 50, height: 50))
+        } else {
+            cell.songImage.image = UIImage(named: "dude0.png")
+            cell.songImage.contentMode = UIViewContentMode.ScaleAspectFit
+        }
+        
+        if let songDuration = mediaItem.playbackDuration as NSTimeInterval? {
+            
+            var minutesFormatter = NSNumberFormatter()
+            minutesFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+            
+            var minutes = minutesFormatter.stringFromNumber(floor(songDuration/60))!
+            
+            var secondsFormatter = NSNumberFormatter()
+            secondsFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+            secondsFormatter.roundingMode = NSNumberFormatterRoundingMode.RoundUp
+            
+            var seconds = songDuration - floor(songDuration/60)*60
+            
+            cell.songDuration.text = "\(minutes)m \(secondsFormatter.stringFromNumber(seconds)!)s"
+        }
+        
         return cell
     }
     
