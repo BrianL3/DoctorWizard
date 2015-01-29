@@ -14,6 +14,7 @@
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
 		55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55228CDE1A798F1100E573D1 /* WinnerScene.swift */; };
 		55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D7F6C81A79914E006E8753 /* LooserScene.swift */; };
+		B8F7F8131A7AB86700B55CC7 /* blackhole.png in Resources */ = {isa = PBXBuildFile; fileRef = B8F7F8121A7AB86700B55CC7 /* blackhole.png */; };
 		C0E2189F1A795DE300880E41 /* MediaItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2189E1A795DE300880E41 /* MediaItemCell.swift */; };
 		C0E64CBC1A781A2F009C8D10 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */; };
 		C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */; };
@@ -75,6 +76,7 @@
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
 		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
 		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
+		B8F7F8121A7AB86700B55CC7 /* blackhole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackhole.png; sourceTree = "<group>"; };
 		C0E2189E1A795DE300880E41 /* MediaItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemCell.swift; sourceTree = "<group>"; };
 		C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoctorWizard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				483339D11A76C3AF00344DC8 /* dude.png */,
+				B8F7F8121A7AB86700B55CC7 /* blackhole.png */,
 				48D415581A787019005CE91C /* alienspaceship.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
 				487D5DE61A78221300359556 /* Spike.png */,
@@ -356,6 +359,7 @@
 				FA4116E41A78463700FCC212 /* chom_one.wav in Resources */,
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
 				FA4116E61A78463700FCC212 /* clicks_one.wav in Resources */,
+				B8F7F8131A7AB86700B55CC7 /* blackhole.png in Resources */,
 				483339D61A76D32000344DC8 /* Rock.png in Resources */,
 				FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */,
 				FA4116E01A78463700FCC212 /* blop_seven.wav in Resources */,

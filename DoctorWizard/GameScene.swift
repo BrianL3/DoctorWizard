@@ -230,7 +230,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
+      //  println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -388,7 +388,7 @@ class GameScene: SKScene {
         enumerateChildNodesWithName("rock") { node, _ in
             
             let rockHit = node as SKSpriteNode
-            
+
             if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
