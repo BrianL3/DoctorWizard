@@ -184,12 +184,7 @@ class GameScene: SKScene {
             
         case .Second:
             if !fireBallOn {
-                if self.backgroundImageName == "background0" {
-                    println("switch to background 2")
-                    
-                    self.backgroundImageName = "background1"
-                    addMovingBackground(self.backgroundImageName)
-                }
+
                 
                 actionToSpawnFireBalls()
                 println("Second scene on now")
@@ -197,10 +192,7 @@ class GameScene: SKScene {
 
         case .Third:
             if !alienOn {
-                if self.backgroundImageName == "background1" {
-                    self.backgroundImageName = "background2"
-                    addMovingBackground(self.backgroundImageName)
-                }
+
                 
                 actionToSpawnAlien()
                 println("Third scene on now")
@@ -208,19 +200,13 @@ class GameScene: SKScene {
             
         case .Fourth:
             if !blackHoleOn {
-                if self.backgroundImageName == "background2" {
-                    self.backgroundImageName = "background3"
-                    addMovingBackground(self.backgroundImageName)
-                }
+
                 
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
-            if self.backgroundImageName == "background3" {
-                self.backgroundImageName = "background4"
-                addMovingBackground(self.backgroundImageName)
-            }
+
             if !dragonOn{
                 actionToSpawnDragon()
                 println("Fifth scene on now")
@@ -230,10 +216,6 @@ class GameScene: SKScene {
             
             
         default:
-            if self.backgroundImageName == "background4" {
-                self.backgroundImageName = "background0"
-                addMovingBackground(self.backgroundImageName)
-            }
             
             println("DefaultLevel")
         }
@@ -387,7 +369,7 @@ class GameScene: SKScene {
         let actions = [appear]
         fireBall.runAction(SKAction.sequence(actions))
         let actionMove =
-        SKAction.moveToX(-fireBall.size.height/2, duration: 2.0)
+        SKAction.moveToX(-300, duration: 3.0)
         let actionRemove = SKAction.removeFromParent()
         fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
     }
