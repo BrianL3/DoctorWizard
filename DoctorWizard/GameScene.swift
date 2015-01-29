@@ -622,24 +622,24 @@ class GameScene: SKScene {
     }
     
     func currentLevelIs() -> Level {
-        let timeAsFloat = self.songDuration as Double
+        let songTimeAsFloat = self.songDuration as Double
         let timePassedAsFloat = self.timePassed as Double
-        let twentyPercent = timeAsFloat/5
-        let fortyPercent = (timeAsFloat/2) * 2
-        let sixtyPercent = (timeAsFloat/2) * 3
-        let eightyPercent = (timeAsFloat/2) * 5
+        let twentyPercent = songTimeAsFloat/5
+        let fortyPercent = (songTimeAsFloat/2) * 2
+        let sixtyPercent = (songTimeAsFloat/2) * 3
+        let eightyPercent = (songTimeAsFloat/2) * 5
         
         switch timePassedAsFloat {
             //first 20% of the song
-        case 0...twentyPercent :
+        case 0..<twentyPercent :
             self.curLevel = .First
-        case twentyPercent...fortyPercent :
+        case twentyPercent..<fortyPercent :
             self.curLevel = .Second
-        case fortyPercent...sixtyPercent :
+        case fortyPercent..<sixtyPercent :
             self.curLevel = .Third
-        case sixtyPercent...eightyPercent :
+        case sixtyPercent..<eightyPercent :
             self.curLevel = .Fourth
-        case eightyPercent...timeAsFloat :
+        case eightyPercent..<songTimeAsFloat :
             self.curLevel = .Fifth
         default:
             self.curLevel = .First
