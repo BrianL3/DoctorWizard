@@ -249,7 +249,6 @@ class GameScene: SKScene {
         
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
-        sceneTouched(touchLocation)
         
         // set the background verticle scrolling direction
         let previousY = touch.previousLocationInView(self.view).y
