@@ -17,7 +17,7 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let dudeAnimation : SKAction
     
@@ -152,15 +152,15 @@ class GameScene: SKScene {
         {
             
         case .First:
-            if !dragonOn {
-                actionToSpawnDragon()
-                println("First scene on now")
-            }
-            
-//            if !rocksOn {
-//                actionToSpawnRocks()
+//            if !dragonOn {
+//                actionToSpawnDragon()
 //                println("First scene on now")
 //            }
+            
+            if !rocksOn {
+                actionToSpawnRocks()
+                println("First scene on now")
+            }
             
         case .Second:
             if !fireBallOn {
@@ -197,10 +197,16 @@ class GameScene: SKScene {
                 println("Fourth scene on now")
             }
         case .Fifth:
+            if self.backgroundImageName == "background3" {
+                self.backgroundImageName = "background4"
+                addMovingBackground(self.backgroundImageName)
+            }
             if !dragonOn{
                 actionToSpawnDragon()
                 println("Fifth scene on now")
             }
+            
+            println("Fifth scene on now")
             
             
         default:
