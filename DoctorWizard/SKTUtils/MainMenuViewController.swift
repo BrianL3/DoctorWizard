@@ -14,7 +14,6 @@ import SpriteKit
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate {
     
-    var song : MPMediaItem?
     var songDuration : NSTimeInterval = 100.0
     var songGenre : String = "DefaultDuncanSong"
     var scene : GameScene?
@@ -36,8 +35,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.delegate = self
         
         // frame  is 40% of screen
-        let width           = self.view.frame.width * 0.9
-        let height          = self.view.frame.height * 0.9
+        let width           = self.view.frame.width * 0.85
+        let height          = self.view.frame.height * 0.85
         popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
         popUpVC.view.center = self.view.center
         
@@ -50,7 +49,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC.didMoveToParentViewController(self)
         
         //do animation
-        AnimationController.singleton.enterStageRight(popUpVC)
+        AnimationController.singleton.bounceInViewController(popUpVC)
 
     }
 
@@ -98,7 +97,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
         
-        self.song = musicPlayer.nowPlayingItem
+        let song = musicPlayer.nowPlayingItem
         
         completionHandler(genre: song?.genre, duration: song?.playbackDuration)
     }
@@ -123,10 +122,10 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
         self.playSKMusic()
         self.scene?.paused = false
-       popUpVC.view.removeFromSuperview()
+       //popUpVC.view.removeFromSuperview()
+        AnimationController.singleton.slideOffViewController(popUpVC)
+        
     }
-    
-    
     
     //MARK: SongPickerDelegate
     func userDidSelectSong(song : MPMediaItemCollection){
@@ -144,35 +143,14 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
     
     //MARK: MAIN MENU DELEGATE
-    func playerDidLose(){
-        self.pauseGame()
-        //create pop up controller
-        popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
-        popUpVC.delegate = self
-        
-        // frame  is 40% of screen
-        let width           = self.view.frame.width * 0.9
-        let height          = self.view.frame.height * 0.9
-        popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
-        popUpVC.view.center = self.view.center
-        
-        self.view.addSubview(popUpVC.view)
-        
-        //told parent vc that child vc was added
-        self.addChildViewController(popUpVC)
-        
-        //told child it has a parent
-        popUpVC.didMoveToParentViewController(self)
-        
-        //do animation
-        AnimationController.singleton.enterStageRight(popUpVC)
-    }
     
     func restartWithSameSong(usingDefaultSong : Bool){
         if usingDefaultSong{
             self.launchGame()
             pauseGame()
             userDidPressPlayWithoutSong()
+            unpauseGame()
+
         }else{
             self.launchGame()
             pauseGame()
