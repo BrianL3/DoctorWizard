@@ -330,11 +330,16 @@ class GameScene: SKScene {
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
-    //MARK:  SPAWN FIREBALLS ====================================================================
-    
-    
+    //MARK: FIREBALLS ====================================================================
+
     func spawnFireball() {
         let fireBall = SKSpriteNode(imageNamed: "fireball")
+        let oldPosition = fireBall.position
+        let upPosition = oldPosition + CGPoint(x: 0, y: 80)
+        let upEffect = SKTMoveEffect(node: fireBall, duration: 0.9, startPosition: oldPosition, endPosition: upPosition)
+        upEffect.timingFunction = { t in pow(1, -1 * t) * (sin(t * π * 3))}
+        let upAction = SKAction.actionWithEffect(upEffect)
+        let upActionRepeat = SKAction.repeatActionForever(upAction)
         fireBall.name = "fireball"
         fireBall.position = CGPoint(x: size.width - fireBall.size.width/2, y: CGFloat.random(min: CGRectGetMinY(playableRect), max: CGRectGetMaxY(playableRect)))
         fireBall.setScale(1)
@@ -346,9 +351,9 @@ class GameScene: SKScene {
         let actionMove =
         SKAction.moveToX(-fireBall.size.height/2, duration: 1.0)
         let actionRemove = SKAction.removeFromParent()
-        fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
-    
-    
+        fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
+    }
+
     //MARK: SPAWN ALIENS ======================================================================
     
     func spawnAlien() {
@@ -451,7 +456,7 @@ class GameScene: SKScene {
         enumerateChildNodesWithName("rock") { node, _ in
             
             let rockHit = node as SKSpriteNode
-            
+
             if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
@@ -697,7 +702,7 @@ class GameScene: SKScene {
         switch timePassedAsFloat {
             //first 20% of the song
         case 0..<twentyPercent :
-            self.curLevel = .First
+            self.curLevel = .Second
         case twentyPercent..<fortyPercent :
             self.curLevel = .Second
         case fortyPercent..<sixtyPercent :
