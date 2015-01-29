@@ -10,6 +10,8 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
+    func restartWithSameSong()
+    func restartWithDifferentSong()
 }
 
 class GameScene: SKScene {
@@ -176,11 +178,7 @@ class GameScene: SKScene {
         
         if self.healthPoints <= 0 {
             self.healthPoints = 0
-            println("you have lost")
-            let lostGame = LooserScene(size: self.size)
-            self.view?.presentScene(lostGame)
-        } else {
-            println("healthPoints\(self.healthPoints)")
+            self.didLose = true
         }
         
         //println(self.altitude)
@@ -192,7 +190,15 @@ class GameScene: SKScene {
     override func didEvaluateActions() {
         if self.didLose == true{
             self.scene?.paused = true
-            self.menuDelegate?.playerDidLose()
+            let lostGameScene = LooserScene(size: self.size)
+            lostGameScene.mainMenuDelegate = self.menuDelegate
+            if self.songGenre == "DefaultDuncanSong"{
+                lostGameScene.isDefaultSong = true
+            }else{
+ //               lostGameScene.currentSong
+            }
+            self.view?.presentScene(lostGameScene)
+
         }
         checkCollisions()
         destroyedByBlackHole()
@@ -456,8 +462,6 @@ class GameScene: SKScene {
                 
             }
         }
-
-
     }
     
     func addMovingBackground(){
