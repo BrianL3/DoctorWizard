@@ -18,7 +18,7 @@ class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
-    let dragon = Dragon()
+    let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -95,7 +95,7 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
         addChild(dude)
-
+        
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
         
@@ -149,10 +149,15 @@ class GameScene: SKScene {
         {
             
         case .First:
-            if !rocksOn {
-                actionToSpawnRocks()
+            if !dragonOn {
+                actionToSpawnDragon()
                 println("First scene on now")
             }
+            
+//            if !rocksOn {
+//                actionToSpawnRocks()
+//                println("First scene on now")
+//            }
             
         case .Second:
             if !fireBallOn {
@@ -172,10 +177,11 @@ class GameScene: SKScene {
                 println("Fourth scene on now")
             }
         case .Fifth:
-            if !dragonOn {
-                
+            if !dragonOn{
+                actionToSpawnDragon()
+                println("Fifth scene on now")
             }
-            println("Fifth scene on now")
+            
             
         default:
             println("DefaultLevel")
@@ -364,6 +370,28 @@ class GameScene: SKScene {
         let actions = [appear, inplode, actionRemove]
         blackHole.runAction(repeatSpin)
         blackHole.runAction((SKAction.sequence(actions)))}
+    
+    //MARK: DRAGON ==============================================================================
+    
+    func spawnDragon() {
+        dragon.name = "dragon"
+        println("I made it to spawnDragon")
+        dragon.position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.width,
+                max: CGRectGetMaxX(playableRect) - dragon.frame.width),
+            y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.height,
+                max: (CGRectGetMaxX(playableRect) - (5 * dragon.frame.height))))
+        println(dragon.position)
+        dragon.setScale(0)
+        dragon.zPosition = -1
+        addChild(dragon)
+        let appear = SKAction.scaleTo(1.3, duration: 5.0)
+        //let actionRemove = SKAction.removeFromParent()
+        //let actions = [appear, actionRemove]
+        let actions = [appear]
+        dragon.runAction((SKAction.sequence(actions)))
+    
+    }
     
     
     //MARK: COLLISIONS ==========================================================================
@@ -687,6 +715,14 @@ class GameScene: SKScene {
             SKAction.sequence([SKAction.runBlock(spawnBlackHole),
                 SKAction.waitForDuration(45)])))
         println("BlackHole on scene on now")
+    }
+    
+    func actionToSpawnDragon() {
+        dragonOn = true
+        runAction(SKAction.repeatActionForever(
+            SKAction.sequence([SKAction.runBlock(spawnDragon),
+                SKAction.waitForDuration(30)])))
+        println("Dragon on scene on now")
     }
     
     
