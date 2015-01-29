@@ -152,15 +152,15 @@ class GameScene: SKScene {
         {
             
         case .First:
-//            if !dragonOn {
-//                actionToSpawnDragon()
-//                println("First scene on now")
-//            }
-            
-            if !rocksOn {
-                actionToSpawnRocks()
+            if !dragonOn {
+                actionToSpawnDragon()
                 println("First scene on now")
             }
+            
+//            if !rocksOn {
+//                actionToSpawnRocks()
+//                println("First scene on now")
+//            }
             
         case .Second:
             if !fireBallOn {
@@ -404,6 +404,39 @@ class GameScene: SKScene {
     //MARK: DRAGON ==============================================================================
     
     func spawnDragon() {
+        
+        //this controls whether we go on X, Y or Circle
+        var randomWhereDragonGoes = Int.random(1...9)
+        
+        //random variable for dragon movement
+        var randomXChooser = CGFloat(Int.random(0...Int(playableRect.width)))
+        var randomYChooser = CGFloat(Int.random(0...Int(playableRect.height)))
+        
+        switch randomWhereDragonGoes {
+            
+        case 1...3:
+            SKAction.moveToX(randomYChooser -  dragon.frame.width / 2, duration: 1.0)
+            println("Im on 1 to 3 - Dragon Move")
+            
+        case 4...6:
+            
+            SKAction.moveToY(randomYChooser -  dragon.frame.height / 2, duration: 1.0)
+            println("Im on 4 to 6 - Dragon Move")
+
+            
+        case 7...9:
+            println("Im on 7 to 9 - Dragon Move")
+            
+        default:
+            println("DefaultLevel")
+
+            
+        }
+        
+        
+        //let actionMoveY
+        
+        
         dragon.name = "dragon"
         println("I made it to spawnDragon")
         dragon.position = CGPoint(
@@ -416,11 +449,17 @@ class GameScene: SKScene {
         dragon.zPosition = -1
         addChild(dragon)
         let appear = SKAction.scaleTo(1.3, duration: 5.0)
-        //let actionRemove = SKAction.removeFromParent()
-        //let actions = [appear, actionRemove]
-        let actions = [appear]
-        dragon.runAction((SKAction.sequence(actions)))
-    
+        //following actions determine random movement
+        
+        let actionMoveYDown =
+        SKAction.moveToY(0, duration: 2.0)
+//        let actionMoveX =
+//        SKAction.moveToX(randomXPosition, duration: 0.5)
+//        let actionMoveYUp =
+//        SKAction.moveToY(size.height - dragon.frame.height / 2, duration: 4.0)
+//        
+//        let actionRemove = SKAction.removeFromParent()
+
     }
     
     
