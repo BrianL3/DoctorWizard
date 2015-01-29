@@ -330,7 +330,7 @@ class GameScene: SKScene {
         let actionRemove = SKAction.removeFromParent()
         rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
-    //MARK: FIREBALLS ====================================================================
+    //MARK: SPAWN FIREBALLS ====================================================================
 
     func spawnFireball() {
         let fireBall = SKSpriteNode(imageNamed: "fireball")
@@ -702,7 +702,7 @@ class GameScene: SKScene {
         switch timePassedAsFloat {
             //first 20% of the song
         case 0..<twentyPercent :
-            self.curLevel = .Second
+            self.curLevel = .First
         case twentyPercent..<fortyPercent :
             self.curLevel = .Second
         case fortyPercent..<sixtyPercent :
