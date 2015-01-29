@@ -178,11 +178,7 @@ class GameScene: SKScene {
         
         if self.healthPoints <= 0 {
             self.healthPoints = 0
-            println("you have lost")
-            let lostGame = LooserScene(size: self.size)
-            self.view?.presentScene(lostGame)
-        } else {
-           // println("healthPoints\(self.healthPoints)")
+            self.didLose = true
         }
         
         //println(self.altitude)
