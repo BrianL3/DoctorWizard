@@ -4,7 +4,7 @@
 //
 //  Created by nacnud on 1/26/15.
 //  Copyright (c) 2015 codefellows. All rights reserved.
-//
+
 
 import SpriteKit
 import CoreMotion
@@ -21,6 +21,10 @@ class GameScene: SKScene {
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
+    let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
+    let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
+    
+    
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -62,6 +66,14 @@ class GameScene: SKScene {
     var blackHoleOn : Bool = false
     var dragonOn : Bool = false
     
+    //console display labels
+    var playTimeRemainingLabel : SKLabelNode?
+    var doctorWizardsAltitudeLabel : SKLabelNode?
+    var doctorWizardsHealthLabel : SKLabelNode?
+    var playTimeRemainingTicker: NSTimeInterval = 0
+    var playButtonPressed : Bool = false
+    
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -80,6 +92,7 @@ class GameScene: SKScene {
         }
         
         self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
+        
         
         super.init(size: size)
         
@@ -103,6 +116,44 @@ class GameScene: SKScene {
         
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
+        
+        //MARK: Game Console  ======================================================================
+        
+        consoleBarLeft.zPosition = 13
+        consoleBarLeft.position = CGPoint(x: 500, y: 220)
+        self.addChild(consoleBarLeft)
+        
+        consoleBarRight.zPosition = 13
+        consoleBarRight.position = CGPoint(x: 1500, y: 220)
+        self.addChild(consoleBarRight)
+        
+        
+        
+        playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
+        playTimeRemainingLabel?.fontColor = SKColor.redColor()
+        playTimeRemainingLabel?.fontSize = 60;
+        //playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+250,y:CGRectGetMinY(self.frame)+1250)
+        playTimeRemainingLabel?.position = CGPoint(x: 570, y: 220)
+        playTimeRemainingLabel?.zPosition = 14
+        self.addChild(playTimeRemainingLabel!)
+        
+        doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"Futura")
+        doctorWizardsAltitudeLabel?.fontColor = SKColor.redColor()
+        doctorWizardsAltitudeLabel?.fontSize = 60;
+        //doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
+        doctorWizardsAltitudeLabel?.position = CGPoint(x: 670, y: 220)
+        doctorWizardsAltitudeLabel?.zPosition = 14
+        self.addChild(doctorWizardsAltitudeLabel!)
+        
+        
+        doctorWizardsHealthLabel = SKLabelNode(fontNamed:"Futura")
+        doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
+        doctorWizardsHealthLabel?.fontSize = 60;
+        //doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1800,y:CGRectGetMinY(self.frame)+1250)
+        doctorWizardsHealthLabel?.position = CGPoint(x: 570, y: 320)
+        doctorWizardsHealthLabel?.zPosition = 14
+        self.addChild(doctorWizardsHealthLabel!)
+        
         
         //add background layers to to mainview
         addMovingBackground(self.backgroundImageName)
@@ -242,6 +293,42 @@ class GameScene: SKScene {
             self.healthPoints = 0
             self.didLose = true
         }
+        
+        
+        //MARK: Main Game Consile Display Labels
+        
+        doctorWizardsAltitudeLabel?.text = "Altitude: \(altitude)"
+        
+        //I want to start playTimeRemainingTicker after play button was pressed not when game starts
+        //if ( playButtonPressed == true ){}
+        
+        playTimeRemainingTicker = songDuration - timePassed
+        
+        
+        
+        if ( playTimeRemainingTicker > 0 ){
+            
+            
+            playTimeRemainingLabel?.text = "TTP: \(playTimeRemainingTicker)"
+            
+        }else{
+            
+            
+            playTimeRemainingLabel?.text = "TTP: \(0)"
+            
+            self.didLose = true // and show the you loose label or image
+            
+            // will create "You Loose" Label or show Duncan Artwork
+            
+            
+        }
+        
+        
+        doctorWizardsHealthLabel?.text = "Health: \(healthPoints)"
+        
+        
+        
+        
         
         //println(self.altitude)
         boundsCheckDude()

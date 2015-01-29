@@ -29,11 +29,11 @@ class AnimationController {
         vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25)
         
         //do trasform
-        vc.view.transform = CGAffineTransformMakeScale(0.85, 0.85)
+        vc.view.transform = CGAffineTransformMakeScale(1, 1)
         UIView.animateWithDuration(0.2, delay: 0.5, options: nil, animations: { () -> Void in
             
             vc.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.85)
+            vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
             vc.view.alpha = 1
             
             }) { (finished) -> Void in
@@ -48,7 +48,7 @@ class AnimationController {
     func slideOnViewController(vc: UIViewController) {
         
         vc.view.alpha = 1
-        vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25)
+        vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)
         
         let slideOnViewController = CGAffineTransformMakeTranslation(0,0)
         
@@ -56,7 +56,7 @@ class AnimationController {
         UIView.animateWithDuration(0.4, delay: 0.2, options: nil, animations: { () -> Void in
             
             vc.view.transform = slideOnViewController
-            vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.85)
+            vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
             
             }) { (finished) -> Void in
                 
@@ -69,9 +69,9 @@ class AnimationController {
     func slideOffViewController(vc: UIViewController) {
         
         vc.view.alpha = 1
-        vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.85)
+        vc.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         
-        let slideOffViewController = CGAffineTransformMakeTranslation(-800,0)
+        let slideOffViewController = CGAffineTransformMakeTranslation(-2100,0)
         
         
         UIView.animateWithDuration(0.4 , delay: 0.1, options: nil, animations: { () -> Void in
