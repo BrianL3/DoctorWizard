@@ -11,7 +11,7 @@ import CoreMotion
 
 
 protocol MainMenuDelegate {
-    func playerDidLose()
+
     func restartWithSameSong(usingDefaultSong: Bool)
     func restartWithDifferentSong()
 }
@@ -493,6 +493,7 @@ class GameScene: SKScene {
                 self.velocity = CGPoint(x:0, y:0)
                 if self.invincible == false {
                     self.healthPoints -= CGFloat.random(min: 50, max: 100)
+                    self.playRockCollisionSound()
                 }
             }
         }
@@ -712,10 +713,32 @@ class GameScene: SKScene {
     }
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
     func playRockCollisionSound(){
+        SKTAudio.sharedInstance().pauseBackgroundMusic()
+        let randomNum = CGFloat.random(min: 0, max: 4)
+        switch randomNum{
+        case 0..<1 :
+            SKTAudio.sharedInstance().playSoundEffect("clicks_one.wav")
+        case 1..<2 :
+            SKTAudio.sharedInstance().playSoundEffect("blop_eleven.wav")
+        case 2..<3 :
+            SKTAudio.sharedInstance().playSoundEffect("blop_four.wav")
+        case 3...4 :
+            SKTAudio.sharedInstance().playSoundEffect("blop_nine.wav")
+
+        default:
+            println("fucked something up")
+        }
+        SKTAudio.sharedInstance().resumeBackgroundMusic()
     }
     
     func playAlienCollisionSound(){
-        SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+        let randomNum = CGFloat.random(min: 1, max: 2)
+        if randomNum <= 1 {
+            SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+        }else{
+            SKTAudio.sharedInstance().playSoundEffect("blop_seven.wav")
+        }
+    
     }
     
     //MARK: LEVEL
