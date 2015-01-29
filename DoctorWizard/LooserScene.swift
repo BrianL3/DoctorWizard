@@ -43,7 +43,12 @@ class LooserScene: SKScene {
             
 
             if CGRectIntersectsRect(button.frame, CGRect(origin: self.touchLocation, size: CGSize(width: 50, height: 50))) {
-                    self.mainMenuDelegate?.restartWithSameSong()
+                if self.isDefaultSong {
+                    self.mainMenuDelegate?.restartWithSameSong(true)
+                }else{
+                    self.mainMenuDelegate?.restartWithSameSong(false)
+                }
+                
             }
             
         })

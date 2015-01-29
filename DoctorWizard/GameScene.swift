@@ -10,7 +10,7 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
-    func restartWithSameSong()
+    func restartWithSameSong(usingDefaultSong: Bool)
     func restartWithDifferentSong()
 }
 
@@ -194,9 +194,8 @@ class GameScene: SKScene {
             lostGameScene.mainMenuDelegate = self.menuDelegate
             if self.songGenre == "DefaultDuncanSong"{
                 lostGameScene.isDefaultSong = true
-            }else{
- //               lostGameScene.currentSong
             }
+            
             self.view?.presentScene(lostGameScene)
 
         }
@@ -230,7 +229,6 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
