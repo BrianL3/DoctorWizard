@@ -118,7 +118,7 @@ class GameScene: SKScene {
                     self.backgroundVerticalDirection = CGFloat(verticleData * 50.0)
                     self.backgroundHorizontalDirection = CGFloat(horizontalData * 50.0)
                     
-                    println("we got acceleromiter data : \(verticleData)")
+                  //  println("we got acceleromiter data : \(verticleData)")
                 }
             })
         }
@@ -226,7 +226,7 @@ class GameScene: SKScene {
                 println("Fifth scene on now")
             }
             
-            println("Fifth scene on now")
+          //  println("Fifth scene on now")
             
             
         default:
@@ -260,6 +260,17 @@ class GameScene: SKScene {
             
             self.view?.presentScene(lostGameScene)
 
+        }
+        if self.didWin == true{
+            self.scene?.paused = true
+            let winGameScene = WinScene(size: self.size)
+            winGameScene.mainMenuDelegate = self.menuDelegate
+            if self.songGenre == "DefaultDuncanSong"{
+                winGameScene.isDefaultSong = true
+            }
+            
+            self.view?.presentScene(winGameScene)
+            
         }
         checkCollisions()
         destroyedByBlackHole()
