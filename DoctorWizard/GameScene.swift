@@ -55,6 +55,7 @@ class GameScene: SKScene {
     var fireBallOn : Bool = false
     var alienOn : Bool = false
     var blackHoleOn : Bool = false
+    var dragonOn : Bool = false
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -171,6 +172,9 @@ class GameScene: SKScene {
                 println("Fourth scene on now")
             }
         case .Fifth:
+            if !dragonOn {
+                
+            }
             println("Fifth scene on now")
             
         default:
