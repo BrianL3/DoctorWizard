@@ -19,6 +19,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     var songGenre : String = "DefaultDuncanSong"
     var scene : GameScene?
     var popUpVC = PopUpMenuController()
+    let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
+    var currentSong : MPMediaItemCollection?
     
     var didPickMusic = false
 
@@ -93,7 +95,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     // the music will play
     func playMPMusic(music: MPMediaItemCollection, completionHandler : (genre: String?, duration: NSTimeInterval?) -> () ) {
-        let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
         musicPlayer.setQueueWithItemCollection(music)
         musicPlayer.play()
         
@@ -129,6 +130,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     //MARK: SongPickerDelegate
     func userDidSelectSong(song : MPMediaItemCollection){
+        self.currentSong = song
         playMPMusic(song, completionHandler: { (genre, duration) -> () in
             self.unpauseGame()
             if duration != nil{
@@ -166,11 +168,26 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         AnimationController.singleton.enterStageRight(popUpVC)
     }
     
-    func restartWithSameSong(){
-        
+    func restartWithSameSong(usingDefaultSong : Bool){
+        if usingDefaultSong{
+            self.launchGame()
+            pauseGame()
+            userDidPressPlayWithoutSong()
+        }else{
+            self.launchGame()
+            pauseGame()
+            if musicPlayer.playbackState == .Playing {
+                self.musicPlayer.skipToBeginning()
+            }else{
+                userDidSelectSong(currentSong!)
+            }
+            unpauseGame()
+        }
     }
     
     func restartWithDifferentSong(){
-        
+        self.launchGame()
+        pauseGame()
+        userDidPressSelectSong()
     }
 }
