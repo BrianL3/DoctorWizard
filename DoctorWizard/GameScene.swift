@@ -10,11 +10,14 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
+    func relaunchGameWithSameSong()
+    func chooseNewSong()
 }
 
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dudeAnimation : SKAction
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -31,7 +34,7 @@ class GameScene: SKScene {
     var songDuration : NSTimeInterval!
     var songGenre : String!
     var backgroundLayerMovePointsPerSec: CGFloat = 300
-    var backgroundVerticalDirection: CGFloat = 1.0
+    var backgroundVerticalDirection: CGFloat = 6.0
     var gameStartTime : NSTimeInterval = 0
     var timePassed : NSTimeInterval = 0
     var backgroundImageName = "background_test"
@@ -52,6 +55,11 @@ class GameScene: SKScene {
 
     
     
+    //booleans to determine if enemies are on the field of play
+    var rocksOn : Bool = false
+    var fireBallOn : Bool = false
+    var alienOn : Bool = false
+    var blackHoleOn : Bool = false
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -71,7 +79,10 @@ class GameScene: SKScene {
         }
         
         self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
-        super.init(size: size) // 5
+        
+        super.init(size: size)
+        
+        
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -86,6 +97,7 @@ class GameScene: SKScene {
         dude.position = CGPoint(x: 700, y: 400)
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
+        dude.name = "dude"
         addChild(dude)
         
         
@@ -167,7 +179,6 @@ class GameScene: SKScene {
         self.timePassed = round((currentTime - gameStartTime) * 10 )/10
         
         
-        
         if timePassed % 0.5 == 0 {
             if self.backgroundVerticalDirection < 0 {
                 self.altitude += 1
@@ -206,6 +217,7 @@ class GameScene: SKScene {
             self.menuDelegate?.playerDidLose()
         }
         checkCollisions()
+        destroyedByBlackHole()
     }
     
     //MARK: MOVE THE DUDE ======================================================================
@@ -234,7 +246,6 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-//        println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -314,7 +325,7 @@ class GameScene: SKScene {
         fireBall.runAction(SKAction.sequence([actionMove, actionRemove]))}
     
     
-    //MARK: SPAWN ALIENS =======================================================================
+    //MARK: SPAWN ALIENS ======================================================================
     
     func spawnAlien() {
         let alien = SKSpriteNode(imageNamed: "alienspaceship")
@@ -345,7 +356,7 @@ class GameScene: SKScene {
     //MARK: BLACK HOLE =========================================================================
     
     func spawnBlackHole() {
-        let blackHole = SKSpriteNode(imageNamed: "blackhole")
+        //blackHole = SKSpriteNode(imageNamed: "blackhole")
         blackHole.name = "blackhole"
         //logic to detect where blackhole should land based on it massive size and powerful feature
         blackHole.position = CGPoint(
@@ -354,14 +365,15 @@ class GameScene: SKScene {
             y: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.height,
                 max: (CGRectGetMaxX(playableRect) - (5 * blackHole.frame.height))))
         blackHole.setScale(0)
-        blackHole.zPosition = 2
+        blackHole.zPosition = -1
         addChild(blackHole)
         let angle : CGFloat = -CGFloat(M_PI)
         let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
         let repeatSpin = SKAction.repeatActionForever(oneSpin)
         let appear = SKAction.scaleTo(4, duration: 15.0)
         let inplode = SKAction.scaleTo(0, duration: 15.0)
-        let actions = [appear, inplode]
+        let actionRemove = SKAction.removeFromParent()
+        let actions = [appear, inplode, actionRemove]
         blackHole.runAction(repeatSpin)
         blackHole.runAction((SKAction.sequence(actions)))}
     
@@ -397,6 +409,9 @@ class GameScene: SKScene {
             if CGRectIntersectsRect(rockHit.frame, self.dude.frame) {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
+                if self.invincible == false {
+                    self.healthPoints -= CGFloat.random(min: 50, max: 100)
+                }
             }
         }
         
@@ -407,6 +422,9 @@ class GameScene: SKScene {
             if CGRectIntersectsRect(fireballHit.frame, self.dude.frame) {
                 hitObstacle.append(fireballHit)
                 self.velocity = CGPoint(x:0, y:0)
+                if self.invincible == false {
+                    self.healthPoints -= CGFloat.random(min: 80, max: 140)
+                }
             }
         }
         //sets up dude for stunning and becoming invincible
@@ -418,6 +436,50 @@ class GameScene: SKScene {
     
     func destroyedByBlackHole() {
         
+        enumerateChildNodesWithName("rock") { node, _ in
+            
+            let rockHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
+                rockHit.removeFromParent()
+                
+            }
+            
+        }
+        
+        enumerateChildNodesWithName("fireball") { node, _ in
+            
+            let fireballHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(fireballHit.frame, self.blackHole.frame) {
+                fireballHit.removeFromParent()
+                
+            }
+        }
+        
+        enumerateChildNodesWithName("dude") { node, _ in
+            
+            let dudeHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(dudeHit.frame, self.blackHole.frame) {
+                dudeHit.removeFromParent()
+                if self.invincible == false {
+                    self.healthPoints = 0
+                }
+            }
+        }
+        
+        enumerateChildNodesWithName("alienspaceship") { node, _ in
+            
+            let alienHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(alienHit.frame, self.blackHole.frame) {
+                alienHit.removeFromParent()
+                
+            }
+        }
+
+
     }
     
     func addMovingBackground(){

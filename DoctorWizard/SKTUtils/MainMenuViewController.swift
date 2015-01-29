@@ -61,8 +61,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
 // MARK: Game Funcs
     func launchGame(){
+        self.scene = nil
         self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
+        println(self.songGenre)
         scene?.songGenre = self.songGenre
+        println(self.songDuration)
         scene?.songDuration = self.songDuration
         scene?.menuDelegate = self
         let skView = SKView(frame: self.view.frame)
@@ -159,10 +162,10 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         playMPMusic(song, completionHandler: { (genre, duration) -> () in
             self.unpauseGame()
             if duration != nil{
-                self.songDuration = duration!
+                self.scene!.songDuration = duration!
             }
             if genre != nil{
-                self.songGenre = genre!
+                self.scene!.songGenre = genre!
             }
         })
         popUpVC.view.removeFromSuperview()
@@ -170,6 +173,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     //MARK: MAIN MENU DELEGATE
     func playerDidLose(){
+        self.launchGame()
         self.pauseGame()
         //create pop up controller
         popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
@@ -191,6 +195,17 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         //do animation
         AnimationController.singleton.enterStageRight(popUpVC)
+
+    }
+    
+    func relaunchGameWithSameSong() {
+        // something
+        println("going to relaunch with same song")
+    }
+    
+    func chooseNewSong() {
+        // something
+        println("going to choose new song")
 
     }
 }

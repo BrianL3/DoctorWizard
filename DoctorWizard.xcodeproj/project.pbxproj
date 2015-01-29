@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		483339D21A76C3AF00344DC8 /* dude.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D11A76C3AF00344DC8 /* dude.png */; };
 		483339D61A76D32000344DC8 /* Rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D51A76D32000344DC8 /* Rock.png */; };
-		487D5DE71A78221300359556 /* Spike.png in Resources */ = {isa = PBXBuildFile; fileRef = 487D5DE61A78221300359556 /* Spike.png */; };
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
-		48D4155B1A7959A3005CE91C /* blackhole.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D4155A1A7959A3005CE91C /* blackhole.png */; };
+		48D415611A799D1D005CE91C /* blackhole2.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415601A799D1D005CE91C /* blackhole2.png */; };
+		55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55228CDE1A798F1100E573D1 /* WinnerScene.swift */; };
+		55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D7F6C81A79914E006E8753 /* LooserScene.swift */; };
+		C0E2189F1A795DE300880E41 /* MediaItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2189E1A795DE300880E41 /* MediaItemCell.swift */; };
 		C0E64CBC1A781A2F009C8D10 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */; };
 		C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */; };
 		C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C4D707CE1A76BEFB00A990A1 /* GameScene.sks */; };
@@ -68,10 +70,12 @@
 /* Begin PBXFileReference section */
 		483339D11A76C3AF00344DC8 /* dude.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dude.png; sourceTree = "<group>"; };
 		483339D51A76D32000344DC8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
-		487D5DE61A78221300359556 /* Spike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spike.png; sourceTree = "<group>"; };
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
-		48D4155A1A7959A3005CE91C /* blackhole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackhole.png; sourceTree = "<group>"; };
+		48D415601A799D1D005CE91C /* blackhole2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackhole2.png; sourceTree = "<group>"; };
+		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
+		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
+		C0E2189E1A795DE300880E41 /* MediaItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemCell.swift; sourceTree = "<group>"; };
 		C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		C4D707C71A76BEFB00A990A1 /* DoctorWizard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoctorWizard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4D707CB1A76BEFB00A990A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -160,11 +164,14 @@
 				FA4116C91A78463700FCC212 /* Sounds */,
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
+				55228CDE1A798F1100E573D1 /* WinnerScene.swift */,
 				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
 				FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */,
+				C0E2189E1A795DE300880E41 /* MediaItemCell.swift */,
 				C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */,
 				C4D707CE1A76BEFB00A990A1 /* GameScene.sks */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
+				55D7F6C81A79914E006E8753 /* LooserScene.swift */,
 				C4D707D41A76BEFB00A990A1 /* Main.storyboard */,
 				FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */,
 				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
@@ -178,10 +185,9 @@
 			isa = PBXGroup;
 			children = (
 				483339D11A76C3AF00344DC8 /* dude.png */,
+				48D415601A799D1D005CE91C /* blackhole2.png */,
 				48D415581A787019005CE91C /* alienspaceship.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
-				48D4155A1A7959A3005CE91C /* blackhole.png */,
-				487D5DE61A78221300359556 /* Spike.png */,
 				483339D51A76D32000344DC8 /* Rock.png */,
 				C4D707CB1A76BEFB00A990A1 /* Info.plist */,
 			);
@@ -350,11 +356,9 @@
 				FA4116E41A78463700FCC212 /* chom_one.wav in Resources */,
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
 				FA4116E61A78463700FCC212 /* clicks_one.wav in Resources */,
-				48D4155B1A7959A3005CE91C /* blackhole.png in Resources */,
 				483339D61A76D32000344DC8 /* Rock.png in Resources */,
 				FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */,
 				FA4116E01A78463700FCC212 /* blop_seven.wav in Resources */,
-				487D5DE71A78221300359556 /* Spike.png in Resources */,
 				FA4116E51A78463700FCC212 /* chom_two.wav in Resources */,
 				FA4116E11A78463700FCC212 /* blop_thirteen.wav in Resources */,
 				FA4116E31A78463700FCC212 /* chaos.wav in Resources */,
@@ -368,6 +372,7 @@
 				C4D707CF1A76BEFB00A990A1 /* GameScene.sks in Resources */,
 				FA4116E81A78463700FCC212 /* clicks_two.wav in Resources */,
 				FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */,
+				48D415611A799D1D005CE91C /* blackhole2.png in Resources */,
 				FA4116DF1A78463700FCC212 /* blop_nine.wav in Resources */,
 				FA4116E21A78463700FCC212 /* blop_three.wav in Resources */,
 				C4D707D61A76BEFB00A990A1 /* Main.storyboard in Resources */,
@@ -391,15 +396,18 @@
 				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
+				C0E2189F1A795DE300880E41 /* MediaItemCell.swift in Sources */,
 				FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,
 				C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */,
 				C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */,
+				55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */,
 				C0E64CBC1A781A2F009C8D10 /* AnimationController.swift in Sources */,
 				C4EA38611A76C0AB00EC284C /* SKAction+SpecialEffects.swift in Sources */,
 				C4EA385E1A76C0AB00EC284C /* CGVector+Extensions.swift in Sources */,
 				C4EA38601A76C0AB00EC284C /* SKAction+Extensions.swift in Sources */,
 				C4EA38621A76C0AB00EC284C /* SKColor+Extensions.swift in Sources */,
+				55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */,
 				C4EA385F1A76C0AB00EC284C /* Int+Extensions.swift in Sources */,
 				C4EA38631A76C0AB00EC284C /* SKNode+Extensions.swift in Sources */,
 				C4EA38641A76C0AB00EC284C /* SKTAudio.swift in Sources */,
