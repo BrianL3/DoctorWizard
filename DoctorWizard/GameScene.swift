@@ -16,8 +16,6 @@ class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let dudeAnimation : SKAction
-    let remainingTimeInSongLabel : SKLabelNode = SKLabelNode()
-    var currentTime: NSTimeInterval = 0.00
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 2000.0
@@ -42,8 +40,17 @@ class GameScene: SKScene {
     var didLose = false
     //delegate
     var menuDelegate : MainMenuDelegate?
+    //console window variables
+    //var remainingTimeInSongLabel = SKLabelNode()
+    var playTimeRemaining : SKLabelNode?
+    var doctorWizardsAltitude : SKLabelNode?
+    
+    var currentTime: NSTimeInterval = 0.00
+    
     
     var altitude: CGFloat = 0
+
+    
     
     
     //MARK: INTIALIZER ==============================================================================
@@ -81,6 +88,29 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         addChild(dude)
         
+        
+        //func showGameOverScreen(){
+            playTimeRemaining = SKLabelNode(fontNamed:"System")
+            playTimeRemaining?.text = "TTP: \(0)"
+            playTimeRemaining?.fontColor = SKColor.redColor()
+            playTimeRemaining?.fontSize = 65;
+            //playTimeRemaining?.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+            playTimeRemaining?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
+            playTimeRemaining?.zPosition = 14
+            self.addChild(playTimeRemaining!)
+        
+        doctorWizardsAltitude = SKLabelNode(fontNamed:"System")
+        //doctorWizardsAltitude?.text = "Altitude: \(0)"
+        doctorWizardsAltitude?.fontColor = SKColor.redColor()
+        doctorWizardsAltitude?.fontSize = 65;
+        doctorWizardsAltitude?.position = CGPoint(x:CGRectGetMinX(self.frame)+300,y:CGRectGetMinY(self.frame)+1250)
+        doctorWizardsAltitude?.zPosition = 14
+        self.addChild(doctorWizardsAltitude!)
+        
+        
+       
+        
+        /*
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
                 SKAction.waitForDuration(1.0)])))
@@ -97,7 +127,7 @@ class GameScene: SKScene {
             SKAction.sequence([SKAction.runBlock(spawnBlackHole),
                 SKAction.waitForDuration(45)])))
 
-        
+        */
         
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
@@ -126,12 +156,6 @@ class GameScene: SKScene {
         self.currentTime = currentTime
         
         
-        
-        
-        
-        
-        
-        
         if let lastTouch = lastTouchLocation {
             
             let diff = lastTouch - dude.position
@@ -155,6 +179,28 @@ class GameScene: SKScene {
                 self.altitude -= 1
             }
         }
+        
+        
+        //~~~console display code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        doctorWizardsAltitude?.text = "Altitude: \(displayAltitudeTickerOnConsole(altitude))"
+        
+        if ( timePassed == songDuration ){
+            
+            playTimeRemaining?.text = "TTP: \(0)"
+            
+            self.didLose = true // and show the you loose label or image
+
+        }else{
+            
+            playTimeRemaining?.text = "TTP: \(songDuration-timePassed)"
+            
+        }
+
+        //~~~console display code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        
+        
         
         println(self.altitude)
         boundsCheckDude()
@@ -532,4 +578,21 @@ class GameScene: SKScene {
     func playAlienCollisionSound(){
         SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
     }
+    
+    
+    func displayAltitudeTickerOnConsole(flt: CGFloat) -> String{
+        
+        let string = NSString(format: "%.2f", flt)
+        
+        let nf = NSNumberFormatter()
+        nf.numberStyle = .DecimalStyle
+        let s2 = nf.stringFromNumber(flt)
+        return s2!
+        
+    }
+    
+    
+    
+    
+    
 }

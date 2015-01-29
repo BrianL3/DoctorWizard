@@ -42,7 +42,7 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
 //MARK: TableViewDataSource functions
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = self.mediaQuery?.items[indexPath.row].title
+       // cell.textLabel?.text = self.mediaQuery?.items[indexPath.row].title
         cell.detailTextLabel?.text = self.mediaQuery?.items[indexPath.row].artist
         return cell
     }
