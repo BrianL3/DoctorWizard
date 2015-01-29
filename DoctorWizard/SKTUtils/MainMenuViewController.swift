@@ -63,11 +63,24 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
     
     
-    //MARK: Game Center Protocol Conformation
+//MARK: Game Center Protocol Conformation
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!) {
         gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func showLeaderBoardAndAchievements(shouldShowLeaderboard: Bool) {
+        var gcViewController = GKGameCenterViewController()
+        gcViewController.gameCenterDelegate = self
+        if shouldShowLeaderboard == true {
+            gcViewController.viewState = GKGameCenterViewControllerState.Leaderboards
+            gcViewController.leaderboardIdentifier = GameCenterController.singleton.leaderboardIdentifier
+        } else {
+            gcViewController.viewState = GKGameCenterViewControllerState.Achievements
+        }
+        self.presentViewController(gcViewController, animated: true, completion: nil)
+    }
+
     
 // MARK: Game Funcs
     func launchGame(){
