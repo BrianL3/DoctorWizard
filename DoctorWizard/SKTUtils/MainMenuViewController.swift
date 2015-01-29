@@ -61,6 +61,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
 // MARK: Game Funcs
     func launchGame(){
+        self.scene = nil
         self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
         println(self.songGenre)
         scene?.songGenre = self.songGenre
@@ -87,36 +88,6 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     func unpauseGame(){
         self.scene?.paused = false
     }
-    
-    //MARK: MEDIA PICKER CONTROLLER OPTIONS ================================================
-    
-    // if the user cancels out of choosing a song - dismisses the modal
-    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController!) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    // if the user picks a song it (1) fires PlayMusic and (2) dismisses the MediaPicker and then (3) summons GameViewController
-    func mediaPicker(mediaPicker: MPMediaPickerController!, didPickMediaItems mediaItemCollection: MPMediaItemCollection!) {
-        didPickMusic = !didPickMusic
-        // (1) firing playMusic
-        self.playMPMusic(mediaItemCollection, completionHandler: { (genre, duration) -> () in
-            //println("found songToPlay, duration of \(duration) and genre \(genre)")
-            // (2) dismissing the MediaPicker
-            mediaPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
-                // create the GameViewController
-                let songToPlay = mediaItemCollection[0] as? MPMediaItem
-                // (3) presenting the GameViewController
-                if duration != nil{
-                    self.songDuration = duration!
-                }
-                if genre != nil{
-                    self.songGenre = genre!
-                }
-                self.unpauseGame()
-
-            })
-        })
-    }
-
     
     //MARK: MUSIC PLAYER CONTROLLER ========================================================
     
