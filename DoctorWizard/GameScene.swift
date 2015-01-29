@@ -10,7 +10,7 @@ import SpriteKit
 
 protocol MainMenuDelegate {
     func playerDidLose()
-    func restartWithSameSong()
+    func restartWithSameSong(usingDefaultSong: Bool)
     func restartWithDifferentSong()
 }
 
@@ -224,9 +224,8 @@ class GameScene: SKScene {
             lostGameScene.mainMenuDelegate = self.menuDelegate
             if self.songGenre == "DefaultDuncanSong"{
                 lostGameScene.isDefaultSong = true
-            }else{
- //               lostGameScene.currentSong
             }
+            
             self.view?.presentScene(lostGameScene)
 
         }
