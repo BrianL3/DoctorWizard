@@ -17,7 +17,7 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole")
+    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dudeAnimation : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
@@ -182,7 +182,7 @@ class GameScene: SKScene {
             let lostGame = LooserScene(size: self.size)
             self.view?.presentScene(lostGame)
         } else {
-            println("healthPoints\(self.healthPoints)")
+//            println("healthPoints\(self.healthPoints)")
         }
         
         //println(self.altitude)
@@ -226,7 +226,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
-        println("song duration is : \(songDuration)")
+       // println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -625,29 +625,33 @@ class GameScene: SKScene {
     
     func currentLevelIs() -> Level {
         let timeAsFloat = self.songDuration as Double
+        //println(timeAsFloat)
         let timePassedAsFloat = self.timePassed as Double
-        if timeAsFloat <= timePassedAsFloat{
+        //println(timePassedAsFloat)
+        //if timeAsFloat <= timePassedAsFloat {
+            
+//           println("entered the if statement")
             let twentyPercent = timeAsFloat/5
-            let fortyPercent = (timeAsFloat/2) * 2
-            let sixtyPercent = (timeAsFloat/2) * 3
-            let eightyPercent = (timeAsFloat/2) * 5
+            let fortyPercent = (timeAsFloat/5) * 2
+            let sixtyPercent = (timeAsFloat/5) * 3
+            let eightyPercent = (timeAsFloat/5) * 5
             
             switch timePassedAsFloat {
                 //first 20% of the song
-            case 0...twentyPercent :
+            case 0..<(twentyPercent) :
                 self.curLevel = .First
-            case twentyPercent...fortyPercent :
+            case twentyPercent..<(fortyPercent):
                 self.curLevel = .Second
-            case fortyPercent...sixtyPercent :
+            case fortyPercent..<(sixtyPercent):
                 self.curLevel = .Third
-            case sixtyPercent...eightyPercent :
+            case sixtyPercent..<(eightyPercent):
                 self.curLevel = .Fourth
-            case eightyPercent...timeAsFloat :
+            case eightyPercent..<timeAsFloat:
                 self.curLevel = .Fifth
             default:
                 self.curLevel = .First
             }
-        }
+       // }
         return self.curLevel
     }
     
