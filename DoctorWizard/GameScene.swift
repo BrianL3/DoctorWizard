@@ -19,6 +19,7 @@ class GameScene: SKScene {
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dudeAnimation : SKAction
+    
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     let dudeMovePointsPerSec: CGFloat = 2000.0
@@ -40,14 +41,11 @@ class GameScene: SKScene {
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
     
-    var currentTime: NSTimeInterval = 0.00
-    
-    
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
     var healthPoints :CGFloat = 742
-
+    
     var didLose = false
     var menuDelegate: MainMenuDelegate?
     
@@ -93,7 +91,7 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented") // 6
     }
     
-
+    
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
@@ -157,12 +155,8 @@ class GameScene: SKScene {
             dt = 0
         }
         
-        
         lastUpdateTime = currentTime
         //println("\(dt*1000) milliseconds since last update")
-        
-        self.currentTime = currentTime
-        
         
         if let lastTouch = lastTouchLocation {
             
@@ -231,48 +225,40 @@ class GameScene: SKScene {
                 println("First scene on now")
             }
             
-        
         case .Second:
             if !fireBallOn {
                 actionToSpawnFireBalls()
                 println("Second scene on now")
             }
-
-        
+            
         case .Third:
             if !alienOn {
                 actionToSpawnAlien()
                 println("Third scene on now")
             }
             
-        
         case .Fourth:
             if !blackHoleOn {
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
-        
         case .Fifth:
             println("Fifth scene on now")
             
         default:
             println("DefaultLevel")
         }
-
-        
         
         if self.healthPoints <= 0 {
             self.healthPoints = 0
             println("you have lost")
             let lostGame = LooserScene(size: self.size)
-            lostGame.mainDelegate = self.menuDelegate
             self.view?.presentScene(lostGame)
         } else {
-  //          println("healthPoints\(self.healthPoints)")
+//            println("healthPoints\(self.healthPoints)")
         }
         
         //println(self.altitude)
-        println(self.altitude)
         boundsCheckDude()
         moveBackground()
         moveStars()
@@ -294,7 +280,7 @@ class GameScene: SKScene {
         
         let amountToMove = CGPoint(x: velocity.x * CGFloat(dt),
             y: velocity.y * CGFloat(dt))
-//        println("Amount to move: \(amountToMove)")
+        //        println("Amount to move: \(amountToMove)")
         
         sprite.position = CGPoint(
             x: sprite.position.x + amountToMove.x,
@@ -313,6 +299,7 @@ class GameScene: SKScene {
         
         lastTouchLocation = touchLocation
         moveDudeToward(touchLocation)
+       // println("song duration is : \(songDuration)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -351,7 +338,6 @@ class GameScene: SKScene {
             velocity.y = -velocity.y
         }
     }
-
     
     //MARK: SPAWN ROCKS ========================================================================
     
@@ -415,7 +401,7 @@ class GameScene: SKScene {
         SKAction.moveToX(randomXPosition, duration: 0.5)
         let actionMoveYUp =
         SKAction.moveToY(size.height - alien.frame.height / 2, duration: 4.0)
-
+        
         let actionRemove = SKAction.removeFromParent()
         alien.runAction(SKAction.sequence([actionMoveYDown, actionMoveX, actionMoveYUp, actionRemove]))}
     
@@ -545,8 +531,8 @@ class GameScene: SKScene {
                 
             }
         }
-
-
+        
+        
     }
     
     func addMovingBackground(){
@@ -702,16 +688,6 @@ class GameScene: SKScene {
     
     //MARK: LEVEL
     
-    func displayAltitudeTickerOnConsole(flt: CGFloat) -> String{
-        
-        let string = NSString(format: "%.2f", flt)
-        
-        let nf = NSNumberFormatter()
-        nf.numberStyle = .DecimalStyle
-        let s2 = nf.stringFromNumber(flt)
-        return s2!
-    }
-    
     enum Level {
         case First
         case Second
@@ -722,29 +698,33 @@ class GameScene: SKScene {
     
     func currentLevelIs() -> Level {
         let timeAsFloat = self.songDuration as Double
+        //println(timeAsFloat)
         let timePassedAsFloat = self.timePassed as Double
-        if timeAsFloat <= timePassedAsFloat{
+        //println(timePassedAsFloat)
+        //if timeAsFloat <= timePassedAsFloat {
+            
+//           println("entered the if statement")
             let twentyPercent = timeAsFloat/5
-            let fortyPercent = (timeAsFloat/2) * 2
-            let sixtyPercent = (timeAsFloat/2) * 3
-            let eightyPercent = (timeAsFloat/2) * 5
+            let fortyPercent = (timeAsFloat/5) * 2
+            let sixtyPercent = (timeAsFloat/5) * 3
+            let eightyPercent = (timeAsFloat/5) * 5
             
             switch timePassedAsFloat {
                 //first 20% of the song
-            case 0...twentyPercent :
+            case 0..<(twentyPercent) :
                 self.curLevel = .First
-            case twentyPercent...fortyPercent :
+            case twentyPercent..<(fortyPercent):
                 self.curLevel = .Second
-            case fortyPercent...sixtyPercent :
+            case fortyPercent..<(sixtyPercent):
                 self.curLevel = .Third
-            case sixtyPercent...eightyPercent :
+            case sixtyPercent..<(eightyPercent):
                 self.curLevel = .Fourth
-            case eightyPercent...timeAsFloat :
+            case eightyPercent..<timeAsFloat:
                 self.curLevel = .Fifth
             default:
                 self.curLevel = .First
             }
-        }
+       // }
         return self.curLevel
     }
     
@@ -783,5 +763,5 @@ class GameScene: SKScene {
     }
     
     
-
+    
 }
