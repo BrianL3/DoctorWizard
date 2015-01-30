@@ -95,10 +95,9 @@ class GameScene: SKScene {
         
         self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
         
-        
         super.init(size: size)
-        
-        
+        setupParticles()
+        createMagic()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -443,7 +442,7 @@ class GameScene: SKScene {
     func particleEmitterNode(#speed: CGFloat, lifetime: CGFloat, scale: CGFloat, birthRate: CGFloat, color: SKColor) -> SKEmitterNode {
         let star = SKLabelNode(fontNamed: "Helvetica")
         star.fontSize = 80.0
-        star.text = "✚"
+        star.text = "0"
         let textureView = SKView()
         let texture = textureView.textureFromNode(star)
         texture.filteringMode = .Nearest
@@ -456,8 +455,33 @@ class GameScene: SKScene {
         emitterNode.particleSpeed = speed
         emitterNode.particleScale = scale
         emitterNode.particleColorBlendFactor = 1
-        emitterNode.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMaxY(frame))
+        emitterNode.position = CGPoint(x: CGRectGetMaxX(frame), y: CGRectGetMaxY(frame))
         emitterNode.particlePositionRange = CGVector(dx: CGRectGetMaxX(frame), dy: 0)
+        
+        //not in setupParticles() :
+        emitterNode.emissionAngle = CGFloat(M_PI_4)
+        emitterNode.particleAction = SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_4), duration: 1))
+        emitterNode.particleZPosition = 1000
+        /*
+
+        emitterNode.particleBlendMode
+        emitterNode.particleColorRed/Green/Blue/AlphaSpeed
+        emitterNode.particleColorBlendFactorSpeed
+        emitterNode.xAcceleration
+        emitterNode.yAcceleration
+        emitterNode.numParticlesToEmit
+        emitterNode.particleRotation
+        emitterNode.particleRotationSpeed
+        emitterNode.particleSize
+        emitterNode.particleScaleSpeed
+        emitterNode.particleAlpha
+        emitterNode.particleAlphaSpeed =
+        emitterNode.targetNode
+        p.197 for range properties
+        
+        */
+        //emitterNode.particleAction = SKAction.repeatActionForever(SKAction.sequence([SKAction.rotateByAngle(CGFloat(-M_PI_4), duration: 1), SKAction.rotateByAngle(CGFloat(M_PI_4), duration: 1)]))
+        emitterNode.advanceSimulationTime(NSTimeInterval(lifetime))
         return emitterNode
     }
     
@@ -467,9 +491,15 @@ class GameScene: SKScene {
     func setupParticles() {
             let dustTrailNode = SKNode()
             dustTrailNode.name = "dustTrailNode"
-            dustTrailNode.addChild(particleEmitterNode(speed: -48, lifetime: (size.height / 23), scale: 0.2, birthRate: 1, color: SKColor.lightGrayColor()))
+            dustTrailNode.addChild(particleEmitterNode(speed: -100, lifetime: (size.height / 23), scale: 0.4, birthRate: 3, color: SKColor.lightGrayColor()))
             addChild(dustTrailNode)
-            
+    }
+    
+    func createMagic() {
+            let magicEmitter = SKEmitterNode(fileNamed: "Magic.sks")
+                magicEmitter.position = CGPoint(x: 700, y: 400)
+            magicEmitter.name = "magicEmitter"
+            addChild(magicEmitter)
     }
 
     
