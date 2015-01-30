@@ -44,8 +44,12 @@ class GameScene: SKScene {
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
     var backgroundHorizontalDirection: CGFloat = 1.0
+    // timing variables
     var gameStartTime : NSTimeInterval = 0
+    var gamePausedAt : NSTimeInterval?
     var timePassed : NSTimeInterval = 0
+    var currentClock : NSTimeInterval = 0
+    
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
     let motionManager = CMMotionManager()
@@ -101,6 +105,11 @@ class GameScene: SKScene {
             width: size.width,
             height: playableHeight) // 4
         
+        dudesHealthGague = CGRect(x: CGRectGetMinX(playableRect)+1700, y: CGRectGetMinY(playableRect)+350,
+            width: 200,
+            height: 30)
+        //dudesHealthGague = SKColor(colorWithRed:0.15, green:0.15, blue:0.3, alpha:1.0)
+        
         // setup dude_animation
         var texturesRight: [SKTexture] = []
         var texturesLeft: [SKTexture] = []
@@ -138,6 +147,7 @@ class GameScene: SKScene {
 
         //clockfix
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         
         //simulate SKSpriteNode for collision purposes
@@ -225,7 +235,14 @@ class GameScene: SKScene {
     }
     
     func didEnterBackground(){
-        self.paused = true
+            self.gamePausedAt = lastUpdateTime
+
+    }
+    func didEnterForeground(){
+        let currentTime = CACurrentMediaTime()
+// the new start time should be == old start time + time passed since pause
+        let timePaused = currentTime - gamePausedAt!
+        self.lastUpdateTime = self.lastUpdateTime + timePaused
     }
     
     //called before each frame is rendered
@@ -264,7 +281,6 @@ class GameScene: SKScene {
 //            }
 //        }
 //        
-        
         if self.paused == false {
             if gameStartTime == 0 {
                 gameStartTime = currentTime
@@ -278,6 +294,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
+        
         //println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
@@ -293,10 +310,13 @@ class GameScene: SKScene {
         }
         
         
-        //MARK: set timepassed
+        //MARK: SET TIMEPASSED ======================================
         if self.paused == false {
-            self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+            
+            self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
         }
+        
+        println(self.dt)
         
         //MARK: set altitude variable
         if timePassed % 0.5 == 0 {
