@@ -181,6 +181,38 @@ class GameScene: SKScene {
     
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
+        
+        //validating if it is fifth level only Dragon exists
+        
+        if currentLevelIs() == .Fifth {
+            
+            enumerateChildNodesWithName("rock") { node, _ in
+                
+                let rockNode = node as SKSpriteNode
+                rockNode.removeFromParent()
+                }
+            
+            enumerateChildNodesWithName("fireball") { node, _ in
+                
+                let fireballNode = node as SKSpriteNode
+                fireballNode.removeFromParent()
+            }
+            
+            enumerateChildNodesWithName("blackhole") { node, _ in
+                
+                let blackHoleNode = node as SKSpriteNode
+                blackHoleNode.removeFromParent()
+            }
+            
+            enumerateChildNodesWithName("alien") { node, _ in
+                
+                let alienNode = node as SKSpriteNode
+                alienNode.removeFromParent()
+            }
+        }
+        
+        
+        
         if gameStartTime == 0 {
             gameStartTime = currentTime
         }
