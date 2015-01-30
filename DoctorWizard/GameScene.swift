@@ -19,10 +19,8 @@ protocol MainMenuDelegate {
 class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
+    var singleDragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
-    let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
-    let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
-    let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
     var dudeDirection:String = "right"
     
     
@@ -56,7 +54,7 @@ class GameScene: SKScene {
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
-    var healthPoints :CGFloat = 74200
+    var healthPoints :CGFloat = 742
 
     var didLose = false
     var didWin = false
@@ -70,6 +68,8 @@ class GameScene: SKScene {
     var dragonOn : Bool = false
     
     var sequenceDragonActions : [SKAction] = []
+    var dragon : [SKSpriteNode] = []
+    var dragonCounter : Int = 0
     
     //console display labels
     var playTimeRemainingLabel : SKLabelNode?
@@ -78,6 +78,14 @@ class GameScene: SKScene {
     var playTimeRemainingTicker: NSTimeInterval = 0
     var playButtonPressed : Bool = false
     var backgroundSizeFrame : CGRect = CGRect(x: 0, y: 0, width: 4096, height: 3027)
+    let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
+    let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
+    let consoleBar : SKSpriteNode = SKSpriteNode(imageNamed: "drWizardConsoleBar_3000_wLabels")
+    
+    let dudesHealthGague: CGRect
+    
+    
+    
     
     var alienHitRocks = 15
     
@@ -88,6 +96,7 @@ class GameScene: SKScene {
         let maxAspectRatio:CGFloat = 16.0/9.0 // 1
         let playableHeight = size.width / maxAspectRatio // 2
         let playableMargin = (size.height-playableHeight)/2.0 // 3
+        
         playableRect = CGRect(x: 0, y: playableMargin,
             width: size.width,
             height: playableHeight) // 4
@@ -104,7 +113,6 @@ class GameScene: SKScene {
         
         self.dudeAnimationRight = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesRight, timePerFrame: 0.1))
         self.dudeAnimationLeft = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesLeft, timePerFrame: 0.1))
-        
         
         super.init(size: size)
         
@@ -136,42 +144,60 @@ class GameScene: SKScene {
 
         
         //MARK: Game Console  ======================================================================
+
         
-        consoleBarLeft.zPosition = 13
-        consoleBarLeft.position = CGPoint(x: 550, y: 220)
-        self.addChild(consoleBarLeft)
+        //Main console bar
         
-        consoleBarRight.zPosition = 13
-        consoleBarRight.position = CGPoint(x: 1500, y: 220)
-        self.addChild(consoleBarRight)
+            consoleBar.zPosition = 15
+            consoleBar.position = CGPoint(x: 1020, y: 248)
+            //consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+        
+        //console bar extender left for bigger screens
+            consoleBarLeft.zPosition = 15
+            consoleBarLeft.position = CGPoint(x: 0, y: 248)
+            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            self.addChild(consoleBarLeft)
+        
+        //console bar extenders right for bigger screens
+            consoleBarRight.zPosition = 15
+            consoleBarRight.position = CGPoint(x: 1500, y: 248)
+            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            self.addChild(consoleBarRight)
+        
+        self.addChild(consoleBar)
+        
+        
+        
+        //Get your rocks on
         
         for i in 1...5 {
             rocks.append("pinkRock\(i)")
         }
         
         playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
-        playTimeRemainingLabel?.fontColor = SKColor.redColor()
-        playTimeRemainingLabel?.fontSize = 60;
-        //playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+250,y:CGRectGetMinY(self.frame)+1250)
-        playTimeRemainingLabel?.position = CGPoint(x: 190, y: 220)
-        playTimeRemainingLabel?.zPosition = 14
+        playTimeRemainingLabel?.fontColor = SKColor.blueColor()
+        playTimeRemainingLabel?.fontSize = 38;
+        //playTimeRemainingLabel?.position = CGPoint(x: 560, y: 213)
+        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+560,y:CGRectGetMinY(self.frame)+213)
+        playTimeRemainingLabel?.zPosition = 16
         self.addChild(playTimeRemainingLabel!)
         
         doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"Futura")
-        doctorWizardsAltitudeLabel?.fontColor = SKColor.redColor()
-        doctorWizardsAltitudeLabel?.fontSize = 60;
-        //doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsAltitudeLabel?.position = CGPoint(x: 900, y: 220)
-        doctorWizardsAltitudeLabel?.zPosition = 14
+        doctorWizardsAltitudeLabel?.fontColor = SKColor.blueColor()
+        doctorWizardsAltitudeLabel?.fontSize = 40;
+        //doctorWizardsAltitudeLabel?.position = CGPoint(x: 1031, y: 198)
+        doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1031,y:CGRectGetMinY(self.frame)+198)
+        doctorWizardsAltitudeLabel?.zPosition = 16
         self.addChild(doctorWizardsAltitudeLabel!)
         
         
         doctorWizardsHealthLabel = SKLabelNode(fontNamed:"Futura")
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
-        doctorWizardsHealthLabel?.fontSize = 60;
-        //doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1800,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 220)
-        doctorWizardsHealthLabel?.zPosition = 14
+        doctorWizardsHealthLabel?.fontSize = 45;
+        //doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
+        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1700,y:CGRectGetMinY(self.frame)+350)
+        
+        doctorWizardsHealthLabel?.zPosition = 16
         self.addChild(doctorWizardsHealthLabel!)
         
         
@@ -302,8 +328,7 @@ class GameScene: SKScene {
             
         case .First:
             if !rocksOn {
-                    actionToSpawnRocks()
-//                actionToSpawnRocks()
+                actionToSpawnRocks()
                 println("First scene on now")
             }
 
@@ -321,7 +346,6 @@ class GameScene: SKScene {
             
         case .Fourth:
             if !blackHoleOn {
-                actionToSpawnRocks()
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
@@ -348,7 +372,7 @@ class GameScene: SKScene {
         
         //MARK: Main Game Consile Display Labels
         
-        doctorWizardsAltitudeLabel?.text = "Altitude: \(altitude)"
+        doctorWizardsAltitudeLabel?.text = "\(altitude)"
         
         //I want to start playTimeRemainingTicker after play button was pressed not when game starts
         //if ( playButtonPressed == true ){}
@@ -360,12 +384,12 @@ class GameScene: SKScene {
         if ( playTimeRemainingTicker > 0 ){
             
             
-            playTimeRemainingLabel?.text = "TTP: \(playTimeRemainingTicker)"
+            playTimeRemainingLabel?.text = "\(playTimeRemainingTicker)"
             
         }else{
             
             
-            playTimeRemainingLabel?.text = "TTP: \(0)"
+            playTimeRemainingLabel?.text = "\(0)"
             
             self.didWin = true // and show the you loose label or image
             
@@ -734,23 +758,26 @@ class GameScene: SKScene {
     //MARK: DRAGON ==============================================================================
     
     func spawnDragon() {
+        
+        singleDragon = SKSpriteNode(imageNamed: "dragon2")
+        dragon.append(singleDragon)
 
         for index in 1...60 {
         //random variable for dragon movement
-        var randomXChooser = CGFloat(Int.random(0...Int(size.width)))
+        var randomXChooser = CGFloat(Int.random(0...Int(playableRect.width)))
         println(randomXChooser)
         println(size.width)
-        var randomYChooser = CGFloat(Int.random(0...Int(size.height)))
+        var randomYChooser = CGFloat(Int.random(0...Int(playableRect.height)))
         
         switch generateRandomDragonOrientation() {
             
         case 1...5:
-            var actionX = SKAction.moveToX(randomYChooser +  (dragon.frame.width / 2), duration: 0.3)
+            var actionX = SKAction.moveToX(randomYChooser +  (dragon[dragonCounter].frame.width / 2), duration: 0.3)
             sequenceDragonActions.append(actionX)
             
         case 6...10:
             
-            var actionY = SKAction.moveToY(randomYChooser -  (dragon.frame.height / 2), duration: 0.3)
+            var actionY = SKAction.moveToY(randomYChooser -  (dragon[dragonCounter].frame.height / 2), duration: 0.3)
             sequenceDragonActions.append(actionY)
             
         default:
@@ -758,18 +785,18 @@ class GameScene: SKScene {
   
             }
         }
-        dragon.name = "dragon"
+        dragon[dragonCounter].name = "dragon"
         println("I made it to spawnDragon")
-        dragon.position = CGPoint(
-            x: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.width,
-                max: CGRectGetMaxX(playableRect) - dragon.frame.width),
-            y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.height,
-                max: (CGRectGetMaxX(playableRect) - (5 * dragon.frame.height))))
-        dragon.setScale(0)
-        dragon.zPosition = 0
-        addChild(dragon)
+        dragon[dragonCounter].position = CGPoint(
+            x: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon[dragonCounter].frame.width,
+                max: CGRectGetMaxX(playableRect) - dragon[dragonCounter].frame.width),
+            y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon[dragonCounter].frame.height,
+                max: (CGRectGetMaxX(playableRect) - (5 * dragon[dragonCounter].frame.height))))
+        dragon[dragonCounter].setScale(0)
+        dragon[dragonCounter].zPosition = 0
+        addChild(dragon[dragonCounter])
         let appear = SKAction.scaleTo(1.3, duration: 1.0)
-        dragon.runAction(appear)
+        dragon[dragonCounter].runAction(appear)
         
         let actionDragonAttack = SKAction.sequence(sequenceDragonActions)
         
@@ -779,11 +806,14 @@ class GameScene: SKScene {
         
         let dragonKillEverything = [actionDragonAttack, actionRemove]
         
-        dragon.runAction(SKAction.sequence(dragonKillEverything))
+        dragon[dragonCounter].runAction(SKAction.sequence(dragonKillEverything))
         
-    // MAARK: END OF DRAGON SECTION ==============================================================
+        dragonCounter++
+        //println(dragonCounter)
 
     }
+    
+    // MAARK: END OF DRAGON SECTION ==============================================================
     
     func generateRandomDragonOrientation() -> Int {
         
@@ -793,7 +823,7 @@ class GameScene: SKScene {
     
     func runDragonActions(dragonActions : [SKAction]) {
         for index in 0...19 {
-            dragon.runAction(dragonActions[index])
+            dragon[dragonCounter].runAction(dragonActions[index])
         }
     }
     
@@ -864,7 +894,7 @@ class GameScene: SKScene {
             
             let dudeHit = node as SKSpriteNode
             
-            if CGRectIntersectsRect(dudeHit.frame, self.dragon.frame) {
+            if CGRectIntersectsRect(dudeHit.frame, self.dragon[self.dragonCounter].frame) {
                 self.healthPoints = self.healthPoints - 500
             }
         }
@@ -1201,7 +1231,7 @@ class GameScene: SKScene {
         dragonOn = true
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnDragon),
-                SKAction.waitForDuration(20)])))
+                SKAction.waitForDuration(15)])))
         println("Dragon on scene on now")
     }
     
