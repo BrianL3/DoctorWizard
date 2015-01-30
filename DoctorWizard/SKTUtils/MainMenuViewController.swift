@@ -34,9 +34,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
         popUpVC.delegate = self
         
-        // frame  is 40% of screen
-        let width           = self.view.frame.width * 0.85
-        let height          = self.view.frame.height * 0.85
+        //MARK: Main Menu Frame
+        let width           = self.view.frame.width * 1.0
+        let height          = self.view.frame.height * 1.0
         popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
         popUpVC.view.center = self.view.center
         
@@ -143,6 +143,28 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     }
     
     //MARK: MAIN MENU DELEGATE
+    func playerDidLose(){
+        self.pauseGame()
+        //create pop up controller
+        popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
+        popUpVC.delegate = self
+        
+        let width           = self.view.frame.width * 1.0
+        let height          = self.view.frame.height * 1.0
+        popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
+        popUpVC.view.center = self.view.center
+        
+        self.view.addSubview(popUpVC.view)
+        
+        //told parent vc that child vc was added
+        self.addChildViewController(popUpVC)
+        
+        //told child it has a parent
+        popUpVC.didMoveToParentViewController(self)
+        
+        //do animation
+        AnimationController.singleton.bounceInViewController(popUpVC)
+    }
     
     func restartWithSameSong(usingDefaultSong : Bool){
         if usingDefaultSong{
