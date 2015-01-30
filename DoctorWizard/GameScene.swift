@@ -80,6 +80,10 @@ class GameScene: SKScene {
     var backgroundSizeFrame : CGRect = CGRect(x: 0, y: 0, width: 4096, height: 3027)
     
     var alienHitRocks = 15
+    
+    // app delegate
+    var appDelegate = UIApplication.sharedApplication().delegate
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -90,7 +94,7 @@ class GameScene: SKScene {
             width: size.width,
             height: playableHeight) // 4
         
-        
+        //appDelegate!.applicationWillResignActive(<#application: UIApplication#>)
         // setup dude_animation
         var texturesRight: [SKTexture] = []
         var texturesLeft: [SKTexture] = []
@@ -231,15 +235,16 @@ class GameScene: SKScene {
 //        }
 //        
         
-        
-        if gameStartTime == 0 {
-            gameStartTime = currentTime
-        }
-        
-        if lastUpdateTime > 0 {
-            dt = currentTime - lastUpdateTime
-        } else {
-            dt = 0
+        if self.paused == false {
+            if gameStartTime == 0 {
+                gameStartTime = currentTime
+            }
+            
+            if lastUpdateTime > 0 {
+                dt = currentTime - lastUpdateTime
+            } else {
+                dt = 0
+            }
         }
         
         lastUpdateTime = currentTime
@@ -259,7 +264,9 @@ class GameScene: SKScene {
         
         
         //MARK: set timepassed
-        self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        if self.paused == false {
+            self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        }
         
         //MARK: set altitude variable
         if timePassed % 0.5 == 0 {
