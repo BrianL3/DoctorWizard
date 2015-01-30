@@ -45,8 +45,12 @@ class GameScene: SKScene {
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
     var backgroundHorizontalDirection: CGFloat = 1.0
+    // timing variables
     var gameStartTime : NSTimeInterval = 0
+    var gamePausedAt : NSTimeInterval?
     var timePassed : NSTimeInterval = 0
+    var currentClock : NSTimeInterval = 0
+    
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
     let motionManager = CMMotionManager()
@@ -102,6 +106,11 @@ class GameScene: SKScene {
             width: size.width,
             height: playableHeight) // 4
         
+        dudesHealthGague = CGRect(x: CGRectGetMinX(playableRect)+1700, y: CGRectGetMinY(playableRect)+350,
+            width: 200,
+            height: 30)
+        //dudesHealthGague = SKColor(colorWithRed:0.15, green:0.15, blue:0.3, alpha:1.0)
+        
         // setup dude_animation
         var texturesRight: [SKTexture] = []
         var texturesLeft: [SKTexture] = []
@@ -139,6 +148,7 @@ class GameScene: SKScene {
 
         //clockfix
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         
         //simulate SKSpriteNode for collision purposes
@@ -151,18 +161,20 @@ class GameScene: SKScene {
         
             consoleBar.zPosition = 15
             consoleBar.position = CGPoint(x: 1020, y: 248)
+            //consoleBar.anchorPoint = CGPointZero
             //consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            //consoleBar.position = CGPointZero
         
         //console bar extender left for bigger screens
             consoleBarLeft.zPosition = 15
             consoleBarLeft.position = CGPoint(x: 0, y: 248)
-            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+0,y:CGRectGetMinY(self.frame)+248)
             self.addChild(consoleBarLeft)
         
         //console bar extenders right for bigger screens
             consoleBarRight.zPosition = 15
             consoleBarRight.position = CGPoint(x: 1500, y: 248)
-            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1500,y:CGRectGetMinY(self.frame)+248)
             self.addChild(consoleBarRight)
         
         self.addChild(consoleBar)
@@ -196,7 +208,7 @@ class GameScene: SKScene {
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
         doctorWizardsHealthLabel?.fontSize = 45;
         //doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
-        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1700,y:CGRectGetMinY(self.frame)+350)
+        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1840,y:CGRectGetMinY(self.frame)+213)
         
         doctorWizardsHealthLabel?.zPosition = 16
         self.addChild(doctorWizardsHealthLabel!)
@@ -226,7 +238,14 @@ class GameScene: SKScene {
     }
     
     func didEnterBackground(){
-        self.paused = true
+            self.gamePausedAt = lastUpdateTime
+
+    }
+    func didEnterForeground(){
+        let currentTime = CACurrentMediaTime()
+// the new start time should be == old start time + time passed since pause
+        let timePaused = currentTime - gamePausedAt!
+        self.lastUpdateTime = self.lastUpdateTime + timePaused
     }
     
     //called before each frame is rendered
@@ -265,7 +284,6 @@ class GameScene: SKScene {
 //            }
 //        }
 //        
-        
         if self.paused == false {
             if gameStartTime == 0 {
                 gameStartTime = currentTime
@@ -279,6 +297,7 @@ class GameScene: SKScene {
         }
         
         lastUpdateTime = currentTime
+        
         //println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
@@ -294,10 +313,13 @@ class GameScene: SKScene {
         }
         
         
-        //MARK: set timepassed
+        //MARK: SET TIMEPASSED ======================================
         if self.paused == false {
-            self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+            
+            self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
         }
+        
+        println(self.dt)
         
         //MARK: set altitude variable
         if timePassed % 0.5 == 0 {
@@ -371,7 +393,7 @@ class GameScene: SKScene {
         }
         
         
-        //MARK: Main Game Consile Display Labels
+        //MARK: GAME CONSOLE DISPLAY LABELS-------------------------------------
         
         doctorWizardsAltitudeLabel?.text = "\(altitude)"
         
@@ -399,10 +421,52 @@ class GameScene: SKScene {
             
         }
         
+
+        var fullHealthStatus: CGFloat = 742.0
+        //println("Your health now is \(healthPoints)")
         
-        doctorWizardsHealthLabel?.text = "Health: \(healthPoints)"
+        let healthyIconEmoji: String = "🍏"
+        let unhealthyIconEmoji: String = "🍊"
+
+        
+        if (healthPoints == 0 ){
+             println("YOU dead!")
+            doctorWizardsHealthLabel?.text = "YOU DEAD!"
+        }else{
         
         
+        //strongest >= 80%
+        if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
+            //println("strongest condition reached")
+            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji) \(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+        }
+        
+        //strong <= 80% && >=60%
+        if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
+            //println("strong condition reached")
+            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
+        }
+        
+        //ok <= 60% && >=40%
+        if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
+            //println("ok condition reached")
+            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+        }
+        
+         //weak <= 40% && >=20%
+        if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
+            //println("weak condition reached")
+            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
+        }
+        
+        //weakest <= 20%
+        if(healthPoints <= fullHealthStatus*0.2){
+            //println("weakest condition reached")
+            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
+        }
+        
+        }
+ 
         
         if self.alienHitRocks <= 0 {
             enumerateChildNodesWithName("alienspaceship", usingBlock: { (node, _) -> Void in
@@ -410,6 +474,10 @@ class GameScene: SKScene {
                 alien.removeFromParent()
             })
         }
+        
+        
+          //E.O. GAME CONSOLE DISPLAY LABELS -------------------------------------
+        
         
         //println(self.altitude)
 //        boundsCheckDude()
