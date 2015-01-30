@@ -23,9 +23,11 @@ class GameScene: SKScene {
     let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
     let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
+    var dudeDirection:String = "right"
     
     
-    let dudeAnimation : SKAction
+    let dudeAnimationRight : SKAction
+    let dudeAnimationLeft : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -89,12 +91,17 @@ class GameScene: SKScene {
         
         
         // setup dude_animation
-        var textures: [SKTexture] = []
+        var texturesRight: [SKTexture] = []
+        var texturesLeft: [SKTexture] = []
         for i in 0...10 {
-            textures.append(SKTexture(imageNamed: "dude\(i)"))
+            
+            texturesRight.append(SKTexture(imageNamed: "dude\(i)" ))
+            texturesLeft.append(SKTexture(imageNamed: "dudeLeft\(i)"))
+
         }
         
-        self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
+        self.dudeAnimationRight = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesRight, timePerFrame: 0.1))
+        self.dudeAnimationLeft = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesLeft, timePerFrame: 0.1))
         
         
         super.init(size: size)
@@ -115,7 +122,7 @@ class GameScene: SKScene {
         dude.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         dude.zPosition = 15
         dude.setScale(0.75)
-        dude.runAction(SKAction.repeatActionForever(dudeAnimation))
+        dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
         addChild(dude)
         
@@ -201,34 +208,36 @@ class GameScene: SKScene {
 
         
         //validating if it is fifth level only Dragon exists
+
         
-        if currentLevelIs() == .Fifth {
-            
-            enumerateChildNodesWithName("rock") { node, _ in
-                
-                let rockNode = node as SKSpriteNode
-                rockNode.removeFromParent()
-                }
-            
-            enumerateChildNodesWithName("fireball") { node, _ in
-                
-                let fireballNode = node as SKSpriteNode
-                fireballNode.removeFromParent()
-            }
-            
-            enumerateChildNodesWithName("blackhole") { node, _ in
-                
-                let blackHoleNode = node as SKSpriteNode
-                blackHoleNode.removeFromParent()
-            }
-            
-            enumerateChildNodesWithName("alien") { node, _ in
-                
-                let alienNode = node as SKSpriteNode
-                alienNode.removeFromParent()
-            }
-        }
-        
+        //MARK: stop all nodes other than dragon
+//        if currentLevelIs() == .Fifth {
+//            
+//            enumerateChildNodesWithName("rock") { node, _ in
+//                
+//                let rockNode = node as SKSpriteNode
+//                rockNode.removeFromParent()
+//                }
+//            
+//            enumerateChildNodesWithName("fireball") { node, _ in
+//                
+//                let fireballNode = node as SKSpriteNode
+//                fireballNode.removeFromParent()
+//            }
+//            
+//            enumerateChildNodesWithName("blackhole") { node, _ in
+//                
+//                let blackHoleNode = node as SKSpriteNode
+//                blackHoleNode.removeFromParent()
+//            }
+//            
+//            enumerateChildNodesWithName("alien") { node, _ in
+//                
+//                let alienNode = node as SKSpriteNode
+//                alienNode.removeFromParent()
+//            }
+//        }
+//        
         
         
         if gameStartTime == 0 {
@@ -256,10 +265,13 @@ class GameScene: SKScene {
             }
         }
         
+        
+        //MARK: set timepassed
         self.timePassed = round((currentTime - gameStartTime) * 10 )/10
         
-        
+        //MARK: set altitude variable
         if timePassed % 0.5 == 0 {
+            
             if self.backgroundVerticalDirection < 0 {
                 self.altitude += 1
             } else if self.backgroundVerticalDirection > 0 {
@@ -268,6 +280,17 @@ class GameScene: SKScene {
         }
         
         
+        if self.backgroundHorizontalDirection > 0 && self.dudeDirection != "left" {
+            self.dude.removeAllActions()
+            self.dude.runAction(SKAction.repeatActionForever(dudeAnimationLeft))
+            self.dudeDirection = "left"
+        } else if self.backgroundHorizontalDirection < 0 && self.dudeDirection != "right" {
+            self.dude.removeAllActions()
+            self.dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
+            self.dudeDirection = "right"
+        }
+        
+
         
         //Sections that determines which enemmies come to playing field based on Level of tune
         
@@ -290,11 +313,13 @@ class GameScene: SKScene {
         case .Third:
             if !alienOn {
                 actionToSpawnAlien()
+                actionToSpawnRocks()
                 println("Third scene on now")
             }
             
         case .Fourth:
             if !blackHoleOn {
+                actionToSpawnRocks()
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
@@ -340,7 +365,7 @@ class GameScene: SKScene {
             
             playTimeRemainingLabel?.text = "TTP: \(0)"
             
-            self.didLose = true // and show the you loose label or image
+            self.didWin = true // and show the you loose label or image
             
             // will create "You Loose" Label or show Duncan Artwork
             
@@ -479,25 +504,34 @@ class GameScene: SKScene {
     
     func spawnRock(){
         let chooseRockNum = Int(CGFloat.random(min: 1, max: 5))
-        println(chooseRockNum)
         let rock = SKSpriteNode(imageNamed: self.rocks[chooseRockNum])
-        rock.position = self.backgroundLayer.convertPoint(randomSpawnPoint(self.backgroundSizeFrame), fromNode: self)
+        rock.position = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
         // exclusive or checks to determin that the rock will not spawn on  the player!
         if spawnWontHitPlayer(position) {
             rock.setScale(0)
             rock.alpha = 0
             rock.zRotation = CGFloat.random(min: 0, max: 90)
             self.backgroundLayer.addChild(rock)
-            let duration = NSTimeInterval(CGFloat.random(min: 2, max: 6))
-            let grow = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 1.8), duration: duration)
-            let fade = SKAction.fadeAlphaTo(1, duration: duration)
+            let duration = NSTimeInterval(CGFloat.random(min: 0, max: 10))
+            let grow = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 3), duration: duration)
+            let fade = SKAction.fadeAlphaTo(1, duration: duration/10)
             let wait = SKAction.waitForDuration(NSTimeInterval(CGFloat.random(min: 4, max: 15)))
             let appear = SKAction.group([grow,fade])
-            let disopear = appear.reversedAction()
+            let reverseGrow = SKAction.scaleTo(0, duration: duration/5)
+            let reverseFade = SKAction.fadeAlphaTo(0, duration: duration/5)
+            let disopear = SKAction.group([reverseFade, reverseGrow])
             let remove = SKAction.removeFromParent()
-            let seq = SKAction.sequence([appear,wait,disopear, remove])
-            rock.runAction(seq)
-            let randomFloat = CGFloat.random(min: 3, max: 10)
+            let curentLevel = currentLevelIs()
+            if curentLevel == .First || curentLevel == .Second {
+                let seq = SKAction.sequence([appear,wait,disopear, remove])
+                rock.runAction(seq)
+            } else {
+                let positionToDouble = randomSpawnPoint()
+                let moveToPositon = positionToDouble * 2
+                let move = SKAction.moveTo(moveToPositon, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
+                let moveApear = SKAction.group([grow,move,fade])
+                rock.runAction(SKAction.sequence([moveApear, disopear, remove]))
+            }
         }
 
     }
@@ -512,11 +546,10 @@ class GameScene: SKScene {
     }
     
 
-    func randomSpawnPoint(node:CGRect) -> CGPoint {
+    func randomSpawnPoint() -> CGPoint {
         let posX : CGFloat = CGFloat.random(min: 0, max: 4096) - 1024
         let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
         let position = CGPoint(x: posX, y: posY)
-        println("rando point \(position)")
         return position
     }
     
@@ -1046,7 +1079,7 @@ class GameScene: SKScene {
         rocksOn = true
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
-                SKAction.waitForDuration(1)])))
+                SKAction.waitForDuration(0.7)])))
         println("Rock on  scene on now")
     }
     
