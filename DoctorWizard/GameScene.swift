@@ -439,6 +439,40 @@ class GameScene: SKScene {
         }
     }
     
+    //MARK: PARTICLE SYSTEMS ========================================================================
+    func particleEmitterNode(#speed: CGFloat, lifetime: CGFloat, scale: CGFloat, birthRate: CGFloat, color: SKColor) -> SKEmitterNode {
+        let star = SKLabelNode(fontNamed: "Helvetica")
+        star.fontSize = 80.0
+        star.text = "✚"
+        let textureView = SKView()
+        let texture = textureView.textureFromNode(star)
+        texture.filteringMode = .Nearest
+        
+        let emitterNode = SKEmitterNode()
+        emitterNode.particleTexture = texture
+        emitterNode.particleBirthRate = birthRate
+        emitterNode.particleColor = color
+        emitterNode.particleLifetime = lifetime
+        emitterNode.particleSpeed = speed
+        emitterNode.particleScale = scale
+        emitterNode.particleColorBlendFactor = 1
+        emitterNode.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMaxY(frame))
+        emitterNode.particlePositionRange = CGVector(dx: CGRectGetMaxX(frame), dy: 0)
+        return emitterNode
+    }
+    
+    /*  you need a setup scene layer equivalent!
+    ->      setupParticlesLayers() in init:
+    */
+    func setupParticles() {
+            let dustTrailNode = SKNode()
+            dustTrailNode.name = "dustTrailNode"
+            dustTrailNode.addChild(particleEmitterNode(speed: -48, lifetime: (size.height / 23), scale: 0.2, birthRate: 1, color: SKColor.lightGrayColor()))
+            addChild(dustTrailNode)
+            
+    }
+
+    
     //MARK: SPAWN ROCKS ========================================================================
     
     func spawnRock() {
