@@ -81,8 +81,6 @@ class GameScene: SKScene {
     
     var alienHitRocks = 15
     
-    // app delegate
-    var appDelegate = UIApplication.sharedApplication().delegate
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -94,7 +92,6 @@ class GameScene: SKScene {
             width: size.width,
             height: playableHeight) // 4
         
-        //appDelegate!.applicationWillResignActive(<#application: UIApplication#>)
         // setup dude_animation
         var texturesRight: [SKTexture] = []
         var texturesLeft: [SKTexture] = []
@@ -131,6 +128,9 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
 
+        //clockfix
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        
         
         //simulate SKSpriteNode for collision purposes
 
@@ -196,6 +196,10 @@ class GameScene: SKScene {
         }
        
         
+    }
+    
+    func didEnterBackground(){
+        self.paused = true
     }
     
     //called before each frame is rendered
