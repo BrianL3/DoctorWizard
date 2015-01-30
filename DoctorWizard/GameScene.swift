@@ -452,7 +452,7 @@ class GameScene: SKScene {
     func particleEmitterNode(#speed: CGFloat, lifetime: CGFloat, scale: CGFloat, birthRate: CGFloat, color: SKColor) -> SKEmitterNode {
         let star = SKLabelNode(fontNamed: "Helvetica")
         star.fontSize = 80.0
-        star.text = "0"
+        star.text = "🔹"
         let textureView = SKView()
         let texture = textureView.textureFromNode(star)
         texture.filteringMode = .Nearest
@@ -471,7 +471,7 @@ class GameScene: SKScene {
         //not in setupParticles() :
         emitterNode.emissionAngle = CGFloat(M_PI_4)
         emitterNode.particleAction = SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_4), duration: 1))
-        emitterNode.particleZPosition = 1000
+        emitterNode.particleZPosition = 100
         /*
 
         emitterNode.particleBlendMode
@@ -491,27 +491,36 @@ class GameScene: SKScene {
         
         */
         //emitterNode.particleAction = SKAction.repeatActionForever(SKAction.sequence([SKAction.rotateByAngle(CGFloat(-M_PI_4), duration: 1), SKAction.rotateByAngle(CGFloat(M_PI_4), duration: 1)]))
+        
+        // keyframe for particles to alternate between 2 color values : to sparkle
+        let sparkles = 20
+        let colorSequence = SKKeyframeSequence(capacity: sparkles * 2)
+        let sparkleTime = 1.0 / CGFloat(sparkles)
+        for i in 0..<sparkles {
+            colorSequence.addKeyframeValue(SKColor.whiteColor(), time: CGFloat(i) * 2 * sparkleTime/2)
+            colorSequence.addKeyframeValue(SKColor.blueColor(), time: (CGFloat(i) * 2+1) * sparkleTime/2)
+        }
+        emitterNode.particleColorSequence = colorSequence
+        
         emitterNode.advanceSimulationTime(NSTimeInterval(lifetime))
         return emitterNode
     }
     
-    /*  you need a setup scene layer equivalent!
-    ->      setupParticlesLayers() in init:
-    */
+    // dust particles
     func setupParticles() {
             let dustTrailNode = SKNode()
             dustTrailNode.name = "dustTrailNode"
-            dustTrailNode.addChild(particleEmitterNode(speed: -100, lifetime: (size.height / 23), scale: 0.4, birthRate: 3, color: SKColor.lightGrayColor()))
+            dustTrailNode.addChild(particleEmitterNode(speed: -100, lifetime: (size.height / 23), scale: 0.4, birthRate: 1, color: SKColor.lightGrayColor()))
             addChild(dustTrailNode)
     }
     
+    // dude particles
     func createMagic() {
             let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
                 magicEmitter.position = CGPoint(x: 700, y: 400)
             magicEmitter.name = "magicEmitter"
             addChild(magicEmitter)
     }
-
     
     //MARK: SPAWN ROCKS ========================================================================
     
