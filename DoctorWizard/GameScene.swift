@@ -270,13 +270,13 @@ class GameScene: SKScene {
 
         case .Third:
             if !alienOn {
-               actionToSpawnAlien()
+                actionToSpawnAlien()
                 println("Third scene on now")
             }
             
         case .Fourth:
             if !blackHoleOn {
-               actionToSpawnBlackHole()
+                actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
@@ -709,6 +709,10 @@ class GameScene: SKScene {
                 let repeatSpin = SKAction.repeatActionForever(oneSpin)
                 let implode = SKAction.scaleTo(0, duration: 2.0)
                 let actionRemove = SKAction.removeFromParent()
+                let actionTowardsBlackHoleXCoord = SKAction.moveToX(self.blackHole.position.x, duration: 1.0)
+                self.dude.runAction(actionTowardsBlackHoleXCoord)
+                let actionTowardsBlackHoleYCoord = SKAction.moveToY(self.blackHole.position.y, duration: 1.0)
+                self.dude.runAction(actionTowardsBlackHoleYCoord)
                 let actions = [implode, actionRemove]
                 dudeHit.runAction(repeatSpin)
                 dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
