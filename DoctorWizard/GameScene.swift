@@ -1078,6 +1078,7 @@ class GameScene: SKScene {
     }
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
     func playRockCollisionSound(){
+        if self.songGenre == "DefaultDuncanSong"{
         let randomNum = CGFloat.random(min: 0, max: 4)
         switch randomNum{
         case 0..<1 :
@@ -1094,16 +1095,18 @@ class GameScene: SKScene {
         }
 
         SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 1.0
+        }
     }
     
     func playAlienCollisionSound(){
+        if self.songGenre == "DefaultDuncanSong" {
         let randomNum = CGFloat.random(min: 1, max: 2)
         if randomNum <= 1 {
             SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
         }else{
             SKTAudio.sharedInstance().playSoundEffect("blop_seven.wav")
         }
-    
+        }
     }
     
     //MARK: LEVEL
