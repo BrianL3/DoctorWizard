@@ -18,8 +18,6 @@ protocol MainMenuDelegate {
 
 class GameScene: SKScene {
     
-    
-    
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     var singleDragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     var blackHole : SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
@@ -148,11 +146,11 @@ class GameScene: SKScene {
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
+
+        //clockfix
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
-//        let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
-//        magicEmitter.position = CGPoint(x: -10, y: 15)
-//        magicEmitter.name = "magicEmitter"
-//        dude.addChild(magicEmitter)
         
         //simulate SKSpriteNode for collision purposes
 
@@ -236,8 +234,7 @@ class GameScene: SKScene {
                     let horizontalData = data.acceleration.y
                     self.backgroundVerticalDirection = CGFloat(verticalData * 50.0)
                     self.backgroundHorizontalDirection = CGFloat(horizontalData * 50.0)
-//                    println("verticalData: \(verticalData)")
-//                    println("horizontalData: \(horizontalData)")
+                    
                   //  println("we got acceleromiter data : \(verticleData)")
                 }
             })
@@ -343,14 +340,10 @@ class GameScene: SKScene {
             self.dude.removeAllActions()
             self.dude.runAction(SKAction.repeatActionForever(dudeAnimationLeft))
             self.dudeDirection = "left"
-//            self.magicEmitter.emissionAngle = 180
-            
-            
         } else if self.backgroundHorizontalDirection < 0 && self.dudeDirection != "right" {
             self.dude.removeAllActions()
             self.dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
             self.dudeDirection = "right"
-           // self.magicEmitter.emissionAngle = 0.0
         }
         
         self.dude.position = self.backgroundLayer.convertPoint(CGPoint(x: self.size.width/2, y: self.size.height/2), fromNode: self)
@@ -635,17 +628,19 @@ class GameScene: SKScene {
     func setupParticles() {
         let dustTrailNode = SKNode()
         dustTrailNode.name = "dustTrailNode"
-        dustTrailNode.addChild(particleEmitterNode(speed: -400, lifetime: (size.height / 100), scale: 0.5, birthRate: 1, color: SKColor.lightGrayColor()))
+        dustTrailNode.addChild(particleEmitterNode(speed: -400, lifetime: (size.height / 100), scale: 0.3, birthRate: 1, color: SKColor.lightGrayColor()))
         dustTrailNode.zPosition = 20
         addChild(dustTrailNode)
         
-        var emitterNode = particleEmitterNode(speed: -240, lifetime: (size.height / 50), scale: 0.2, birthRate: 2, color: SKColor.grayColor())
+        var emitterNode = particleEmitterNode(speed: -240, lifetime: (size.height / 50), scale: 0.2, birthRate: 2, color: SKColor.yellowColor())
         emitterNode.zPosition = -1
-        emitterNode.position = CGPoint(x: 0, y: CGRectGetMaxY(frame))
+        //emitterNode.position = CGPoint(x: 0, y: CGRectGetMaxY(frame))
         dustTrailNode.addChild(emitterNode)
         
-        emitterNode = particleEmitterNode(speed: -100, lifetime: size.height / 20, scale: 0.1, birthRate: 4, color: SKColor.whiteColor())
+        emitterNode = particleEmitterNode(speed: -100, lifetime: size.height / 20, scale: 0.1, birthRate: 1, color: SKColor.redColor())
         emitterNode.zPosition = 20
+        //emitterNode.position = CGPoint(x: 0, y: CGRectGetMaxY(frame))
+
         dustTrailNode.addChild(emitterNode)
         
     }
