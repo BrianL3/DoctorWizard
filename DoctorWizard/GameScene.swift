@@ -20,7 +20,8 @@ class GameScene: SKScene {
     
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     var singleDragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
-    let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
+    var blackHole : SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
+    
     var dudeDirection:String = "right"
     
     
@@ -82,7 +83,7 @@ class GameScene: SKScene {
     let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
     let consoleBar : SKSpriteNode = SKSpriteNode(imageNamed: "drWizardConsoleBar_3000_wLabels")
     
-    let dudesHealthGague: CGRect
+    //let dudesHealthGague: CGRect
     
     
     
@@ -327,9 +328,14 @@ class GameScene: SKScene {
         {
             
         case .First:
-            if !rocksOn {
-                actionToSpawnRocks()
-                println("First scene on now")
+//            if !rocksOn {
+//                actionToSpawnRocks()
+//                println("First scene on now")
+//            }
+            
+            if !blackHoleOn {
+                actionToSpawnBlackHole()
+                println("Fourth scene on now")
             }
             
             case .Second:
@@ -734,17 +740,24 @@ class GameScene: SKScene {
     //MARK: BLACK HOLE =========================================================================
     
     func spawnBlackHole() {
-        //blackHole = SKSpriteNode(imageNamed: "blackhole")
+        
         blackHole.name = "blackhole"
         //logic to detect where blackhole should land based on it massive size and powerful feature
-        blackHole.position = CGPoint(
-            x: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.width,
-                max: CGRectGetMaxX(playableRect) - blackHole.frame.width),
-            y: CGFloat.random(min: CGRectGetMinX(playableRect) + blackHole.frame.height,
-                max: (CGRectGetMaxX(playableRect) - (5 * blackHole.frame.height))))
+        
+        let posX : CGFloat = CGFloat.random(min: 0, max: 2048)
+        let posY : CGFloat = CGFloat.random(min: 0, max: 1596)
+        let position = CGPoint(x: posX, y: posY)
+        
+        //let centerScreen = self.backgroundLayer.convertPoint(CGPoint(x: 1024, y: 676), fromNode: self)
+        let centerScreen = self.backgroundLayer.convertPoint(position, fromNode: self)
+        blackHole.position = centerScreen
+        
+        //blackHole.position = self.backgroundLayer.convertPoint(position, fromNode: self)
+        
+       
         blackHole.setScale(0)
-        blackHole.zPosition = -1
-        addChild(blackHole)
+        blackHole.zPosition = 3
+        self.backgroundLayer.addChild(blackHole)
         let angle : CGFloat = -CGFloat(M_PI)
         let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
         let repeatSpin = SKAction.repeatActionForever(oneSpin)
@@ -774,7 +787,6 @@ class GameScene: SKScene {
         case 1...5:
             let actionXPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
             var actionX = SKAction.moveTo(actionXPoint, duration: 1)
-            println("we got a point \(actionXPoint)")
             sequenceDragonActions.append(actionX)
             
         case 6...10:
@@ -876,6 +888,8 @@ class GameScene: SKScene {
             }
         }
         
+        
+        
         self.backgroundLayer.enumerateChildNodesWithName("fireball") { node, _ in
             
             let fireballHit = node as SKSpriteNode
@@ -917,7 +931,7 @@ class GameScene: SKScene {
             
         }
         
-        enumerateChildNodesWithName("fireball") { node, _ in
+        self.backgroundLayer.enumerateChildNodesWithName("fireball") { node, _ in
             
             let fireballHit = node as SKSpriteNode
             
@@ -926,7 +940,7 @@ class GameScene: SKScene {
             }
         }
         
-        enumerateChildNodesWithName("dude") { node, _ in
+        self.backgroundLayer.enumerateChildNodesWithName("dude") { node, _ in
             
             let dudeHit = node as SKSpriteNode
             
