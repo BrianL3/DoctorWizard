@@ -328,17 +328,12 @@ class GameScene: SKScene {
         {
             
         case .First:
-//            if !rocksOn {
-//                actionToSpawnRocks()
-//                println("First scene on now")
-//            }
-            
-            if !blackHoleOn {
-                actionToSpawnBlackHole()
-                println("Fourth scene on now")
+            if !rocksOn {
+                actionToSpawnRocks()
+                println("First scene on now")
             }
             
-            case .Second:
+        case .Second:
             if !fireBallOn {
                 actionToSpawnFireBalls()
                 println("Second scene on now")
