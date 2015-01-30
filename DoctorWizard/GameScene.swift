@@ -11,7 +11,7 @@ import CoreMotion
 
 
 protocol MainMenuDelegate {
-    func playerDidLose()
+
     func restartWithSameSong(usingDefaultSong: Bool)
     func restartWithDifferentSong()
 }
@@ -482,6 +482,12 @@ class GameScene: SKScene {
                 self.velocity = CGPoint(x:0, y:0)
                 if self.invincible == false {
                     self.healthPoints -= CGFloat.random(min: 50, max: 100)
+                    // SKAction that lowers volume and plays collision sound
+                    SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 0.5
+                    let action = SKAction.waitForDuration(1.0)
+                    self.dude.runAction(action, completion: { () -> Void in
+                        self.playRockCollisionSound()
+                    })
                 }
             }
         }
@@ -513,7 +519,6 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
                 rockHit.removeFromParent()
-                
             }
             
         }
@@ -524,7 +529,6 @@ class GameScene: SKScene {
             
             if CGRectIntersectsRect(fireballHit.frame, self.blackHole.frame) {
                 fireballHit.removeFromParent()
-                
             }
         }
         
@@ -533,10 +537,19 @@ class GameScene: SKScene {
             let dudeHit = node as SKSpriteNode
             
             if CGRectIntersectsRect(dudeHit.frame, self.blackHole.frame) {
-                dudeHit.removeFromParent()
-                if self.invincible == false {
-                    self.healthPoints = 0
-                }
+     
+                let angle : CGFloat = -CGFloat(M_PI)
+                let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+                let repeatSpin = SKAction.repeatActionForever(oneSpin)
+                let implode = SKAction.scaleTo(0, duration: 2.0)
+                let actionRemove = SKAction.removeFromParent()
+                let actions = [implode, actionRemove]
+                dudeHit.runAction(repeatSpin)
+                dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
+                    if self.invincible == false {
+                        self.healthPoints = 0
+                    }
+                })
             }
         }
         
@@ -549,6 +562,17 @@ class GameScene: SKScene {
                 
             }
         }
+    }
+    /* in progress */
+    func actionSpiralIntoBlackHole (passedInNode: SKSpriteNode ) {
+        let angle : CGFloat = -CGFloat(M_PI)
+        let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+        let implode = SKAction.scaleTo(0, duration: 2.0)
+        let actionRemove = SKAction.removeFromParent()
+        let actions = [implode, actionRemove]
+        passedInNode.runAction(repeatSpin)
+        passedInNode.runAction(SKAction.sequence(actions))
     }
     
     func addMovingBackground(backgroundName:String ){
@@ -701,10 +725,32 @@ class GameScene: SKScene {
     }
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
     func playRockCollisionSound(){
+        let randomNum = CGFloat.random(min: 0, max: 4)
+        switch randomNum{
+        case 0..<1 :
+            SKTAudio.sharedInstance().playSoundEffect("clicks_one.wav")
+        case 1..<2 :
+            SKTAudio.sharedInstance().playSoundEffect("blop_eleven.wav")
+        case 2..<3 :
+            SKTAudio.sharedInstance().playSoundEffect("blop_four.wav")
+        case 3...4 :
+            SKTAudio.sharedInstance().playSoundEffect("blop_nine.wav")
+
+        default:
+            println("fucked something up")
+        }
+
+        SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 1.0
     }
     
     func playAlienCollisionSound(){
-        SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+        let randomNum = CGFloat.random(min: 1, max: 2)
+        if randomNum <= 1 {
+            SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+        }else{
+            SKTAudio.sharedInstance().playSoundEffect("blop_seven.wav")
+        }
+    
     }
     
     //MARK: LEVEL
