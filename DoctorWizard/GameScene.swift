@@ -21,8 +21,6 @@ class GameScene: SKScene {
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     var singleDragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
-    let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
-    let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
     var dudeDirection:String = "right"
     
     
@@ -56,7 +54,7 @@ class GameScene: SKScene {
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
-    var healthPoints :CGFloat = 74200
+    var healthPoints :CGFloat = 742
 
     var didLose = false
     var didWin = false
@@ -80,6 +78,14 @@ class GameScene: SKScene {
     var playTimeRemainingTicker: NSTimeInterval = 0
     var playButtonPressed : Bool = false
     var backgroundSizeFrame : CGRect = CGRect(x: 0, y: 0, width: 4096, height: 3027)
+    let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
+    let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
+    let consoleBar : SKSpriteNode = SKSpriteNode(imageNamed: "drWizardConsoleBar_3000_wLabels")
+    
+    let dudesHealthGague: CGRect
+    
+    
+    
     
     var alienHitRocks = 15
     //MARK: INTIALIZER ==============================================================================
@@ -88,10 +94,15 @@ class GameScene: SKScene {
         let maxAspectRatio:CGFloat = 16.0/9.0 // 1
         let playableHeight = size.width / maxAspectRatio // 2
         let playableMargin = (size.height-playableHeight)/2.0 // 3
+        
         playableRect = CGRect(x: 0, y: playableMargin,
             width: size.width,
             height: playableHeight) // 4
         
+        dudesHealthGague = CGRect(x: CGRectGetMinX(playableRect)+1700, y: CGRectGetMinY(playableRect)+350,
+            width: 200,
+            height: 30)
+        //dudesHealthGague = SKColor(colorWithRed:0.15, green:0.15, blue:0.3, alpha:1.0)
         
         // setup dude_animation
         var texturesRight: [SKTexture] = []
@@ -105,7 +116,6 @@ class GameScene: SKScene {
         
         self.dudeAnimationRight = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesRight, timePerFrame: 0.1))
         self.dudeAnimationLeft = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesLeft, timePerFrame: 0.1))
-        
         
         super.init(size: size)
         
@@ -134,42 +144,60 @@ class GameScene: SKScene {
 
         
         //MARK: Game Console  ======================================================================
+
         
-        consoleBarLeft.zPosition = 13
-        consoleBarLeft.position = CGPoint(x: 550, y: 220)
-        self.addChild(consoleBarLeft)
+        //Main console bar
         
-        consoleBarRight.zPosition = 13
-        consoleBarRight.position = CGPoint(x: 1500, y: 220)
-        self.addChild(consoleBarRight)
+            consoleBar.zPosition = 15
+            consoleBar.position = CGPoint(x: 1020, y: 248)
+            //consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+        
+        //console bar extender left for bigger screens
+            consoleBarLeft.zPosition = 15
+            consoleBarLeft.position = CGPoint(x: 0, y: 248)
+            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            self.addChild(consoleBarLeft)
+        
+        //console bar extenders right for bigger screens
+            consoleBarRight.zPosition = 15
+            consoleBarRight.position = CGPoint(x: 1500, y: 248)
+            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            self.addChild(consoleBarRight)
+        
+        self.addChild(consoleBar)
+        
+        
+        
+        //Get your rocks on
         
         for i in 1...5 {
             rocks.append("pinkRock\(i)")
         }
         
         playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
-        playTimeRemainingLabel?.fontColor = SKColor.redColor()
-        playTimeRemainingLabel?.fontSize = 60;
-        //playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+250,y:CGRectGetMinY(self.frame)+1250)
-        playTimeRemainingLabel?.position = CGPoint(x: 190, y: 220)
-        playTimeRemainingLabel?.zPosition = 14
+        playTimeRemainingLabel?.fontColor = SKColor.blueColor()
+        playTimeRemainingLabel?.fontSize = 38;
+        //playTimeRemainingLabel?.position = CGPoint(x: 560, y: 213)
+        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+560,y:CGRectGetMinY(self.frame)+213)
+        playTimeRemainingLabel?.zPosition = 16
         self.addChild(playTimeRemainingLabel!)
         
         doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"Futura")
-        doctorWizardsAltitudeLabel?.fontColor = SKColor.redColor()
-        doctorWizardsAltitudeLabel?.fontSize = 60;
-        //doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsAltitudeLabel?.position = CGPoint(x: 900, y: 220)
-        doctorWizardsAltitudeLabel?.zPosition = 14
+        doctorWizardsAltitudeLabel?.fontColor = SKColor.blueColor()
+        doctorWizardsAltitudeLabel?.fontSize = 40;
+        //doctorWizardsAltitudeLabel?.position = CGPoint(x: 1031, y: 198)
+        doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1031,y:CGRectGetMinY(self.frame)+198)
+        doctorWizardsAltitudeLabel?.zPosition = 16
         self.addChild(doctorWizardsAltitudeLabel!)
         
         
         doctorWizardsHealthLabel = SKLabelNode(fontNamed:"Futura")
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
-        doctorWizardsHealthLabel?.fontSize = 60;
-        //doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1800,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 220)
-        doctorWizardsHealthLabel?.zPosition = 14
+        doctorWizardsHealthLabel?.fontSize = 45;
+        //doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
+        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1700,y:CGRectGetMinY(self.frame)+350)
+        
+        doctorWizardsHealthLabel?.zPosition = 16
         self.addChild(doctorWizardsHealthLabel!)
         
         
@@ -337,7 +365,7 @@ class GameScene: SKScene {
         
         //MARK: Main Game Consile Display Labels
         
-        doctorWizardsAltitudeLabel?.text = "Altitude: \(altitude)"
+        doctorWizardsAltitudeLabel?.text = "\(altitude)"
         
         //I want to start playTimeRemainingTicker after play button was pressed not when game starts
         //if ( playButtonPressed == true ){}
@@ -349,12 +377,12 @@ class GameScene: SKScene {
         if ( playTimeRemainingTicker > 0 ){
             
             
-            playTimeRemainingLabel?.text = "TTP: \(playTimeRemainingTicker)"
+            playTimeRemainingLabel?.text = "\(playTimeRemainingTicker)"
             
         }else{
             
             
-            playTimeRemainingLabel?.text = "TTP: \(0)"
+            playTimeRemainingLabel?.text = "\(0)"
             
             self.didWin = true // and show the you loose label or image
             

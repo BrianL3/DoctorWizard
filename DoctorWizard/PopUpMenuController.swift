@@ -32,6 +32,9 @@ class PopUpMenuController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        logoImageView.alpha = 0.6
+
     }
 
     
