@@ -14,6 +14,7 @@ class WinScene: SKScene {
     var mainMenuDelegate : MainMenuDelegate?
     
     let retryButton = SKSpriteNode(imageNamed: "Rock")
+    let repickButton = SKSpriteNode(imageNamed: "Spike")
     var touchLocation :CGPoint = CGPointZero
     
     
@@ -23,12 +24,17 @@ class WinScene: SKScene {
         background.zPosition = -1
         addChild(background)
         
-        let retryButton = SKSpriteNode(imageNamed: "Rock")
         retryButton.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         retryButton.setScale(4.0)
         retryButton.name = "retry"
         retryButton.zPosition = 2
         addChild(retryButton)
+        
+        repickButton.position = CGPoint(x: self.size.width*0.8, y: self.size.height/2)
+        repickButton.setScale(4.0)
+        repickButton.name = "repick"
+        repickButton.zPosition = 2
+        addChild(repickButton)
     }
     
     
@@ -47,11 +53,15 @@ class WinScene: SKScene {
                 }else{
                     self.mainMenuDelegate?.restartWithSameSong(false)
                 }
-                
             }
-            
         })
         
+        enumerateChildNodesWithName("repick", usingBlock: { (node, _) -> Void in
+            let button = node as SKSpriteNode
+            if CGRectIntersectsRect(button.frame, CGRect(origin: self.touchLocation, size: CGSize(width: 50, height: 50))) {
+                self.mainMenuDelegate?.restartWithDifferentSong()
+            }
+        })
         
         
     }
