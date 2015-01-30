@@ -276,27 +276,21 @@ class GameScene: SKScene {
                 actionToSpawnRocks()
                 println("First scene on now")
             }
-            
+
         case .Second:
             if !fireBallOn {
-
-                
                 actionToSpawnFireBalls()
                 println("Second scene on now")
             }
 
         case .Third:
             if !alienOn {
-
-                
                 actionToSpawnAlien()
                 println("Third scene on now")
             }
             
         case .Fourth:
             if !blackHoleOn {
-
-                
                 actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
@@ -387,6 +381,7 @@ class GameScene: SKScene {
         }
         checkCollisions()
         destroyedByBlackHole()
+        destroyedByDragon()
     }
     
     //MARK: MOVE THE DUDE ======================================================================
@@ -596,7 +591,7 @@ class GameScene: SKScene {
             y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon.frame.height,
                 max: (CGRectGetMaxX(playableRect) - (5 * dragon.frame.height))))
         dragon.setScale(0)
-        dragon.zPosition = 4
+        dragon.zPosition = 0
         addChild(dragon)
         let appear = SKAction.scaleTo(1.3, duration: 1.0)
         dragon.runAction(appear)
@@ -696,12 +691,9 @@ class GameScene: SKScene {
             let dudeHit = node as SKSpriteNode
             
             if CGRectIntersectsRect(dudeHit.frame, self.dragon.frame) {
-                dudeHit.removeFromParent()
+                self.healthPoints = self.healthPoints - 500
             }
-            
         }
-
-        
     }
     
     func destroyedByBlackHole() {
@@ -736,6 +728,10 @@ class GameScene: SKScene {
                 let repeatSpin = SKAction.repeatActionForever(oneSpin)
                 let implode = SKAction.scaleTo(0, duration: 2.0)
                 let actionRemove = SKAction.removeFromParent()
+                let actionTowardsBlackHoleXCoord = SKAction.moveToX(self.blackHole.position.x, duration: 1.0)
+                self.dude.runAction(actionTowardsBlackHoleXCoord)
+                let actionTowardsBlackHoleYCoord = SKAction.moveToY(self.blackHole.position.y, duration: 1.0)
+                self.dude.runAction(actionTowardsBlackHoleYCoord)
                 let actions = [implode, actionRemove]
                 dudeHit.runAction(repeatSpin)
                 dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
