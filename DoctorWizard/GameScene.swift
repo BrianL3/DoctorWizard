@@ -111,12 +111,12 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
 //        dude.position = CGPoint(x: 700, y: 400)
-        dude.position = self.backgroundLayer.convertPoint(CGPoint(x: self.size.width/2, y: self.size.height/2), fromNode: self)
+        dude.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         dude.zPosition = 15
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
-        self.backgroundLayer.addChild(dude)
+        addChild(dude)
         
         //simulate SKSpriteNode for collision purposes
         dude.zPosition = 0
@@ -194,7 +194,7 @@ class GameScene: SKScene {
     
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
-        dude.position = backgroundLayer.convertPoint(CGPoint(x: size.width/2, y: size.height/2), fromNode: self)
+
 
         
         //validating if it is fifth level only Dragon exists
@@ -416,7 +416,7 @@ class GameScene: SKScene {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         
         let touch = touches.anyObject() as UITouch
-        let touchLocation = touch.locationInNode(self.backgroundLayer)
+        let touchLocation = touch.locationInNode(self)
         sceneTouched(touchLocation)
     }
     
