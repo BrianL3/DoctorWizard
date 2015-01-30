@@ -171,7 +171,7 @@ class GameScene: SKScene {
                     self.backgroundVerticalDirection = CGFloat(verticleData * 50.0)
                     self.backgroundHorizontalDirection = CGFloat(horizontalData * 50.0)
                     
-                    //println("we got acceleromiter data : \(verticleData)")
+                  //  println("we got acceleromiter data : \(verticleData)")
                 }
             })
         }
@@ -647,6 +647,20 @@ class GameScene: SKScene {
         for incomingObject in hitObstacle {
             dudeHitObject(incomingObject)
         }
+        
+    }
+    
+    func destroyedByDragon() {
+        enumerateChildNodesWithName("dude") { node, _ in
+            
+            let dudeHit = node as SKSpriteNode
+            
+            if CGRectIntersectsRect(dudeHit.frame, self.dragon.frame) {
+                dudeHit.removeFromParent()
+            }
+            
+        }
+
         
     }
     
