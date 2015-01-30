@@ -110,7 +110,9 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
-        dude.position = CGPoint(x: 700, y: 400)
+//        dude.position = CGPoint(x: 700, y: 400)
+        dude.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        dude.zPosition = 15
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimation))
         dude.name = "dude"
@@ -162,8 +164,19 @@ class GameScene: SKScene {
         self.addChild(backgroundLayer)
         self.addChild(starLayer)
         
+        if motionManager.gyroAvailable {
+            self.motionManager.gyroUpdateInterval = 0.01
+            self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
+                println("error")
+                if error == nil {
+                    println(data)
+                }
+            })
+        }
+        
+        
         if motionManager.accelerometerAvailable {
-            self.motionManager.accelerometerUpdateInterval = 0.01
+            self.motionManager.accelerometerUpdateInterval = 0.1
             self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
                 if error == nil {
                     let verticleData = data.acceleration.x
@@ -181,6 +194,8 @@ class GameScene: SKScene {
     
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
+
+
         
         //validating if it is fifth level only Dragon exists
         
@@ -490,27 +505,31 @@ class GameScene: SKScene {
     func spawnAlien() {
         let alien = SKSpriteNode(imageNamed: "alienspaceship")
         alien.name = "alienspaceship"
-        alien.position = CGPoint(
+        let positionOnScreen = CGPoint(
             x: CGFloat.random(min: CGRectGetMinX(playableRect) + alien.frame.size.width,
                 max: CGRectGetMaxX(playableRect)),
             y: size.height)
+        alien.position = backgroundLayer.convertPoint(positionOnScreen, fromNode: self)
         alien.setScale(1)
         alien.zPosition = 0
-        addChild(alien)
+        backgroundLayer.addChild(alien)
         var randomXPosition = CGFloat.random(min: 0, max: size.width)
         var randomYPosition = CGFloat.random(min: 0, max: size.height)
         let appear = SKAction.scaleTo(1, duration: 2.0)
-        let actions = [appear]
-        alien.runAction(SKAction.sequence(actions))
-        let actionMoveYDown =
-        SKAction.moveToY(0, duration: 2.0)
-        let actionMoveX =
-        SKAction.moveToX(randomXPosition, duration: 0.5)
-        let actionMoveYUp =
+        let moveToY = backgroundLayer.convertPoint(CGPoint(x: 0, y: randomYPosition), fromNode: self)
+        let moveToX = backgroundLayer.convertPoint(CGPoint(x: randomXPosition, y: 0), fromNode: self)
+//        let actionMoveYDown =
+//        SKAction.moveToY(0, duration: 2.0)
+//        let actionMoveX =
+//        SKAction.moveToX(randomXPosition, duration: 0.5)
+//        let actionMoveYUp =
+        
+        let actionMoveY = SKAction.moveTo(moveToY, duration: 2.0)
+        let actionMoveX = SKAction.moveTo(moveToX, duration: 1.0)
         SKAction.moveToY(size.height - alien.frame.height / 2, duration: 4.0)
 
         let actionRemove = SKAction.removeFromParent()
-        alien.runAction(SKAction.sequence([actionMoveYDown, actionMoveX, actionMoveYUp, actionRemove]))}
+        alien.runAction(SKAction.sequence([appear, actionMoveX, actionMoveY, actionRemove]))}
     
     
     //MARK: BLACK HOLE =========================================================================
