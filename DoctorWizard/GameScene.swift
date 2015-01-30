@@ -21,7 +21,6 @@ class GameScene: SKScene {
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     var singleDragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
-    let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
     var dudeDirection:String = "right"
     
     
@@ -145,22 +144,32 @@ class GameScene: SKScene {
 
         
         //MARK: Game Console  ======================================================================
+
         
-        consoleBarLeft.zPosition = 13
-        //consoleBarLeft.position = CGPoint(x: 550, y: 220)
-        consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
-        self.addChild(consoleBarLeft)
+        //Main console bar
         
-        consoleBarRight.zPosition = 13
-        //consoleBarRight.position = CGPoint(x: 1500, y: 220)
-        consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
-        self.addChild(consoleBarRight)
+            consoleBar.zPosition = 15
+            consoleBar.position = CGPoint(x: 1020, y: 248)
+            //consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
         
-        consoleBar.zPosition = 15
-        //consoleBar.position = CGPoint(x: 1020, y: 248)
-        consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
-        //consoleBar.setScale(0.65)
+        //console bar extender left for bigger screens
+            consoleBarLeft.zPosition = 15
+            consoleBarLeft.position = CGPoint(x: 0, y: 248)
+            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            self.addChild(consoleBarLeft)
+        
+        //console bar extenders right for bigger screens
+            consoleBarRight.zPosition = 15
+            consoleBarRight.position = CGPoint(x: 1500, y: 248)
+            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            self.addChild(consoleBarRight)
+        
         self.addChild(consoleBar)
+        
+        
+        
+        //Get your rocks on
+        
         for i in 1...5 {
             rocks.append("pinkRock\(i)")
         }
