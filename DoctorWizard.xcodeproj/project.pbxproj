@@ -395,6 +395,7 @@
 				FA4116EA1A78463700FCC212 /* rerrr.wav in Resources */,
 				FA4116EB1A78463700FCC212 /* tick_one.wav in Resources */,
 				55983BBA1A7B68F20096CC8A /* spark.png in Resources */,
+				B8A0F50A1A7B1B8300EB9362 /* spark.png in Resources */,
 				FA4116E91A78463700FCC212 /* garbal_blips.wav in Resources */,
 				FA4116E41A78463700FCC212 /* chom_one.wav in Resources */,
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
