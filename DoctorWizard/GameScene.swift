@@ -496,7 +496,7 @@ class GameScene: SKScene {
     }
     
     func createMagic() {
-            let magicEmitter = SKEmitterNode(fileNamed: "Magic.sks")
+            let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
                 magicEmitter.position = CGPoint(x: 700, y: 400)
             magicEmitter.name = "magicEmitter"
             addChild(magicEmitter)

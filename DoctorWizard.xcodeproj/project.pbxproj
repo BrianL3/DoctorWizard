@@ -17,7 +17,6 @@
 		55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D7F6C81A79914E006E8753 /* LooserScene.swift */; };
 		B8A0F5091A7B1B8300EB9362 /* DudeParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B8A0F5071A7B1B8300EB9362 /* DudeParticle.sks */; };
 		B8A0F50A1A7B1B8300EB9362 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = B8A0F5081A7B1B8300EB9362 /* spark.png */; };
-		B8A0F50E1A7B1BE300EB9362 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = B8A0F50D1A7B1BE300EB9362 /* Smoke.sks */; };
 		B8A0F5101A7B1C0B00EB9362 /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = B8A0F50F1A7B1C0B00EB9362 /* Fire.sks */; };
 		B8A0F5121A7B1C1F00EB9362 /* FireFlies.sks in Resources */ = {isa = PBXBuildFile; fileRef = B8A0F5111A7B1C1F00EB9362 /* FireFlies.sks */; };
 		B8A0F5141A7B1C3300EB9362 /* Magic.sks in Resources */ = {isa = PBXBuildFile; fileRef = B8A0F5131A7B1C3300EB9362 /* Magic.sks */; };
@@ -90,7 +89,6 @@
 		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
 		B8A0F5071A7B1B8300EB9362 /* DudeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DudeParticle.sks; sourceTree = "<group>"; };
 		B8A0F5081A7B1B8300EB9362 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
-		B8A0F50D1A7B1BE300EB9362 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Smoke.sks; sourceTree = "<group>"; };
 		B8A0F50F1A7B1C0B00EB9362 /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
 		B8A0F5111A7B1C1F00EB9362 /* FireFlies.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireFlies.sks; sourceTree = "<group>"; };
 		B8A0F5131A7B1C3300EB9362 /* Magic.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Magic.sks; sourceTree = "<group>"; };
@@ -169,7 +167,6 @@
 			children = (
 				B8A0F5071A7B1B8300EB9362 /* DudeParticle.sks */,
 				B8A0F5081A7B1B8300EB9362 /* spark.png */,
-				B8A0F50D1A7B1BE300EB9362 /* Smoke.sks */,
 				B8A0F50F1A7B1C0B00EB9362 /* Fire.sks */,
 				B8A0F5111A7B1C1F00EB9362 /* FireFlies.sks */,
 				B8A0F5131A7B1C3300EB9362 /* Magic.sks */,
@@ -404,7 +401,6 @@
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
 				FA4116E61A78463700FCC212 /* clicks_one.wav in Resources */,
 				B8A0F5171A7B1C4F00EB9362 /* Bokeh.sks in Resources */,
-				B8A0F50E1A7B1BE300EB9362 /* Smoke.sks in Resources */,
 				FF076AA41A7AF268006D0152 /* ConsoleNavBar.png in Resources */,
 				B8F7F8131A7AB86700B55CC7 /* blackhole.png in Resources */,
 				483339D61A76D32000344DC8 /* Rock.png in Resources */,
