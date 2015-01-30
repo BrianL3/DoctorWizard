@@ -458,7 +458,7 @@ class GameScene: SKScene {
         texture.filteringMode = .Nearest
         
         let emitterNode = SKEmitterNode()
-        emitterNode.particleTexture = texture
+        emitterNode.particleTexture = SKTexture(imageNamed: "bokeh.png")
         emitterNode.particleBirthRate = birthRate
         emitterNode.particleColor = color
         emitterNode.particleLifetime = lifetime
