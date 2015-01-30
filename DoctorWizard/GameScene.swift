@@ -79,6 +79,7 @@ class GameScene: SKScene {
     var playButtonPressed : Bool = false
     var backgroundSizeFrame : CGRect = CGRect(x: 0, y: 0, width: 4096, height: 3027)
     
+    var alienHitRocks = 15
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -368,7 +369,12 @@ class GameScene: SKScene {
         
         
         
-        
+        if self.alienHitRocks <= 0 {
+            enumerateChildNodesWithName("alienspaceship", usingBlock: { (node, _) -> Void in
+                let alien = node as SKSpriteNode
+                alien.removeFromParent()
+            })
+        }
         
         //println(self.altitude)
 //        boundsCheckDude()
@@ -499,31 +505,33 @@ class GameScene: SKScene {
         rock.name = "rock"
         rock.position = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
         // exclusive or checks to determin that the rock will not spawn on  the player!
-        if spawnWontHitPlayer(position) {
-            rock.setScale(0)
-            rock.alpha = 0
-            rock.zRotation = CGFloat.random(min: 0, max: 90)
-            self.backgroundLayer.addChild(rock)
-            let duration = NSTimeInterval(CGFloat.random(min: 0, max: 10))
-            let grow = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 3), duration: duration)
-            let fade = SKAction.fadeAlphaTo(0.6, duration: duration/10)
-            let wait = SKAction.waitForDuration(NSTimeInterval(CGFloat.random(min: 4, max: 15)))
-            let appear = SKAction.group([grow,fade])
-            let reverseGrow = SKAction.scaleTo(0, duration: duration/5)
-            let reverseFade = SKAction.fadeAlphaTo(0, duration: duration/5)
-            let disopear = SKAction.group([reverseFade, reverseGrow])
-            let remove = SKAction.removeFromParent()
-            let curentLevel = currentLevelIs()
-            if curentLevel == .First || curentLevel == .Second {
-                let seq = SKAction.sequence([appear,wait,disopear, remove])
-                rock.runAction(seq)
-            } else {
-                let positionToDouble = randomSpawnPoint()
-                let moveToPositon = positionToDouble * 2
-                let convertedPositon = self.backgroundLayer.convertPoint(positionToDouble, fromNode: self)
-                let move = SKAction.moveTo(convertedPositon, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
-                let moveApear = SKAction.group([grow,move,fade])
-                rock.runAction(SKAction.sequence([moveApear, disopear, remove]))
+        if self.children.count < 2 {
+            if spawnWontHitPlayer(position) {
+                rock.setScale(0)
+                rock.alpha = 0
+                rock.zRotation = CGFloat.random(min: 0, max: 90)
+                self.backgroundLayer.addChild(rock)
+                let duration = NSTimeInterval(CGFloat.random(min: 0, max: 10))
+                let grow = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 2.4), duration: duration)
+                let fade = SKAction.fadeAlphaTo(0.6, duration: duration/10)
+                let wait = SKAction.waitForDuration(NSTimeInterval(CGFloat.random(min: 4, max: 15)))
+                let appear = SKAction.group([grow,fade])
+                let reverseGrow = SKAction.scaleTo(0, duration: duration/5)
+                let reverseFade = SKAction.fadeAlphaTo(0, duration: duration/5)
+                let disopear = SKAction.group([reverseFade, reverseGrow])
+                let remove = SKAction.removeFromParent()
+                let curentLevel = currentLevelIs()
+                if curentLevel == .First || curentLevel == .Second {
+                    let seq = SKAction.sequence([appear,wait,disopear, remove])
+                    rock.runAction(seq)
+                } else {
+                    let positionToDouble = randomSpawnPoint()
+                    let moveToPositon = positionToDouble * 2
+                    let convertedPositon = self.backgroundLayer.convertPoint(positionToDouble, fromNode: self)
+                    let move = SKAction.moveTo(convertedPositon, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
+                    let moveApear = SKAction.group([grow,move,fade])
+                    rock.runAction(SKAction.sequence([moveApear, disopear, remove]))
+                }
             }
         }
 
@@ -659,11 +667,27 @@ class GameScene: SKScene {
         let alien = SKSpriteNode(imageNamed: "spaceShip")
         alien.name = "alienspaceship"
         alien.position = randomSpawnPoint()
+        alien.zRotation = CGFloat.random(min: 0, max: 90)
+        var directions : [SKAction] = []
+        var points : [CGPoint] = []
+        points.append(alien.position)
+        for i in 1...25 {
+            let rand = CGFloat.random() % 5
+            let point = self.backgroundLayer.convertPoint(CGPoint(x: points[i-1].x + rand, y: points[i-1].y + rand), fromNode: self)
+            let action = SKAction.moveTo(point, duration: NSTimeInterval(2))
+            points.append(point)
+            directions.append(action)
+        }
+        
+        let remove = SKAction.removeFromParent()
+        directions.append(remove)
+        
         self.backgroundLayer.addChild(alien)
 
         
         let move = SKAction.moveTo(self.dude.position, duration: 3)
-        alien.runAction(move)
+        let wait = SKAction.waitForDuration(1)
+        alien.runAction(SKAction.sequence([move,wait, SKAction.sequence(directions)]))
         
     }
     
@@ -785,7 +809,7 @@ class GameScene: SKScene {
         
         var hitObstacle: [SKSpriteNode] = []
         
-        enumerateChildNodesWithName("rock") { node, _ in
+        self.backgroundLayer.enumerateChildNodesWithName("rock") { node, _ in
             
             let rockHit = node as SKSpriteNode
 
@@ -804,7 +828,7 @@ class GameScene: SKScene {
             }
         }
         
-        enumerateChildNodesWithName("fireball") { node, _ in
+        self.backgroundLayer.enumerateChildNodesWithName("fireball") { node, _ in
             
             let fireballHit = node as SKSpriteNode
             
@@ -836,10 +860,9 @@ class GameScene: SKScene {
     
     func destroyedByBlackHole() {
         
-        enumerateChildNodesWithName("rock") { node, _ in
+        self.backgroundLayer.enumerateChildNodesWithName("rock") { node, _ in
             
             let rockHit = node as SKSpriteNode
-            
             if CGRectIntersectsRect(rockHit.frame, self.blackHole.frame) {
                 rockHit.removeFromParent()
             }
@@ -888,6 +911,7 @@ class GameScene: SKScene {
                 alienHit.removeFromParent()
                 
             }
+
         }
     }
     /* in progress */
