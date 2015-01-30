@@ -44,8 +44,12 @@ class GameScene: SKScene {
     var backgroundLayerMovePointsPerSec: CGFloat = 300
     var backgroundVerticalDirection: CGFloat = 1.0
     var backgroundHorizontalDirection: CGFloat = 1.0
+    // timing variables
     var gameStartTime : NSTimeInterval = 0
+    var gamePausedAt : NSTimeInterval?
     var timePassed : NSTimeInterval = 0
+    var currentClock : NSTimeInterval = 0
+    
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
     let motionManager = CMMotionManager()
@@ -88,6 +92,8 @@ class GameScene: SKScene {
     
     
     var alienHitRocks = 15
+    
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -139,6 +145,10 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
 
+        //clockfix
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         
         //simulate SKSpriteNode for collision purposes
 
@@ -226,6 +236,17 @@ class GameScene: SKScene {
         
     }
     
+    func didEnterBackground(){
+            self.gamePausedAt = lastUpdateTime
+
+    }
+    func didEnterForeground(){
+        let currentTime = CACurrentMediaTime()
+// the new start time should be == old start time + time passed since pause
+        let timePaused = currentTime - gamePausedAt!
+        self.lastUpdateTime = self.lastUpdateTime + timePaused
+    }
+    
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
 
@@ -262,19 +283,20 @@ class GameScene: SKScene {
 //            }
 //        }
 //        
-        
-        
-        if gameStartTime == 0 {
-            gameStartTime = currentTime
-        }
-        
-        if lastUpdateTime > 0 {
-            dt = currentTime - lastUpdateTime
-        } else {
-            dt = 0
+        if self.paused == false {
+            if gameStartTime == 0 {
+                gameStartTime = currentTime
+            }
+            
+            if lastUpdateTime > 0 {
+                dt = currentTime - lastUpdateTime
+            } else {
+                dt = 0
+            }
         }
         
         lastUpdateTime = currentTime
+        
         //println("\(dt*1000) milliseconds since last update")
         
         if let lastTouch = lastTouchLocation {
@@ -290,8 +312,13 @@ class GameScene: SKScene {
         }
         
         
-        //MARK: set timepassed
-        self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        //MARK: SET TIMEPASSED ======================================
+        if self.paused == false {
+            
+            self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
+        }
+        
+        println(self.dt)
         
         //MARK: set altitude variable
         if timePassed % 0.5 == 0 {
@@ -324,6 +351,7 @@ class GameScene: SKScene {
         case .First:
             if !rocksOn {
                 actionToSpawnRocks()
+
                 println("First scene on now")
             }
 
@@ -796,6 +824,8 @@ class GameScene: SKScene {
         blackHole.runAction(repeatSpin)
         blackHole.runAction((SKAction.sequence(actions)))}
     
+    
+    
     //MARK: DRAGON ==============================================================================
     
     func spawnDragon() {
@@ -806,19 +836,22 @@ class GameScene: SKScene {
         for index in 1...60 {
         //random variable for dragon movement
         var randomXChooser = CGFloat(Int.random(0...Int(playableRect.width)))
-        println(randomXChooser)
-        println(size.width)
         var randomYChooser = CGFloat(Int.random(0...Int(playableRect.height)))
         
         switch generateRandomDragonOrientation() {
             
         case 1...5:
-            var actionX = SKAction.moveToX(randomYChooser +  (dragon[dragonCounter].frame.width / 2), duration: 0.3)
+            let actionXPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
+            var actionX = SKAction.moveTo(actionXPoint, duration: 1)
+            println("we got a point \(actionXPoint)")
             sequenceDragonActions.append(actionX)
             
         case 6...10:
             
-            var actionY = SKAction.moveToY(randomYChooser -  (dragon[dragonCounter].frame.height / 2), duration: 0.3)
+            var actionYPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
+            
+
+            let actionY = SKAction.moveTo(actionYPoint, duration: 1)
             sequenceDragonActions.append(actionY)
             
         default:
@@ -828,15 +861,16 @@ class GameScene: SKScene {
         }
         dragon[dragonCounter].name = "dragon"
         println("I made it to spawnDragon")
-        dragon[dragonCounter].position = CGPoint(
-            x: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon[dragonCounter].frame.width,
-                max: CGRectGetMaxX(playableRect) - dragon[dragonCounter].frame.width),
-            y: CGFloat.random(min: CGRectGetMinX(playableRect) + dragon[dragonCounter].frame.height,
-                max: (CGRectGetMaxX(playableRect) - (5 * dragon[dragonCounter].frame.height))))
+
+        var dragonSpawnPoint = randomSpawnPoint()
+        dragonSpawnPoint /= 2
+        dragonSpawnPoint.x += 1024
+        dragonSpawnPoint.y += 767
+        dragon[dragonCounter].position = dragonSpawnPoint
         dragon[dragonCounter].setScale(0)
         dragon[dragonCounter].zPosition = 0
-        addChild(dragon[dragonCounter])
-        let appear = SKAction.scaleTo(1.3, duration: 1.0)
+        self.backgroundLayer.addChild(dragon[dragonCounter])
+        let appear = SKAction.scaleTo(1.3, duration: 1)
         dragon[dragonCounter].runAction(appear)
         
         let actionDragonAttack = SKAction.sequence(sequenceDragonActions)
@@ -931,12 +965,12 @@ class GameScene: SKScene {
     }
     
     func destroyedByDragon() {
-        enumerateChildNodesWithName("dude") { node, _ in
+      self.backgroundLayer.enumerateChildNodesWithName("dragon") { node, _ in
             
-            let dudeHit = node as SKSpriteNode
+            let dragon = node as SKSpriteNode
             
-            if CGRectIntersectsRect(dudeHit.frame, self.dragon[self.dragonCounter].frame) {
-                self.healthPoints = self.healthPoints - 500
+            if CGRectIntersectsRect(dragon.frame, self.dude.frame) {
+                self.healthPoints = self.healthPoints - 200
             }
         }
     }
@@ -1272,7 +1306,7 @@ class GameScene: SKScene {
         dragonOn = true
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnDragon),
-                SKAction.waitForDuration(15)])))
+                SKAction.waitForDuration(10)])))
         println("Dragon on scene on now")
     }
     
