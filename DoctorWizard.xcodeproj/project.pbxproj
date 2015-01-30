@@ -200,6 +200,7 @@
 		C4D707CA1A76BEFB00A990A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55983BB81A7B68F20096CC8A /* spark.png */,
 				FF9CD94A1A7B852A005A3BD5 /* DrWizardConsoleBarExtender.png */,
 				FF9CD9461A7B779B005A3BD5 /* drWizardConsoleBar_3000_wLabels.png */,
 				483339D11A76C3AF00344DC8 /* dude.png */,

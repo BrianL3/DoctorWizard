@@ -21,7 +21,11 @@ class GameScene: SKScene {
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
-    let dudeAnimation : SKAction
+    var dudeDirection:String = "right"
+    
+    
+    let dudeAnimationRight : SKAction
+    let dudeAnimationLeft : SKAction
     
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
@@ -50,7 +54,7 @@ class GameScene: SKScene {
     var altitude: CGFloat = 0
     var curLevel : Level = .First
     
-    var healthPoints :CGFloat = 74200
+    var healthPoints :CGFloat = 742
 
     var didLose = false
     var didWin = false
@@ -71,11 +75,13 @@ class GameScene: SKScene {
     var doctorWizardsHealthLabel : SKLabelNode?
     var playTimeRemainingTicker: NSTimeInterval = 0
     var playButtonPressed : Bool = false
+    var backgroundSizeFrame : CGRect = CGRect(x: 0, y: 0, width: 4096, height: 3027)
     let consoleBarLeft : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
     let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
     let consoleBar : SKSpriteNode = SKSpriteNode(imageNamed: "drWizardConsoleBar_3000_wLabels")
     
     let dudesHealthGague: CGRect
+    
     
     
     
@@ -106,8 +112,8 @@ class GameScene: SKScene {
 
         }
         
-        self.dudeAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1))
-
+        self.dudeAnimationRight = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesRight, timePerFrame: 0.1))
+        self.dudeAnimationLeft = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesLeft, timePerFrame: 0.1))
         
         super.init(size: size)
         
@@ -152,6 +158,9 @@ class GameScene: SKScene {
         consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
         //consoleBar.setScale(0.65)
         self.addChild(consoleBar)
+        for i in 1...5 {
+            rocks.append("pinkRock\(i)")
+        }
         
         playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
         playTimeRemainingLabel?.fontColor = SKColor.blueColor()
