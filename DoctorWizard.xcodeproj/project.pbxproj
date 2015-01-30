@@ -57,6 +57,7 @@
 		FA4116ED1A78463700FCC212 /* lux.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116DC1A78463700FCC212 /* lux.wav */; };
 		FA95887D1A7ADFAE0008F1FF /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA95887C1A7ADFAE0008F1FF /* WinScene.swift */; };
 		FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */; };
+		FF076AA41A7AF268006D0152 /* ConsoleNavBar.png in Resources */ = {isa = PBXBuildFile; fileRef = FF076AA31A7AF268006D0152 /* ConsoleNavBar.png */; };
 		FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,7 @@
 		FA4116DC1A78463700FCC212 /* lux.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lux.wav; sourceTree = "<group>"; };
 		FA95887C1A7ADFAE0008F1FF /* WinScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinScene.swift; sourceTree = "<group>"; };
 		FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemTableViewController.swift; sourceTree = "<group>"; };
+		FF076AA31A7AF268006D0152 /* ConsoleNavBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConsoleNavBar.png; sourceTree = "<group>"; };
 		FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -193,6 +195,7 @@
 			children = (
 				483339D11A76C3AF00344DC8 /* dude.png */,
 				B8F7F8121A7AB86700B55CC7 /* blackhole.png */,
+				FF076AA31A7AF268006D0152 /* ConsoleNavBar.png */,
 				48D415581A787019005CE91C /* alienspaceship.png */,
 				4887AEE71A7ABEF7004FA530 /* dragon2.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
@@ -365,6 +368,7 @@
 				FA4116E41A78463700FCC212 /* chom_one.wav in Resources */,
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
 				FA4116E61A78463700FCC212 /* clicks_one.wav in Resources */,
+				FF076AA41A7AF268006D0152 /* ConsoleNavBar.png in Resources */,
 				B8F7F8131A7AB86700B55CC7 /* blackhole.png in Resources */,
 				483339D61A76D32000344DC8 /* Rock.png in Resources */,
 				FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */,
