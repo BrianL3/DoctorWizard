@@ -305,7 +305,6 @@ class GameScene: SKScene {
         case .Third:
             if !alienOn {
                 actionToSpawnAlien()
-                actionToSpawnRocks()
                 println("Third scene on now")
             }
             
@@ -505,7 +504,7 @@ class GameScene: SKScene {
         rock.name = "rock"
         rock.position = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
         // exclusive or checks to determin that the rock will not spawn on  the player!
-        if self.children.count < 2 {
+
             if spawnWontHitPlayer(position) {
                 rock.setScale(0)
                 rock.alpha = 0
@@ -533,7 +532,7 @@ class GameScene: SKScene {
                     rock.runAction(SKAction.sequence([moveApear, disopear, remove]))
                 }
             }
-        }
+
 
     }
     
@@ -670,11 +669,14 @@ class GameScene: SKScene {
         alien.zRotation = CGFloat.random(min: 0, max: 90)
         var directions : [SKAction] = []
         var points : [CGPoint] = []
-        points.append(alien.position)
+        points.append(self.dude.position)
+
         for i in 1...25 {
-            let rand = CGFloat.random() % 5
-            let point = self.backgroundLayer.convertPoint(CGPoint(x: points[i-1].x + rand, y: points[i-1].y + rand), fromNode: self)
-            let action = SKAction.moveTo(point, duration: NSTimeInterval(2))
+            let randx = CGFloat.random(min: -250, max: 250)
+            let randy = CGFloat.random(min: -250, max: 250)
+            let point = CGPoint(x: points[i-1].x + randx, y: points[i-1].y + randy)
+
+            let action = SKAction.moveTo(point, duration: NSTimeInterval(0.1))
             points.append(point)
             directions.append(action)
         }
@@ -791,18 +793,16 @@ class GameScene: SKScene {
         //here dude beceomes invincible and blinks when hit by a rock
         invincible = true
         
-        let blinkTimes = 10.0
-        let duration = 3.0
-        let blinkAction = SKAction.customActionWithDuration(duration) { node, elapsedTime in
-            let slice = duration / blinkTimes
-            let remainder = Double(elapsedTime) % slice
-            node.hidden = remainder > slice / 2
-        }
-        let setHidden = SKAction.runBlock() {
-            self.dude.hidden = false
+
+
+        let fadeOut = SKAction.fadeAlphaTo(0, duration: 0.1)
+        let fadeIn = SKAction.fadeAlphaTo(1, duration: 0.1)
+        let blink = SKAction.repeatAction(SKAction.sequence([fadeOut, fadeIn]), count: 3)
+        let disableInvincible = SKAction.runBlock() {
             self.invincible = false
+            println("slfkjdlsfj")
         }
-        dude.runAction(SKAction.sequence([blinkAction, setHidden]))
+        dude.runAction(SKAction.sequence([blink, disableInvincible]))
     }
     
     func checkCollisions() {
@@ -817,6 +817,7 @@ class GameScene: SKScene {
                 hitObstacle.append(rockHit)
                 self.velocity = CGPoint(x:0, y:0)
                 if self.invincible == false {
+                    self.dudeHitObject(rockHit)
                     self.healthPoints -= CGFloat.random(min: 50, max: 100)
                     // SKAction that lowers volume and plays collision sound
                     SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 0.5
@@ -841,9 +842,9 @@ class GameScene: SKScene {
             }
         }
         //sets up dude for stunning and becoming invincible
-        for incomingObject in hitObstacle {
-            dudeHitObject(incomingObject)
-        }
+//        for incomingObject in hitObstacle {
+//            dudeHitObject(incomingObject)
+//        }
         
     }
     
