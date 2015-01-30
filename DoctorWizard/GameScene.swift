@@ -160,18 +160,20 @@ class GameScene: SKScene {
         
             consoleBar.zPosition = 15
             consoleBar.position = CGPoint(x: 1020, y: 248)
+            //consoleBar.anchorPoint = CGPointZero
             //consoleBar.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            //consoleBar.position = CGPointZero
         
         //console bar extender left for bigger screens
             consoleBarLeft.zPosition = 15
             consoleBarLeft.position = CGPoint(x: 0, y: 248)
-            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            //consoleBarLeft.position = CGPoint(x:CGRectGetMinX(self.frame)+0,y:CGRectGetMinY(self.frame)+248)
             self.addChild(consoleBarLeft)
         
         //console bar extenders right for bigger screens
             consoleBarRight.zPosition = 15
             consoleBarRight.position = CGPoint(x: 1500, y: 248)
-            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1020,y:CGRectGetMinY(self.frame)+248)
+            //consoleBarRight.position = CGPoint(x:CGRectGetMinX(self.frame)+1500,y:CGRectGetMinY(self.frame)+248)
             self.addChild(consoleBarRight)
         
         self.addChild(consoleBar)
@@ -205,7 +207,7 @@ class GameScene: SKScene {
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
         doctorWizardsHealthLabel?.fontSize = 45;
         //doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
-        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1700,y:CGRectGetMinY(self.frame)+350)
+        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1840,y:CGRectGetMinY(self.frame)+213)
         
         doctorWizardsHealthLabel?.zPosition = 16
         self.addChild(doctorWizardsHealthLabel!)
@@ -391,7 +393,7 @@ class GameScene: SKScene {
         }
         
         
-        //MARK: Main Game Consile Display Labels
+        //MARK: GAME CONSOLE DISPLAY LABELS-------------------------------------
         
         doctorWizardsAltitudeLabel?.text = "\(altitude)"
         
@@ -419,10 +421,52 @@ class GameScene: SKScene {
             
         }
         
+
+        var fullHealthStatus: CGFloat = 742.0
+        //println("Your health now is \(healthPoints)")
         
-        doctorWizardsHealthLabel?.text = "Health: \(healthPoints)"
+        let healthyIconEmoji: String = "🍏"
+        let unhealthyIconEmoji: String = "🍊"
+
+        
+        if (healthPoints == 0 ){
+             println("YOU dead!")
+            doctorWizardsHealthLabel?.text = "YOU DEAD!"
+        }else{
         
         
+        //strongest >= 80%
+        if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
+            //println("strongest condition reached")
+            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji) \(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+        }
+        
+        //strong <= 80% && >=60%
+        if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
+            //println("strong condition reached")
+            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
+        }
+        
+        //ok <= 60% && >=40%
+        if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
+            //println("ok condition reached")
+            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+        }
+        
+         //weak <= 40% && >=20%
+        if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
+            //println("weak condition reached")
+            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
+        }
+        
+        //weakest <= 20%
+        if(healthPoints <= fullHealthStatus*0.2){
+            //println("weakest condition reached")
+            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
+        }
+        
+        }
+ 
         
         if self.alienHitRocks <= 0 {
             enumerateChildNodesWithName("alienspaceship", usingBlock: { (node, _) -> Void in
@@ -430,6 +474,10 @@ class GameScene: SKScene {
                 alien.removeFromParent()
             })
         }
+        
+        
+          //E.O. GAME CONSOLE DISPLAY LABELS -------------------------------------
+        
         
         //println(self.altitude)
 //        boundsCheckDude()
