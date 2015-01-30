@@ -87,7 +87,7 @@ class GameScene: SKScene {
     let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "DrWizardConsoleBarExtender")
     let consoleBar : SKSpriteNode = SKSpriteNode(imageNamed: "drWizardConsoleBar_3000_wLabels")
     
-    //let dudesHealthGague: CGRect
+    let dudesHealthGague: CGRect
     
     
     
