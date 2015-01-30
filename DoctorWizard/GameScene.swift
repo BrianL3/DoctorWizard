@@ -120,7 +120,7 @@ class GameScene: SKScene {
         //MARK: Game Console  ======================================================================
         
         consoleBarLeft.zPosition = 13
-        consoleBarLeft.position = CGPoint(x: 500, y: 220)
+        consoleBarLeft.position = CGPoint(x: 550, y: 220)
         self.addChild(consoleBarLeft)
         
         consoleBarRight.zPosition = 13
@@ -133,7 +133,7 @@ class GameScene: SKScene {
         playTimeRemainingLabel?.fontColor = SKColor.redColor()
         playTimeRemainingLabel?.fontSize = 60;
         //playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+250,y:CGRectGetMinY(self.frame)+1250)
-        playTimeRemainingLabel?.position = CGPoint(x: 570, y: 220)
+        playTimeRemainingLabel?.position = CGPoint(x: 190, y: 220)
         playTimeRemainingLabel?.zPosition = 14
         self.addChild(playTimeRemainingLabel!)
         
@@ -141,7 +141,7 @@ class GameScene: SKScene {
         doctorWizardsAltitudeLabel?.fontColor = SKColor.redColor()
         doctorWizardsAltitudeLabel?.fontSize = 60;
         //doctorWizardsAltitudeLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1000,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsAltitudeLabel?.position = CGPoint(x: 670, y: 220)
+        doctorWizardsAltitudeLabel?.position = CGPoint(x: 900, y: 220)
         doctorWizardsAltitudeLabel?.zPosition = 14
         self.addChild(doctorWizardsAltitudeLabel!)
         
@@ -150,7 +150,7 @@ class GameScene: SKScene {
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
         doctorWizardsHealthLabel?.fontSize = 60;
         //doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1800,y:CGRectGetMinY(self.frame)+1250)
-        doctorWizardsHealthLabel?.position = CGPoint(x: 570, y: 320)
+        doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 220)
         doctorWizardsHealthLabel?.zPosition = 14
         self.addChild(doctorWizardsHealthLabel!)
         
