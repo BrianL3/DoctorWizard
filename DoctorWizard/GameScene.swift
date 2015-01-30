@@ -88,6 +88,8 @@ class GameScene: SKScene {
     
     
     var alienHitRocks = 15
+    
+    
     //MARK: INTIALIZER ==============================================================================
     
     override init(size: CGSize) {
@@ -98,11 +100,6 @@ class GameScene: SKScene {
         playableRect = CGRect(x: 0, y: playableMargin,
             width: size.width,
             height: playableHeight) // 4
-        
-        dudesHealthGague = CGRect(x: CGRectGetMinX(playableRect)+1700, y: CGRectGetMinY(playableRect)+350,
-            width: 200,
-            height: 30)
-        //dudesHealthGague = SKColor(colorWithRed:0.15, green:0.15, blue:0.3, alpha:1.0)
         
         // setup dude_animation
         var texturesRight: [SKTexture] = []
@@ -139,6 +136,9 @@ class GameScene: SKScene {
         dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
 
+        //clockfix
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        
         
         //simulate SKSpriteNode for collision purposes
 
@@ -224,6 +224,10 @@ class GameScene: SKScene {
         
     }
     
+    func didEnterBackground(){
+        self.paused = true
+    }
+    
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
 
@@ -261,15 +265,16 @@ class GameScene: SKScene {
 //        }
 //        
         
-        
-        if gameStartTime == 0 {
-            gameStartTime = currentTime
-        }
-        
-        if lastUpdateTime > 0 {
-            dt = currentTime - lastUpdateTime
-        } else {
-            dt = 0
+        if self.paused == false {
+            if gameStartTime == 0 {
+                gameStartTime = currentTime
+            }
+            
+            if lastUpdateTime > 0 {
+                dt = currentTime - lastUpdateTime
+            } else {
+                dt = 0
+            }
         }
         
         lastUpdateTime = currentTime
@@ -289,7 +294,9 @@ class GameScene: SKScene {
         
         
         //MARK: set timepassed
-        self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        if self.paused == false {
+            self.timePassed = round((currentTime - gameStartTime) * 10 )/10
+        }
         
         //MARK: set altitude variable
         if timePassed % 0.5 == 0 {
