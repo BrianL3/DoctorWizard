@@ -14,10 +14,10 @@ class LooserScene: SKScene {
     var currentSong : String?
     var mainMenuDelegate : MainMenuDelegate?
     
-    let retryButton = SKSpriteNode(imageNamed: "Rock")
+    let retryButton = SKSpriteNode(imageNamed: "ResetButton")
     var touchLocation :CGPoint = CGPointZero
     
-    let repickButton = SKSpriteNode(imageNamed: "Spike")
+    let repickButton = SKSpriteNode(imageNamed: "RepickButton")
 
     
     override func didMoveToView(view: SKView) {

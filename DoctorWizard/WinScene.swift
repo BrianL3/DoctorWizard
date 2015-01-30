@@ -13,8 +13,8 @@ class WinScene: SKScene {
 
     var mainMenuDelegate : MainMenuDelegate?
     
-    let retryButton = SKSpriteNode(imageNamed: "Rock")
-    let repickButton = SKSpriteNode(imageNamed: "Spike")
+    let retryButton = SKSpriteNode(imageNamed: "ResetButton")
+    let repickButton = SKSpriteNode(imageNamed: "RepickButton")
     var touchLocation :CGPoint = CGPointZero
     
     
