@@ -14,6 +14,8 @@
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
 		55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55228CDE1A798F1100E573D1 /* WinnerScene.swift */; };
+		55983BB91A7B68F20096CC8A /* dudeParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 55983BB71A7B68F20096CC8A /* dudeParticle.sks */; };
+		55983BBA1A7B68F20096CC8A /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 55983BB81A7B68F20096CC8A /* spark.png */; };
 		55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D7F6C81A79914E006E8753 /* LooserScene.swift */; };
 		B8F7F8131A7AB86700B55CC7 /* blackhole.png in Resources */ = {isa = PBXBuildFile; fileRef = B8F7F8121A7AB86700B55CC7 /* blackhole.png */; };
 		C0E2189F1A795DE300880E41 /* MediaItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E2189E1A795DE300880E41 /* MediaItemCell.swift */; };
@@ -79,6 +81,8 @@
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
 		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
+		55983BB71A7B68F20096CC8A /* dudeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = dudeParticle.sks; path = ../dudeParticle.sks; sourceTree = "<group>"; };
+		55983BB81A7B68F20096CC8A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../spark.png; sourceTree = "<group>"; };
 		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
 		B8F7F8121A7AB86700B55CC7 /* blackhole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackhole.png; sourceTree = "<group>"; };
 		C0E2189E1A795DE300880E41 /* MediaItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemCell.swift; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 				FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */,
 				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
 				C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */,
+				55983BB71A7B68F20096CC8A /* dudeParticle.sks */,
 				C4D707CA1A76BEFB00A990A1 /* Supporting Files */,
 				FA95887C1A7ADFAE0008F1FF /* WinScene.swift */,
 			);
@@ -193,6 +198,7 @@
 		C4D707CA1A76BEFB00A990A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55983BB81A7B68F20096CC8A /* spark.png */,
 				483339D11A76C3AF00344DC8 /* dude.png */,
 				B8F7F8121A7AB86700B55CC7 /* blackhole.png */,
 				FF076AA31A7AF268006D0152 /* ConsoleNavBar.png */,
@@ -364,6 +370,7 @@
 			files = (
 				FA4116EA1A78463700FCC212 /* rerrr.wav in Resources */,
 				FA4116EB1A78463700FCC212 /* tick_one.wav in Resources */,
+				55983BBA1A7B68F20096CC8A /* spark.png in Resources */,
 				FA4116E91A78463700FCC212 /* garbal_blips.wav in Resources */,
 				FA4116E41A78463700FCC212 /* chom_one.wav in Resources */,
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
@@ -381,6 +388,7 @@
 				FA4116DE1A78463700FCC212 /* blop_four.wav in Resources */,
 				4887AEE81A7ABEF7004FA530 /* dragon2.png in Resources */,
 				483339D21A76C3AF00344DC8 /* dude.png in Resources */,
+				55983BB91A7B68F20096CC8A /* dudeParticle.sks in Resources */,
 				48D415591A787019005CE91C /* alienspaceship.png in Resources */,
 				C4D707D81A76BEFB00A990A1 /* Images.xcassets in Resources */,
 				FA4116E71A78463700FCC212 /* clicks_three.wav in Resources */,
