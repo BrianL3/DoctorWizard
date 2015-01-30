@@ -18,6 +18,8 @@ protocol MainMenuDelegate {
 
 class GameScene: SKScene {
     
+    
+    
     let dude: SKSpriteNode = SKSpriteNode(imageNamed: "dude0")
     let blackHole: SKSpriteNode = SKSpriteNode(imageNamed: "blackhole2")
     let dragon : SKSpriteNode = SKSpriteNode(imageNamed: "dragon2")
@@ -25,7 +27,8 @@ class GameScene: SKScene {
     let consoleBarRight : SKSpriteNode = SKSpriteNode(imageNamed: "ConsoleNavBar")
     var dudeDirection:String = "right"
     
-    
+    let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
+
     let dudeAnimationRight : SKAction
     let dudeAnimationLeft : SKAction
     
@@ -106,7 +109,7 @@ class GameScene: SKScene {
         
         super.init(size: size)
         setupParticles()
-        createMagic()
+        //createMagic()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -125,7 +128,11 @@ class GameScene: SKScene {
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
-
+        
+//        let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
+//        magicEmitter.position = CGPoint(x: -10, y: 15)
+//        magicEmitter.name = "magicEmitter"
+//        dude.addChild(magicEmitter)
         
         //simulate SKSpriteNode for collision purposes
 
@@ -176,15 +183,21 @@ class GameScene: SKScene {
         self.addChild(starLayer)
         self.backgroundLayer.addChild(dude)
         
+        
+        //add magic emitter
+        magicEmitter.position = CGPoint(x: -10, y: 15)
+        dude.addChild(magicEmitter)
+        
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
             self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
                 if error == nil {
-                    let verticleData = data.acceleration.x
+                    let verticalData = data.acceleration.x
                     let horizontalData = data.acceleration.y
-                    self.backgroundVerticalDirection = CGFloat(verticleData * 50.0)
+                    self.backgroundVerticalDirection = CGFloat(verticalData * 50.0)
                     self.backgroundHorizontalDirection = CGFloat(horizontalData * 50.0)
-                    
+//                    println("verticalData: \(verticalData)")
+//                    println("horizontalData: \(horizontalData)")
                   //  println("we got acceleromiter data : \(verticleData)")
                 }
             })
@@ -196,8 +209,6 @@ class GameScene: SKScene {
     //called before each frame is rendered
     override func update(currentTime: NSTimeInterval) {
 
-
-        
         //validating if it is fifth level only Dragon exists
 
         
@@ -275,13 +286,22 @@ class GameScene: SKScene {
             self.dude.removeAllActions()
             self.dude.runAction(SKAction.repeatActionForever(dudeAnimationLeft))
             self.dudeDirection = "left"
+//            self.magicEmitter.emissionAngle = 180
+            
+            
         } else if self.backgroundHorizontalDirection < 0 && self.dudeDirection != "right" {
             self.dude.removeAllActions()
             self.dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
             self.dudeDirection = "right"
+           // self.magicEmitter.emissionAngle = 0.0
         }
         
         self.dude.position = self.backgroundLayer.convertPoint(CGPoint(x: self.size.width/2, y: self.size.height/2), fromNode: self)
+        
+        //magicEmitter
+        let magicEmitterCGPoint = CGPoint(x: backgroundHorizontalDirection, y: backgroundVerticalDirection)
+        let magicEmitterAngle = magicEmitterCGPoint.angle
+        self.magicEmitter.emissionAngle = CGFloat(magicEmitterAngle)
         
         //Sections that determines which enemmies come to playing field based on Level of tune
         
@@ -475,12 +495,12 @@ class GameScene: SKScene {
     
     //MARK: PARTICLE SYSTEMS ========================================================================
     func particleEmitterNode(#speed: CGFloat, lifetime: CGFloat, scale: CGFloat, birthRate: CGFloat, color: SKColor) -> SKEmitterNode {
-        let star = SKLabelNode(fontNamed: "Helvetica")
-        star.fontSize = 80.0
-        star.text = "🔹"
-        let textureView = SKView()
-        let texture = textureView.textureFromNode(star)
-        texture.filteringMode = .Nearest
+//        let star = SKLabelNode(fontNamed: "Helvetica")
+//        star.fontSize = 80.0
+//        star.text = "🔹"
+//        let textureView = SKView()
+//        let texture = textureView.textureFromNode(star)
+//        texture.filteringMode = .Nearest
         
         let emitterNode = SKEmitterNode()
         emitterNode.particleTexture = SKTexture(imageNamed: "bokeh.png")
@@ -490,35 +510,14 @@ class GameScene: SKScene {
         emitterNode.particleSpeed = speed
         emitterNode.particleScale = scale
         emitterNode.particleColorBlendFactor = 1
-        emitterNode.position = CGPoint(x: CGRectGetMaxX(frame), y: CGRectGetMaxY(frame))
+        emitterNode.position = CGPoint(x: CGRectGetMaxX(frame) * 0.75, y: CGRectGetMaxY(frame))
         emitterNode.particlePositionRange = CGVector(dx: CGRectGetMaxX(frame), dy: 0)
         
         //not in setupParticles() :
         emitterNode.emissionAngle = CGFloat(M_PI_4)
         emitterNode.particleAction = SKAction.repeatActionForever(SKAction.rotateByAngle(CGFloat(M_PI_4), duration: 1))
-        emitterNode.particleZPosition = 100
-        /*
 
-        emitterNode.particleBlendMode
-        emitterNode.particleColorRed/Green/Blue/AlphaSpeed
-        emitterNode.particleColorBlendFactorSpeed
-        emitterNode.xAcceleration
-        emitterNode.yAcceleration
-        emitterNode.numParticlesToEmit
-        emitterNode.particleRotation
-        emitterNode.particleRotationSpeed
-        emitterNode.particleSize
-        emitterNode.particleScaleSpeed
-        emitterNode.particleAlpha
-        emitterNode.particleAlphaSpeed =
-        emitterNode.targetNode
-        p.197 for range properties
-        
-        */
-        //emitterNode.particleAction = SKAction.repeatActionForever(SKAction.sequence([SKAction.rotateByAngle(CGFloat(-M_PI_4), duration: 1), SKAction.rotateByAngle(CGFloat(M_PI_4), duration: 1)]))
-        
-        // keyframe for particles to alternate between 2 color values : to sparkle
-        let sparkles = 20
+        let sparkles = 10
         let colorSequence = SKKeyframeSequence(capacity: sparkles * 2)
         let sparkleTime = 1.0 / CGFloat(sparkles)
         for i in 0..<sparkles {
@@ -533,19 +532,30 @@ class GameScene: SKScene {
     
     // dust particles
     func setupParticles() {
-            let dustTrailNode = SKNode()
-            dustTrailNode.name = "dustTrailNode"
-            dustTrailNode.addChild(particleEmitterNode(speed: -100, lifetime: (size.height / 23), scale: 0.4, birthRate: 1, color: SKColor.lightGrayColor()))
-            addChild(dustTrailNode)
+        let dustTrailNode = SKNode()
+        dustTrailNode.name = "dustTrailNode"
+        dustTrailNode.addChild(particleEmitterNode(speed: -400, lifetime: (size.height / 100), scale: 0.5, birthRate: 1, color: SKColor.lightGrayColor()))
+        dustTrailNode.zPosition = 20
+        addChild(dustTrailNode)
+        
+        var emitterNode = particleEmitterNode(speed: -240, lifetime: (size.height / 50), scale: 0.2, birthRate: 2, color: SKColor.grayColor())
+        emitterNode.zPosition = -1
+        emitterNode.position = CGPoint(x: 0, y: CGRectGetMaxY(frame))
+        dustTrailNode.addChild(emitterNode)
+        
+        emitterNode = particleEmitterNode(speed: -100, lifetime: size.height / 20, scale: 0.1, birthRate: 4, color: SKColor.whiteColor())
+        emitterNode.zPosition = 20
+        dustTrailNode.addChild(emitterNode)
+        
     }
     
     // dude particles
-    func createMagic() {
-            let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
-                magicEmitter.position = CGPoint(x: 700, y: 400)
-            magicEmitter.name = "magicEmitter"
-            addChild(magicEmitter)
-    }
+//    func createMagic() {
+//            let magicEmitter = SKEmitterNode(fileNamed: "Fire.sks")
+//                magicEmitter.position = CGPoint(x: 1, y: -4)
+//            magicEmitter.name = "magicEmitter"
+//            addChild(magicEmitter)
+//    }
     
     //MARK: SPAWN ROCKS ========================================================================
 // old spawnRock
