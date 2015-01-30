@@ -49,6 +49,7 @@ class GameScene: SKScene {
     var backgroundImageName = "background0"
     var starsImageName = "starsFinal"
     let motionManager = CMMotionManager()
+    var rocks : [String] = []
     
     var altitude: CGFloat = 0
     var curLevel : Level = .First
@@ -74,7 +75,7 @@ class GameScene: SKScene {
     var doctorWizardsHealthLabel : SKLabelNode?
     var playTimeRemainingTicker: NSTimeInterval = 0
     var playButtonPressed : Bool = false
-    
+    var backgroundSizeFrame : CGRect = CGRect(x: 0, y: 0, width: 4096, height: 3027)
     
     //MARK: INTIALIZER ==============================================================================
     
@@ -131,7 +132,9 @@ class GameScene: SKScene {
         consoleBarRight.position = CGPoint(x: 1500, y: 220)
         self.addChild(consoleBarRight)
         
-        
+        for i in 1...5 {
+            rocks.append("pinkRock\(i)")
+        }
         
         playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
         playTimeRemainingLabel?.fontColor = SKColor.redColor()
@@ -273,7 +276,8 @@ class GameScene: SKScene {
             
         case .First:
             if !rocksOn {
-                actionToSpawnRocks()
+                    actionToSpawnRocks()
+//                actionToSpawnRocks()
                 println("First scene on now")
             }
 
@@ -450,27 +454,77 @@ class GameScene: SKScene {
     }
     
     //MARK: SPAWN ROCKS ========================================================================
+// old spawnRock
+//    func spawnRock() {
+//        let rock = SKSpriteNode(imageNamed: "Rock")
+//        rock.name = "rock"
+//        let positionOnScreen = CGPoint(
+//            x: CGFloat.random(min: -100,
+//                max: self.size.width + 100),
+//            y: size.height + 200)
+//        
+//        rock.position = backgroundLayer.convertPoint(positionOnScreen, fromNode: self)
+//        rock.setScale(1)
+//        rock.zPosition = 0
+//        self.backgroundLayer.addChild(rock)
+//        let appear = SKAction.scaleTo(3, duration: 4.0)
+//        let actions = [appear]
+//        rock.runAction(SKAction.sequence(actions))
+////        let actionMove = SKAction.moveToY(-100, duration: 4.0)
+//        let moveToPoint = CGPoint(x: rock.position.x, y: -300)
+//        let actionMove = SKAction.moveTo(backgroundLayer.convertPoint(moveToPoint, fromNode: self), duration: 4.0)
+//        let actionRemove = SKAction.removeFromParent()
+//        rock.runAction(SKAction.sequence([actionMove, actionRemove]))
+//    }
     
-    func spawnRock() {
-        let rock = SKSpriteNode(imageNamed: "Rock")
-        rock.name = "rock"
-        let positionOnScreen = CGPoint(
-            x: CGFloat.random(min: -100,
-                max: self.size.width + 100),
-            y: size.height + 200)
-        
-        rock.position = backgroundLayer.convertPoint(positionOnScreen, fromNode: self)
-        rock.setScale(1)
-        rock.zPosition = 0
-        self.backgroundLayer.addChild(rock)
-        let appear = SKAction.scaleTo(3, duration: 4.0)
-        let actions = [appear]
-        rock.runAction(SKAction.sequence(actions))
-//        let actionMove = SKAction.moveToY(-100, duration: 4.0)
-        let moveToPoint = CGPoint(x: rock.position.x, y: -300)
-        let actionMove = SKAction.moveTo(backgroundLayer.convertPoint(moveToPoint, fromNode: self), duration: 4.0)
-        let actionRemove = SKAction.removeFromParent()
-        rock.runAction(SKAction.sequence([actionMove, actionRemove]))}
+    func spawnRock(){
+        let chooseRockNum = Int(CGFloat.random(min: 1, max: 5))
+        println(chooseRockNum)
+        let rock = SKSpriteNode(imageNamed: self.rocks[chooseRockNum])
+        rock.position = self.backgroundLayer.convertPoint(randomSpawnPoint(self.backgroundSizeFrame), fromNode: self)
+        // exclusive or checks to determin that the rock will not spawn on  the player!
+        if spawnWontHitPlayer(position) {
+            rock.setScale(0)
+            rock.alpha = 0
+            rock.zRotation = CGFloat.random(min: 0, max: 90)
+            self.backgroundLayer.addChild(rock)
+            let duration = NSTimeInterval(CGFloat.random(min: 2, max: 6))
+            let grow = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 1.8), duration: duration)
+            let fade = SKAction.fadeAlphaTo(1, duration: duration)
+            let wait = SKAction.waitForDuration(NSTimeInterval(CGFloat.random(min: 4, max: 15)))
+            let appear = SKAction.group([grow,fade])
+            let disopear = appear.reversedAction()
+            let remove = SKAction.removeFromParent()
+            let seq = SKAction.sequence([appear,wait,disopear, remove])
+            rock.runAction(seq)
+            let randomFloat = CGFloat.random(min: 3, max: 10)
+        }
+
+    }
+    
+    func spawnWontHitPlayer(spawnPoint: CGPoint) -> Bool {
+        if spawnPoint.x > self.dude.position.x + 500 && !( spawnPoint.x < self.dude.position.x - 500) || !(spawnPoint.x > self.dude.position.x + 500) && ( spawnPoint.x < self.dude.position.x - 500){
+            if (spawnPoint.y > self.dude.position.y  + 500) && !(spawnPoint.y < self.dude.position.y - 500)  || !(spawnPoint.y > self.dude.position.y  + 500) && (spawnPoint.y < self.dude.position.y - 500) {
+                return true
+            }
+        }
+        return false
+    }
+    
+
+    func randomSpawnPoint(node:CGRect) -> CGPoint {
+        let posX : CGFloat = CGFloat.random(min: 0, max: 4096) - 1024
+        let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
+        let position = CGPoint(x: posX, y: posY)
+        println("rando point \(position)")
+        return position
+    }
+    
+    
+    
+// func randomPointInNode(node:SKNode) -> CGPoint {
+//        return CGPoint(x: CGFloat.random(min: 0, max: CGRectGetMaxX(node.frame)), y: CGFloat.random(min: 0, max: CGRectGetMaxY(node.frame)))
+//    }
     
     //MARK: SPAWN FIREBALLS ====================================================================
 
@@ -781,6 +835,7 @@ class GameScene: SKScene {
             topBackground.name = "background"
             backgroundLayer.addChild(bottomBackground)
             backgroundLayer.addChild(topBackground)
+            self.backgroundSizeFrame = bottomBackground.frame
             
             
             
@@ -991,7 +1046,7 @@ class GameScene: SKScene {
         rocksOn = true
         runAction(SKAction.repeatActionForever(
             SKAction.sequence([SKAction.runBlock(spawnRock),
-                SKAction.waitForDuration(1.0)])))
+                SKAction.waitForDuration(1)])))
         println("Rock on  scene on now")
     }
     
