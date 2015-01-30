@@ -119,15 +119,16 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
 //        dude.position = CGPoint(x: 700, y: 400)
-        dude.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        let centerScreen = self.convertPoint(CGPoint(x: 1024, y: 676), fromNode: self.backgroundLayer)
+        dude.position = centerScreen
         dude.zPosition = 15
         dude.setScale(0.75)
         dude.runAction(SKAction.repeatActionForever(dudeAnimationRight))
         dude.name = "dude"
-        addChild(dude)
+
         
         //simulate SKSpriteNode for collision purposes
-        dude.zPosition = 0
+
         
         //MARK: Game Console  ======================================================================
         
@@ -173,17 +174,7 @@ class GameScene: SKScene {
         addMovingBackground(self.backgroundImageName)
         self.addChild(backgroundLayer)
         self.addChild(starLayer)
-        
-        if motionManager.gyroAvailable {
-            self.motionManager.gyroUpdateInterval = 0.01
-            self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
-                println("error")
-                if error == nil {
-                    println(data)
-                }
-            })
-        }
-        
+        self.backgroundLayer.addChild(dude)
         
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
@@ -290,7 +281,7 @@ class GameScene: SKScene {
             self.dudeDirection = "right"
         }
         
-
+        self.dude.position = self.backgroundLayer.convertPoint(CGPoint(x: self.size.width/2, y: self.size.height/2), fromNode: self)
         
         //Sections that determines which enemmies come to playing field based on Level of tune
         
@@ -380,7 +371,7 @@ class GameScene: SKScene {
         
         
         //println(self.altitude)
-        boundsCheckDude()
+//        boundsCheckDude()
         moveBackground()
         moveStars()
     }
@@ -529,7 +520,8 @@ class GameScene: SKScene {
             } else {
                 let positionToDouble = randomSpawnPoint()
                 let moveToPositon = positionToDouble * 2
-                let move = SKAction.moveTo(positionToDouble, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
+                let convertedPositon = self.backgroundLayer.convertPoint(positionToDouble, fromNode: self)
+                let move = SKAction.moveTo(convertedPositon, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
                 let moveApear = SKAction.group([grow,move,fade])
                 rock.runAction(SKAction.sequence([moveApear, disopear, remove]))
             }
@@ -538,8 +530,8 @@ class GameScene: SKScene {
     }
     
     func spawnWontHitPlayer(spawnPoint: CGPoint) -> Bool {
-        if spawnPoint.x > self.dude.position.x + 500 && !( spawnPoint.x < self.dude.position.x - 500) || !(spawnPoint.x > self.dude.position.x + 500) && ( spawnPoint.x < self.dude.position.x - 500){
-            if (spawnPoint.y > self.dude.position.y  + 500) && !(spawnPoint.y < self.dude.position.y - 500)  || !(spawnPoint.y > self.dude.position.y  + 500) && (spawnPoint.y < self.dude.position.y - 500) {
+        if spawnPoint.x > self.dude.position.x + 50 && !( spawnPoint.x < self.dude.position.x - 50) || !(spawnPoint.x > self.dude.position.x + 50) && ( spawnPoint.x < self.dude.position.x - 50){
+            if (spawnPoint.y > self.dude.position.y  + 50) && !(spawnPoint.y < self.dude.position.y - 50)  || !(spawnPoint.y > self.dude.position.y  + 50) && (spawnPoint.y < self.dude.position.y - 50) {
                 return true
             }
         }
@@ -562,62 +554,120 @@ class GameScene: SKScene {
     
     //MARK: SPAWN FIREBALLS ====================================================================
 
-    func spawnFireball() {
-        let fireBall = SKSpriteNode(imageNamed: "fireball")
-        let oldPosition = fireBall.position
-        let upPosition = oldPosition + CGPoint(x: 0, y: 20)
-        let upEffect = SKTMoveEffect(node: fireBall, duration: 0.9, startPosition: oldPosition, endPosition: upPosition)
-        upEffect.timingFunction = { t in pow(1, -1 * t) * (sin(t * π * 3))}
-        let upAction = SKAction.actionWithEffect(upEffect)
-        let upActionRepeat = SKAction.repeatActionForever(upAction)
+//    func spawnFireball() {
+//        let fireBall = SKSpriteNode(imageNamed: "fireball")
+//        let oldPosition = fireBall.position
+//        let upPosition = oldPosition + CGPoint(x: 0, y: 20)
+//        let upEffect = SKTMoveEffect(node: fireBall, duration: 0.9, startPosition: oldPosition, endPosition: upPosition)
+//        upEffect.timingFunction = { t in pow(1, -1 * t) * (sin(t * π * 3))}
+//        let upAction = SKAction.actionWithEffect(upEffect)
+//        let upActionRepeat = SKAction.repeatActionForever(upAction)
+//        
+//        
+//        
+//        fireBall.name = "fireball"
+//        let screenPosition = CGPoint(x: size.width + 100, y: CGFloat.random(min: 0, max: size.height))
+//        fireBall.position = backgroundLayer.convertPoint(screenPosition, fromNode: self)
+//        fireBall.setScale(1)
+//        fireBall.zPosition = 0
+//        self.backgroundLayer.addChild(fireBall)
+//        let appear = SKAction.scaleTo(3, duration: 4.0)
+//        let actions = [appear]
+//        fireBall.runAction(SKAction.sequence(actions))
+//        let actionMove =
+//        SKAction.moveToX(-300, duration: 3.0)
+//        let actionRemove = SKAction.removeFromParent()
+//        fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
+//    }
+    
+    func spawnFireball(){
+        let fireball = SKSpriteNode(imageNamed: "fireball")
+        let warning = SKSpriteNode(imageNamed: "Rock")
+        fireball.name = "fireball"
+        fireball.position = self.backgroundLayer.convertPoint(generateFireballSpawnPoint(), fromNode: self)
+        var warnignPosition =  self.convertPoint(fireball.position, fromNode: self.backgroundLayer)
+        warnignPosition = CGPoint(x: self.size.width - (self.size.width/8), y: warnignPosition.y)
+        warning.position = warnignPosition
+        warning.alpha = 0
         
+        addChild(warning)
+        fireball.setScale(1)
+        fireball.zPosition = 0
+        self.backgroundLayer.addChild(fireball)
+        let remove = SKAction.removeFromParent()
+        let warningApear = SKAction.fadeAlphaTo(1, duration: 0.1)
+        let warningDisopear = SKAction.fadeAlphaTo(0, duration: 0.2)
+        let displayWarning = SKAction.sequence([SKAction.repeatAction(SKAction.sequence([warningApear,warningDisopear ]), count: 4), remove])
+        warning.runAction(displayWarning)
         
+        let moveUp = SKAction.moveToY(fireball.position.y + 20, duration: 0.5)
+        let moveDown = SKAction.moveToY(fireball.position.y - 20, duration: 0.5)
+        var speed :CGFloat = 0.0
+
+        let wiggle = SKAction.repeatActionForever(SKAction.sequence([moveDown,moveUp]))
         
-        fireBall.name = "fireball"
-        let screenPosition = CGPoint(x: size.width + 100, y: CGFloat.random(min: 0, max: size.height))
-        fireBall.position = backgroundLayer.convertPoint(screenPosition, fromNode: self)
-        fireBall.setScale(1)
-        fireBall.zPosition = 0
-        self.backgroundLayer.addChild(fireBall)
-        let appear = SKAction.scaleTo(3, duration: 4.0)
-        let actions = [appear]
-        fireBall.runAction(SKAction.sequence(actions))
-        let actionMove =
-        SKAction.moveToX(-300, duration: 3.0)
-        let actionRemove = SKAction.removeFromParent()
-        fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
+//        let moveAcross = SKAction.moveToX(-1024, duration: NSTimeInterval(CGFloat.random(min: 1, max: 2)))
+        var moveTO = self.backgroundLayer.convertPoint(CGPoint(
+            x: -1024, y: 0), fromNode: self)
+        moveTO.y = fireball.position.y
+        let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 1.3), remove])
+
+        let move = SKAction.group([wiggle, moveAcross])
+        fireball.runAction(move)
+        
+    }
+    
+    func generateFireballSpawnPoint() -> CGPoint{
+        let posX = CGFloat(3072)
+        let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
+        return CGPoint(x: posX, y: posY)
     }
 
     //MARK: SPAWN ALIENS ======================================================================
     
+//    func spawnAlien() {
+//        let alien = SKSpriteNode(imageNamed: "alienspaceship")
+//        alien.name = "alienspaceship"
+//        let positionOnScreen = CGPoint(
+//            x: CGFloat.random(min: CGRectGetMinX(playableRect) + alien.frame.size.width,
+//                max: CGRectGetMaxX(playableRect)),
+//            y: size.height)
+//        alien.position = backgroundLayer.convertPoint(positionOnScreen, fromNode: self)
+//        alien.setScale(1)
+//        alien.zPosition = 0
+//        backgroundLayer.addChild(alien)
+//        var randomXPosition = CGFloat.random(min: 0, max: size.width)
+//        var randomYPosition = CGFloat.random(min: 0, max: size.height)
+//        let appear = SKAction.scaleTo(1, duration: 2.0)
+//        let moveToY = backgroundLayer.convertPoint(CGPoint(x: 0, y: randomYPosition), fromNode: self)
+//        let moveToX = backgroundLayer.convertPoint(CGPoint(x: randomXPosition, y: 0), fromNode: self)
+////        let actionMoveYDown =
+////        SKAction.moveToY(0, duration: 2.0)
+////        let actionMoveX =
+////        SKAction.moveToX(randomXPosition, duration: 0.5)
+////        let actionMoveYUp =
+//        
+//        let actionMoveY = SKAction.moveTo(moveToY, duration: 2.0)
+//        let actionMoveX = SKAction.moveTo(moveToX, duration: 1.0)
+//        SKAction.moveToY(size.height - alien.frame.height / 2, duration: 4.0)
+//
+//        let actionRemove = SKAction.removeFromParent()
+//        alien.runAction(SKAction.sequence([appear, actionMoveX, actionMoveY, actionRemove]))}
+    
+    
     func spawnAlien() {
-        let alien = SKSpriteNode(imageNamed: "alienspaceship")
+        let alien = SKSpriteNode(imageNamed: "spaceShip")
         alien.name = "alienspaceship"
-        let positionOnScreen = CGPoint(
-            x: CGFloat.random(min: CGRectGetMinX(playableRect) + alien.frame.size.width,
-                max: CGRectGetMaxX(playableRect)),
-            y: size.height)
-        alien.position = backgroundLayer.convertPoint(positionOnScreen, fromNode: self)
-        alien.setScale(1)
-        alien.zPosition = 0
-        backgroundLayer.addChild(alien)
-        var randomXPosition = CGFloat.random(min: 0, max: size.width)
-        var randomYPosition = CGFloat.random(min: 0, max: size.height)
-        let appear = SKAction.scaleTo(1, duration: 2.0)
-        let moveToY = backgroundLayer.convertPoint(CGPoint(x: 0, y: randomYPosition), fromNode: self)
-        let moveToX = backgroundLayer.convertPoint(CGPoint(x: randomXPosition, y: 0), fromNode: self)
-//        let actionMoveYDown =
-//        SKAction.moveToY(0, duration: 2.0)
-//        let actionMoveX =
-//        SKAction.moveToX(randomXPosition, duration: 0.5)
-//        let actionMoveYUp =
-        
-        let actionMoveY = SKAction.moveTo(moveToY, duration: 2.0)
-        let actionMoveX = SKAction.moveTo(moveToX, duration: 1.0)
-        SKAction.moveToY(size.height - alien.frame.height / 2, duration: 4.0)
+        alien.position = randomSpawnPoint()
+        self.backgroundLayer.addChild(alien)
 
-        let actionRemove = SKAction.removeFromParent()
-        alien.runAction(SKAction.sequence([appear, actionMoveX, actionMoveY, actionRemove]))}
+        
+        let move = SKAction.moveTo(self.dude.position, duration: 3)
+        alien.runAction(move)
+        
+    }
+    
+
     
     
     //MARK: BLACK HOLE =========================================================================

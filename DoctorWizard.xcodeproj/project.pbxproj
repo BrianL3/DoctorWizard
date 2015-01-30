@@ -81,8 +81,8 @@
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
 		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
-		55983BB71A7B68F20096CC8A /* dudeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = dudeParticle.sks; sourceTree = "<group>"; };
-		55983BB81A7B68F20096CC8A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		55983BB71A7B68F20096CC8A /* dudeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = dudeParticle.sks; path = ../dudeParticle.sks; sourceTree = "<group>"; };
+		55983BB81A7B68F20096CC8A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../spark.png; sourceTree = "<group>"; };
 		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
 		B8F7F8121A7AB86700B55CC7 /* blackhole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackhole.png; sourceTree = "<group>"; };
 		C0E2189E1A795DE300880E41 /* MediaItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemCell.swift; sourceTree = "<group>"; };
@@ -155,8 +155,6 @@
 		C4D707BE1A76BEFB00A990A1 = {
 			isa = PBXGroup;
 			children = (
-				55983BB71A7B68F20096CC8A /* dudeParticle.sks */,
-				55983BB81A7B68F20096CC8A /* spark.png */,
 				C4D707C91A76BEFB00A990A1 /* DoctorWizard */,
 				C4D707E31A76BEFC00A990A1 /* DoctorWizardTests */,
 				C4D707C81A76BEFB00A990A1 /* Products */,
@@ -190,6 +188,7 @@
 				FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */,
 				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
 				C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */,
+				55983BB71A7B68F20096CC8A /* dudeParticle.sks */,
 				C4D707CA1A76BEFB00A990A1 /* Supporting Files */,
 				FA95887C1A7ADFAE0008F1FF /* WinScene.swift */,
 			);
@@ -199,6 +198,7 @@
 		C4D707CA1A76BEFB00A990A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55983BB81A7B68F20096CC8A /* spark.png */,
 				483339D11A76C3AF00344DC8 /* dude.png */,
 				B8F7F8121A7AB86700B55CC7 /* blackhole.png */,
 				FF076AA31A7AF268006D0152 /* ConsoleNavBar.png */,
