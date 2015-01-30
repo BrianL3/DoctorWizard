@@ -505,6 +505,7 @@ class GameScene: SKScene {
     func spawnRock(){
         let chooseRockNum = Int(CGFloat.random(min: 1, max: 5))
         let rock = SKSpriteNode(imageNamed: self.rocks[chooseRockNum])
+        rock.name = "rock"
         rock.position = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
         // exclusive or checks to determin that the rock will not spawn on  the player!
         if spawnWontHitPlayer(position) {
@@ -514,7 +515,7 @@ class GameScene: SKScene {
             self.backgroundLayer.addChild(rock)
             let duration = NSTimeInterval(CGFloat.random(min: 0, max: 10))
             let grow = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 3), duration: duration)
-            let fade = SKAction.fadeAlphaTo(1, duration: duration/10)
+            let fade = SKAction.fadeAlphaTo(0.6, duration: duration/10)
             let wait = SKAction.waitForDuration(NSTimeInterval(CGFloat.random(min: 4, max: 15)))
             let appear = SKAction.group([grow,fade])
             let reverseGrow = SKAction.scaleTo(0, duration: duration/5)
@@ -528,7 +529,7 @@ class GameScene: SKScene {
             } else {
                 let positionToDouble = randomSpawnPoint()
                 let moveToPositon = positionToDouble * 2
-                let move = SKAction.moveTo(moveToPositon, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
+                let move = SKAction.moveTo(positionToDouble, duration: NSTimeInterval(CGFloat.random(min: 8, max: 12)))
                 let moveApear = SKAction.group([grow,move,fade])
                 rock.runAction(SKAction.sequence([moveApear, disopear, remove]))
             }
