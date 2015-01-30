@@ -66,6 +66,8 @@ class GameScene: SKScene {
     var blackHoleOn : Bool = false
     var dragonOn : Bool = false
     
+    var sequenceDragonActions : [SKAction] = []
+    
     //console display labels
     var playTimeRemainingLabel : SKLabelNode?
     var doctorWizardsAltitudeLabel : SKLabelNode?
