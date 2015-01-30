@@ -258,25 +258,25 @@ class GameScene: SKScene {
             
         case .First:
             if !rocksOn {
-                //actionToSpawnRocks()
+                actionToSpawnRocks()
                 println("First scene on now")
             }
 
         case .Second:
             if !fireBallOn {
-                //actionToSpawnFireBalls()
+                actionToSpawnFireBalls()
                 println("Second scene on now")
             }
 
         case .Third:
             if !alienOn {
-               //actionToSpawnAlien()
+                actionToSpawnAlien()
                 println("Third scene on now")
             }
             
         case .Fourth:
             if !blackHoleOn {
-               actionToSpawnBlackHole()
+                actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
