@@ -321,19 +321,23 @@ class GameScene: SKScene {
         if self.paused == false {
             
             self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
+            println("timePassed = \(timePassed)")
         }
         
         println(self.dt)
         
         //MARK: set altitude variable
-        if timePassed % 0.5 == 0 {
+        //if timePassed % 0.5 == 0 { 
+        //That won't work anymore 'cause timePassed variable type changed from a float to an NSTimeInterval.
+            
+         println("timePassed % 0.5 == 0")
             
             if self.backgroundVerticalDirection < 0 {
                 self.altitude += 1
             } else if self.backgroundVerticalDirection > 0 {
                 self.altitude -= 1
             }
-        }
+        //}
         
         
         if self.backgroundHorizontalDirection > 0 && self.dudeDirection != "left" {
