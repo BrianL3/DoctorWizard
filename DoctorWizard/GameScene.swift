@@ -189,12 +189,17 @@ class GameScene: SKScene {
         }
         
         playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
-        playTimeRemainingLabel?.fontColor = SKColor.blueColor()
-        playTimeRemainingLabel?.fontSize = 38;
+        playTimeRemainingLabel?.fontSize = 40;
+            if ( playTimeRemainingTicker <= 15 ){
+                playTimeRemainingLabel?.fontColor = SKColor.blueColor()
+            }else{
+                playTimeRemainingLabel?.fontColor = SKColor.redColor()
+            }
         //playTimeRemainingLabel?.position = CGPoint(x: 560, y: 213)
-        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+560,y:CGRectGetMinY(self.frame)+213)
+        playTimeRemainingLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+545,y:CGRectGetMinY(self.frame)+213)
         playTimeRemainingLabel?.zPosition = 16
         self.addChild(playTimeRemainingLabel!)
+        
         
         doctorWizardsAltitudeLabel = SKLabelNode(fontNamed:"Futura")
         doctorWizardsAltitudeLabel?.fontColor = SKColor.blueColor()
@@ -321,19 +326,21 @@ class GameScene: SKScene {
         if self.paused == false {
             
             self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
+            println("timePassed = \(timePassed)")
         }
         
         println(self.dt)
         
         //MARK: set altitude variable
-        if timePassed % 0.5 == 0 {
-            
+        //if timePassed % 0.5 == 0 { 
+        //That won't work anymore 'cause timePassed variable type changed from a float to an NSTimeInterval.
+        
             if self.backgroundVerticalDirection < 0 {
                 self.altitude += 1
             } else if self.backgroundVerticalDirection > 0 {
                 self.altitude -= 1
             }
-        }
+        //}
         
         
         if self.backgroundHorizontalDirection > 0 && self.dudeDirection != "left" {
@@ -402,80 +409,85 @@ class GameScene: SKScene {
         }
         
         
-        //MARK: GAME CONSOLE DISPLAY LABELS-------------------------------------
         
-        doctorWizardsAltitudeLabel?.text = "\(altitude)"
-        
-        //I want to start playTimeRemainingTicker after play button was pressed not when game starts
-        //if ( playButtonPressed == true ){}
-        
-        playTimeRemainingTicker = songDuration - timePassed
+        //MARK: GAME CONSOLE < Playtime Remaining | Altitude | Health >-------------------------------------
         
         
+            //MARK: Display Playtime Remaining Label
         
-        if ( playTimeRemainingTicker > 0 ){
-            
-            
-            playTimeRemainingLabel?.text = "\(playTimeRemainingTicker)"
-            
-        }else{
-            
-            
-            playTimeRemainingLabel?.text = "\(0)"
-            
-            self.didWin = true // and show the you loose label or image
-            
-            // will create "You Loose" Label or show Duncan Artwork
-            
-            
-        }
         
-
-        var fullHealthStatus: CGFloat = 742.0
-        //println("Your health now is \(healthPoints)")
-        
-        let healthyIconEmoji: String = "🍏"
-        let unhealthyIconEmoji: String = "🍊"
+                playTimeRemainingTicker = songDuration - timePassed
 
         
-        if (healthPoints == 0 ){
-             println("YOU dead!")
-            doctorWizardsHealthLabel?.text = "YOU DEAD!"
-        }else{
+                    if ( playTimeRemainingTicker > 0 ){
+            
+                            playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker,decimalPlaceRequired: 0))"
+            
+                    }else{
+            
+                            playTimeRemainingLabel?.text = "\(0)"
+            
+                            self.didWin = true // and show the you loose screen
+                    }
         
         
-        //strongest >= 80%
-        if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
-            //println("strongest condition reached")
-            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji) \(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
-        }
+         //MARK: Display Spaceman's Altitude Label
         
-        //strong <= 80% && >=60%
-        if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
-            //println("strong condition reached")
-            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
-        }
+            doctorWizardsAltitudeLabel?.text = "\(altitude)"
         
-        //ok <= 60% && >=40%
-        if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
-            //println("ok condition reached")
-            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
-        }
         
-         //weak <= 40% && >=20%
-        if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
-            //println("weak condition reached")
-            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
-        }
         
-        //weakest <= 20%
-        if(healthPoints <= fullHealthStatus*0.2){
-            //println("weakest condition reached")
-            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
-        }
+         //MARK: Display Spaceman's Health Status Label
         
-        }
- 
+            var fullHealthStatus: CGFloat = 742.0
+        
+            let healthyIconEmoji: String = "🍏"
+            let unhealthyIconEmoji: String = "🍊"
+            let expiredEmoji: String = "😑"
+
+        
+        
+                if (healthPoints == 0 ){
+                        //Player is spacedust
+                        doctorWizardsHealthLabel?.text = "\(expiredEmoji)"
+                }else{
+        
+        
+                        //strongest >= 80%
+                    if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
+                            //println("strongest condition reached")
+                            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+                    }
+        
+                        //strong <= 80% && >=60%
+                    if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
+                            //println("strong condition reached")
+                            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
+                    }
+        
+                        //ok <= 60% && >=40%
+                    if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
+                            //println("ok condition reached")
+                            doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+                    }
+        
+                        //weak <= 40% && >=20%
+                    if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
+                            //println("weak condition reached")
+                            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
+                    }
+        
+                        //weakest <= 20%
+                        if(healthPoints <= fullHealthStatus*0.2){
+                            //println("weakest condition reached")
+                            doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
+                        }
+        
+                    }
+        
+        
+          //E.O. GAME CONSOLE DISPLAY LABELS -------------------------------------
+        
         
         if self.alienHitRocks <= 0 {
             enumerateChildNodesWithName("alienspaceship", usingBlock: { (node, _) -> Void in
@@ -485,10 +497,7 @@ class GameScene: SKScene {
         }
         
         
-          //E.O. GAME CONSOLE DISPLAY LABELS -------------------------------------
-        
-        
-        //println(self.altitude)
+       
 //        boundsCheckDude()
         moveBackground()
         moveStars()
@@ -1396,6 +1405,16 @@ class GameScene: SKScene {
     //MARK: start acceleromiter updates
     
 
+    func nSTimeIntervalValueToString(nSTimeIntervalValue: NSTimeInterval, decimalPlaceRequired: Int) -> String {
+        
+        //create the number formatter and remove all decimal places
+        let nf = NSNumberFormatter()
+        nf.numberStyle = .DecimalStyle
+        nf.maximumFractionDigits = decimalPlaceRequired
+        
+        return nf.stringFromNumber(nSTimeIntervalValue)!
+    
+    }
 
 
     
