@@ -20,12 +20,16 @@ class Dude {
     init() {
         var texturesRight: [SKTexture] = []
         var texturesLeft: [SKTexture] = []
+        self.sprite.setScale(0.75)
         for i in 0...10 {
             texturesRight.append(SKTexture(imageNamed: "dude\(i)" ))
             texturesLeft.append(SKTexture(imageNamed: "dudeLeft\(i)"))
         }
         self.dudeAnimationRight = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesRight, timePerFrame: 0.1))
         self.dudeAnimationLeft = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesLeft, timePerFrame: 0.1))
+        sprite.physicsBody = SKPhysicsBody(texture: texturesLeft[0], alphaThreshold: 0.1, size: sprite.size)
+        sprite.physicsBody?.categoryBitMask = 0x1
+        
     }
     
     

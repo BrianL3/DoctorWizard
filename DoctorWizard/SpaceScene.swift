@@ -11,11 +11,12 @@ import SpriteKit
 import CoreMotion
 
 
-class SpaceScene: SKScene {
+class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: setup time propertys
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
+    var totalTime: NSTimeInterval = 0
     
     //setup screen frame propertys
     let playableRect:CGRect
@@ -32,12 +33,18 @@ class SpaceScene: SKScene {
     
     //setup dude and dudes enemys
     let dude:Dude = Dude()
+    var colisionBitMaskDude :UInt32 = 0x1
+    var colisionBitMaskRock :UInt32 = 0x10
+
     
     
     override init(size: CGSize) {
         self.playableRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         self.centerScreen = CGPoint(x: playableRect.width/2, y: playableRect.height/2)
+       
         super.init(size: size)
+        self.physicsWorld.gravity = CGVectorMake(0, 0)
+        self.physicsWorld.contactDelegate = self
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -50,6 +57,10 @@ class SpaceScene: SKScene {
         addChild(backgroundLayer)
         self.backgroundLayer.addChild(self.dude.sprite)
         addChild(starLayer)
+        
+        
+        var rockfield = Rocks(backgroundLayer: self.backgroundLayer, scene: self)
+        rockfield.spawnRocks()
         
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
@@ -80,7 +91,30 @@ class SpaceScene: SKScene {
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        var firstBody :SKPhysicsBody!
+        var secondBody :SKPhysicsBody!
+        if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        switch firstBody.collisionBitMask {
+        case colisionBitMaskDude:
+            println("firstBody is dude")
+        default:
+            println("firstBody is rock")
+        }
+        
+        
+    }
 
-    //MARK: move layers
+    
+    
+
     
 }
