@@ -15,10 +15,11 @@ class BackgroundLayer: SKNode {
     var horizontalDirection: CGFloat = 36.0
     var movePointsPerSec: CGFloat
     var backgroundSizeFrame = CGRect(x: 0, y: 0, width: 4096, height: 3027)
+    var backgroundIdentifier:String
     
     init (backgroundImageName:String, backgroundIdentifier:String, movePointsPerSec:CGFloat) {
         self.movePointsPerSec = movePointsPerSec
-    
+        self.backgroundIdentifier = backgroundIdentifier
         super.init()
         
         for i in 0...1{
@@ -85,12 +86,13 @@ class BackgroundLayer: SKNode {
             y: self.verticalDirection *  self.movePointsPerSec)
     }
     
-    func moveBackground(putSelfHere parentView:SKScene, deltaTime:NSTimeInterval){
+    func moveBackground(currentScene parentView:SKScene, direction:CGPoint, deltaTime:NSTimeInterval){
+        self.updateDirection(direction)
         let backgroundVelocity = self.getBackgroundVelocity()
         let ammountToMove = backgroundVelocity * CGFloat(deltaTime)
         self.position += ammountToMove
         
-        self.enumerateChildNodesWithName("background", usingBlock: { (node, _) -> Void in
+        self.enumerateChildNodesWithName(self.backgroundIdentifier, usingBlock: { (node, _) -> Void in
             let background = node as SKSpriteNode
             let backgroundScreenPos = self.convertPoint(background.position, toNode: parentView)
             if backgroundScreenPos.x <= -background.size.width {

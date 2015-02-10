@@ -19,9 +19,11 @@ class SpaceScene: SKScene {
     
     let playableRect:CGRect
     let centerScreen:CGPoint
+    
+    //setup layers
     let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 60)
     var backgroundDirection = CGPoint(x: 1.0 , y: 1.0)
-    
+    let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 100)
     
     let motionManager = CMMotionManager()
 
@@ -44,8 +46,10 @@ class SpaceScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         dude.sprite.position = centerScreen
-        addChild(dude.sprite)
+        
         addChild(backgroundLayer)
+        self.backgroundLayer.addChild(self.dude.sprite)
+        addChild(starLayer)
         
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
@@ -69,9 +73,8 @@ class SpaceScene: SKScene {
             dt = 0
         }
         lastUpdateTime = currentTime
-        
-        backgroundLayer.updateDirection(self.backgroundDirection)
-        backgroundLayer.moveBackground(putSelfHere: self, deltaTime: self.dt)
+        starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
+        backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }
 
     //MARK: move layers
