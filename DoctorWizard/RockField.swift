@@ -42,4 +42,6 @@ class Rocks {
         let position = CGPoint(x: posX, y: posY)
         return position
     }
+    
+    //test
 }
