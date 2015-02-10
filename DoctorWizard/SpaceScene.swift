@@ -17,20 +17,20 @@ class SpaceScene: SKScene {
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     
+    //setup screen frame propertys
     let playableRect:CGRect
     let centerScreen:CGPoint
+    
+    // setup controlls
+    let motionManager = CMMotionManager()
     
     //setup layers
     let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 60)
     var backgroundDirection = CGPoint(x: 1.0 , y: 1.0)
+    
     let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 100)
     
-    let motionManager = CMMotionManager()
-
-    
-    
-    
-    
+    //setup dude and dudes enemys
     let dude:Dude = Dude()
     
     
@@ -59,7 +59,8 @@ class SpaceScene: SKScene {
                     let horizontalData = data.acceleration.y
                     self.backgroundDirection.y = CGFloat(verticalData * 50.0)
                     self.backgroundDirection.x = CGFloat(horizontalData * 50.0)
-                    
+                    self.dude.animateDude(self.backgroundDirection)
+
                     //  println("we got acceleromiter data : \(verticleData)")
                 }
             })
@@ -73,6 +74,9 @@ class SpaceScene: SKScene {
             dt = 0
         }
         lastUpdateTime = currentTime
+        
+        
+        self.dude.sprite.position = self.backgroundLayer.convertPoint(centerScreen, fromNode: self)
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }

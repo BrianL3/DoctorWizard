@@ -28,4 +28,19 @@ class Dude {
         self.dudeAnimationLeft = SKAction.repeatActionForever(SKAction.animateWithTextures(texturesLeft, timePerFrame: 0.1))
     }
     
+    
+    func animateDude(backgroundDirection:CGPoint){
+        if backgroundDirection.x >= CGFloat(0.0) && self.direction != "left" {
+            self.sprite.removeAllActions()
+            self.sprite.runAction(SKAction.repeatActionForever(dudeAnimationLeft))
+            self.direction = "left"
+            println(self.direction)
+        } else if backgroundDirection.x < CGFloat(0.0) && self.direction != "right" {
+            self.sprite.removeAllActions()
+            self.sprite.runAction(SKAction.repeatActionForever(dudeAnimationRight))
+            self.direction = "right"
+            println(self.direction)
+        }
+        
+    }
 }
