@@ -139,6 +139,10 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         
+        let spaceScene = SpaceScene(size: size)
+        self.view?.presentScene(spaceScene)
+        
+        
 //        dude.position = CGPoint(x: 700, y: 400)
         let centerScreen = self.convertPoint(CGPoint(x: 1024, y: 676), fromNode: self.backgroundLayer)
         dude.position = centerScreen

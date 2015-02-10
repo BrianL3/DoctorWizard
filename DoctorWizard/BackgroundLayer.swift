@@ -11,8 +11,8 @@ import SpriteKit
 
 
 class BackgroundLayer: SKNode {
-    var verticalDirection: CGFloat = 1.0
-    var horizontalDirection: CGFloat = 1.0
+    var verticalDirection: CGFloat = 30.0
+    var horizontalDirection: CGFloat = 36.0
     var movePointsPerSec: CGFloat
     var backgroundSizeFrame = CGRect(x: 0, y: 0, width: 4096, height: 3027)
     
@@ -72,5 +72,39 @@ class BackgroundLayer: SKNode {
             width: background1.size.width * 2,
             height: background1.size.height * 2)
         return backgroundNode
+    }
+    
+    func updateDirection(directionAsPoint:CGPoint){
+        self.horizontalDirection = directionAsPoint.x
+        self.verticalDirection = directionAsPoint.y
+    }
+    
+    func getBackgroundVelocity() -> CGPoint{
+        return  CGPoint(
+            x: self.horizontalDirection * self.movePointsPerSec,
+            y: self.verticalDirection *  self.movePointsPerSec)
+    }
+    
+    func moveBackground(putSelfHere parentView:SKScene, deltaTime:NSTimeInterval){
+        let backgroundVelocity = self.getBackgroundVelocity()
+        let ammountToMove = backgroundVelocity * CGFloat(deltaTime)
+        self.position += ammountToMove
+        
+        self.enumerateChildNodesWithName("background", usingBlock: { (node, _) -> Void in
+            let background = node as SKSpriteNode
+            let backgroundScreenPos = self.convertPoint(background.position, toNode: parentView)
+            if backgroundScreenPos.x <= -background.size.width {
+                background.position.x = background.position.x + background.size.width*2
+            }
+            if backgroundScreenPos.x >= background.size.width {
+                background.position.x = background.position.x - background.size.width*2
+            }
+            if backgroundScreenPos.y <= -background.size.height {
+                background.position.y = background.position.y + background.size.height*2
+            }
+            if backgroundScreenPos.y >= background.size.height {
+                background.position.y = background.position.y - background.size.height*2
+            }
+        })
     }
 }

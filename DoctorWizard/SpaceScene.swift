@@ -8,13 +8,24 @@
 
 import Foundation
 import SpriteKit
+import CoreMotion
 
 
 class SpaceScene: SKScene {
     
+    //MARK: setup time propertys
+    var lastUpdateTime: NSTimeInterval = 0
+    var dt: NSTimeInterval = 0
+    
     let playableRect:CGRect
     let centerScreen:CGPoint
-    let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background", backgroundIdentifier: "backgrodun", movePointsPerSec: 300)
+    let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 60)
+    var backgroundDirection = CGPoint(x: 1.0 , y: 1.0)
+    
+    
+    let motionManager = CMMotionManager()
+
+    
     
     
     
@@ -33,36 +44,36 @@ class SpaceScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         dude.sprite.position = centerScreen
+        addChild(dude.sprite)
+        addChild(backgroundLayer)
         
+        if motionManager.accelerometerAvailable {
+            self.motionManager.accelerometerUpdateInterval = 0.1
+            self.motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data, error) -> Void in
+                if error == nil {
+                    let verticalData = data.acceleration.x
+                    let horizontalData = data.acceleration.y
+                    self.backgroundDirection.y = CGFloat(verticalData * 50.0)
+                    self.backgroundDirection.x = CGFloat(horizontalData * 50.0)
+                    
+                    //  println("we got acceleromiter data : \(verticleData)")
+                }
+            })
+        }
     }
     
     override func update(currentTime: NSTimeInterval) {
+        if lastUpdateTime > 0 {
+            dt = currentTime - lastUpdateTime
+        } else {
+            dt = 0
+        }
+        lastUpdateTime = currentTime
         
+        backgroundLayer.updateDirection(self.backgroundDirection)
+        backgroundLayer.moveBackground(putSelfHere: self, deltaTime: self.dt)
     }
 
     //MARK: move layers
-    func moveBackground(){
-        let backgroundVelocity = CGPoint(
-            x: self.backgroundLayer.horizontalDirection * 60,
-            y: self.backgroundLayer.verticalDirection *  60)
-        let ammountToMove = backgroundVelocity * CGFloat(dt)
-        self.backgroundLayer.position += ammountToMove
-        
-        backgroundLayer.enumerateChildNodesWithName("background", usingBlock: { (node, _) -> Void in
-            let background = node as SKSpriteNode
-            let backgroundScreenPos = self.backgroundLayer.convertPoint(background.position, toNode: self)
-            if backgroundScreenPos.x <= -background.size.width {
-                background.position.x = background.position.x + background.size.width*2
-            }
-            if backgroundScreenPos.x >= background.size.width {
-                background.position.x = background.position.x - background.size.width*2
-            }
-            if backgroundScreenPos.y <= -background.size.height {
-                background.position.y = background.position.y + background.size.height*2
-            }
-            if backgroundScreenPos.y >= background.size.height {
-                background.position.y = background.position.y - background.size.height*2
-            }
-        })
-    }
+    
 }
