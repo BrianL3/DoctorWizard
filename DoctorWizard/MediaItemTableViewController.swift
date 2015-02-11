@@ -13,12 +13,21 @@ protocol SongPickerDelegate {
     func userDidSelectSong(song : MPMediaItemCollection)
 }
 
-class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate {
+class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     
     var mediaQuery : MPMediaQuery?
     var delegate : SongPickerDelegate?
     
+    var filteredSongs : [MPMediaItem]?
+    var unfilteredSongs : [MPMediaItem]?
+    
     @IBOutlet weak var tableView: UITableView!
+
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet var searchDisplay: UISearchDisplayController!
+    
     
     @IBOutlet var navBar: UINavigationBar!
     @IBAction func cancelAction(sender: UIBarButtonItem) {
@@ -32,10 +41,17 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
         // populate the tableview
         fetchItemsFromDeviceLibrary()
+
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.searchBar.delegate = self
+        self.searchDisplay.delegate = self
+        
+        
+        self.tableView.registerClass(MediaItemCell.self, forCellReuseIdentifier: "SONG_CELL")
+        self.searchDisplay.searchResultsTableView.registerClass(MediaItemCell.self, forCellReuseIdentifier: "SONG_CELL")
         
         navBar.delegate = self
     }
@@ -44,45 +60,88 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
 //MARK: TableViewDataSource functions ============================
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as MediaItemCell
-        
-        var mediaItem = mediaQuery?.items[indexPath.row] as MPMediaItem
-        
-        if let songName = mediaItem.title {
-            cell.song.text = songName
+
+        if tableView == self.searchDisplay!.searchResultsTableView{
+            let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as MediaItemCell
+            
+            var mediaItem = filteredSongs![indexPath.row] as MPMediaItem
+            
+            if let songName = mediaItem.title {
+                cell.song.text = songName
+            }
+            
+            if let artistName = mediaItem.artist {
+                cell.artist.text = artistName
+            }
+            
+            if let songImage = mediaItem.artwork {
+                cell.songImage.image = songImage.imageWithSize(CGSize(width: 50, height: 50))
+            } else {
+                cell.songImage.image = UIImage(named: "dude.png")
+            }
+            
+            if let songDuration = mediaItem.playbackDuration as NSTimeInterval? {
+                
+                var minutesFormatter = NSNumberFormatter()
+                minutesFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+                
+                var minutes = minutesFormatter.stringFromNumber(floor(songDuration/60))!
+                
+                var secondsFormatter = NSNumberFormatter()
+                secondsFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+                secondsFormatter.roundingMode = NSNumberFormatterRoundingMode.RoundUp
+                
+                var seconds = songDuration - floor(songDuration/60)*60
+                
+                cell.songDuration.text = "\(minutes)m \(secondsFormatter.stringFromNumber(seconds)!)s"
+            }
+            
+            return cell
+
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as MediaItemCell
+            
+            var mediaItem = unfilteredSongs![indexPath.row] as MPMediaItem
+            
+            if let songName = mediaItem.title {
+                cell.song.text = songName
+            }
+            
+            if let artistName = mediaItem.artist {
+                cell.artist.text = artistName
+            }
+            
+            if let songImage = mediaItem.artwork {
+                cell.songImage.image = songImage.imageWithSize(CGSize(width: 50, height: 50))
+            } else {
+                cell.songImage.image = UIImage(named: "dude.png")
+            }
+            
+            if let songDuration = mediaItem.playbackDuration as NSTimeInterval? {
+                
+                var minutesFormatter = NSNumberFormatter()
+                minutesFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+                
+                var minutes = minutesFormatter.stringFromNumber(floor(songDuration/60))!
+                
+                var secondsFormatter = NSNumberFormatter()
+                secondsFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
+                secondsFormatter.roundingMode = NSNumberFormatterRoundingMode.RoundUp
+                
+                var seconds = songDuration - floor(songDuration/60)*60
+                
+                cell.songDuration.text = "\(minutes)m \(secondsFormatter.stringFromNumber(seconds)!)s"
+            }
+            
+            return cell
+
         }
-        
-        if let artistName = mediaItem.artist {
-            cell.artist.text = artistName
-        }
-        
-        if let songImage = mediaItem.artwork {
-            cell.songImage.image = songImage.imageWithSize(CGSize(width: 50, height: 50))
-        } else {
-            cell.songImage.image = UIImage(named: "dude.png")
-        }
-        
-        if let songDuration = mediaItem.playbackDuration as NSTimeInterval? {
-            
-            var minutesFormatter = NSNumberFormatter()
-            minutesFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
-            
-            var minutes = minutesFormatter.stringFromNumber(floor(songDuration/60))!
-            
-            var secondsFormatter = NSNumberFormatter()
-            secondsFormatter.numberStyle = NSNumberFormatterStyle.NoStyle
-            secondsFormatter.roundingMode = NSNumberFormatterRoundingMode.RoundUp
-            
-            var seconds = songDuration - floor(songDuration/60)*60
-            
-            cell.songDuration.text = "\(minutes)m \(secondsFormatter.stringFromNumber(seconds)!)s"
-        }
-        
-        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == self.searchDisplay!.searchResultsTableView{
+            return filteredSongs!.count
+        }
         return mediaQuery!.items.count
     }
     
@@ -92,7 +151,6 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let song = mediaQuery!.items[indexPath.row] as MPMediaItem
         let songCollection = MPMediaItemCollection(items: [song])
-        println(self.delegate?)
         delegate?.userDidSelectSong(songCollection)
         self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -101,11 +159,31 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     
 //MARK: METHODS ==================================================
 
+    //fills tableview with mediaitems from device library
     func fetchItemsFromDeviceLibrary(){
         self.mediaQuery = MPMediaQuery.songsQuery()
-        mediaQuery?.items
+        
+    self.unfilteredSongs = mediaQuery?.items as? [MPMediaItem]
+        self.filteredSongs = self.unfilteredSongs
     }
     
+    func filterContentForSearchText(searchText: String) {
+        // Filter the array using the filter method
+        self.filteredSongs = self.unfilteredSongs!.filter({(song: MPMediaItem) -> Bool in
+            let stringMatch = song.title.rangeOfString(searchText)
+            return (stringMatch != nil)
+        })
+    }
+//MARK: SearchController Protocol methods
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
+        self.filterContentForSearchText(searchString)
+        return true
+    }
+    
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
+        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+        return true
+    }
 
 
 }
