@@ -13,12 +13,21 @@ protocol SongPickerDelegate {
     func userDidSelectSong(song : MPMediaItemCollection)
 }
 
-class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate {
+class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
     
     var mediaQuery : MPMediaQuery?
     var delegate : SongPickerDelegate?
     
+    var filteredSongs : [MPMediaItem]?
+    var unfilteredSongs : [MPMediaItem]?
+    
     @IBOutlet weak var tableView: UITableView!
+
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet var searchDisplay: UISearchDisplayController!
+    
     
     @IBOutlet var navBar: UINavigationBar!
     @IBAction func cancelAction(sender: UIBarButtonItem) {
@@ -32,10 +41,22 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
         // populate the tableview
         fetchItemsFromDeviceLibrary()
+
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.searchBar.delegate = self
+        self.searchDisplay.delegate = self
+        
+        let nib = UINib(nibName: "MediaItemCell", bundle: NSBundle.mainBundle())
+
+        
+        self.tableView.registerNib(nib, forCellReuseIdentifier: "SONG_CELL")
+        searchDisplay.searchResultsTableView.registerNib(nib, forCellReuseIdentifier: "SONG_CELL")
+        searchDisplay.searchResultsTableView.rowHeight = 78.0
+//        self.tableView.registerClass(MediaItemCell.self, forCellReuseIdentifier: "SONG_CELL")
+//        self.searchDisplay.searchResultsTableView.registerClass(MediaItemCell.self, forCellReuseIdentifier: "SONG_CELL")
         
         navBar.delegate = self
     }
@@ -44,11 +65,14 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
 //MARK: TableViewDataSource functions ============================
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        var mediaItem = MPMediaItem();
+        if tableView == self.searchDisplay!.searchResultsTableView{
+            mediaItem = filteredSongs![indexPath.row] as MPMediaItem
+        }else{
+            mediaItem = unfilteredSongs![indexPath.row] as MPMediaItem
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("SONG_CELL", forIndexPath: indexPath) as MediaItemCell
-        
-        var mediaItem = mediaQuery?.items[indexPath.row] as MPMediaItem
-        
+
         if let songName = mediaItem.title {
             cell.song.text = songName
         }
@@ -78,11 +102,15 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
             
             cell.songDuration.text = "\(minutes)m \(secondsFormatter.stringFromNumber(seconds)!)s"
         }
-        
         return cell
+
     }
     
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == self.searchDisplay!.searchResultsTableView{
+            return filteredSongs!.count
+        }
         return mediaQuery!.items.count
     }
     
@@ -92,7 +120,6 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let song = mediaQuery!.items[indexPath.row] as MPMediaItem
         let songCollection = MPMediaItemCollection(items: [song])
-        println(self.delegate?)
         delegate?.userDidSelectSong(songCollection)
         self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -101,11 +128,31 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     
 //MARK: METHODS ==================================================
 
+    //fills tableview with mediaitems from device library
     func fetchItemsFromDeviceLibrary(){
         self.mediaQuery = MPMediaQuery.songsQuery()
-        mediaQuery?.items
+        
+    self.unfilteredSongs = mediaQuery?.items as? [MPMediaItem]
+        self.filteredSongs = self.unfilteredSongs
     }
     
+    func filterContentForSearchText(searchText: String) {
+        // Filter the array using the filter method
+        self.filteredSongs = self.unfilteredSongs!.filter({(song: MPMediaItem) -> Bool in
+            let stringMatch = song.title.rangeOfString(searchText)
+            return (stringMatch != nil)
+        })
+    }
+//MARK: SearchController Protocol methods
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
+        self.filterContentForSearchText(searchString)
+        return true
+    }
+    
+    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
+        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+        return true
+    }
 
 
 }

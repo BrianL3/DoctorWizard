@@ -11,12 +11,12 @@ import UIKit
 class MediaItemCell: UITableViewCell {
 
     
-    @IBOutlet var song: UILabel!
-    @IBOutlet var artist: UILabel!
-    @IBOutlet var songImage: UIImageView!
+    @IBOutlet weak var song: UILabel!
+    @IBOutlet weak var artist: UILabel!
     
-    @IBOutlet var songDuration: UILabel!
+    @IBOutlet weak var songImage: UIImageView!
     
+    @IBOutlet weak var songDuration: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,5 +28,5 @@ class MediaItemCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }
