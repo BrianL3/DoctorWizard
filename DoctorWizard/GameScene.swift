@@ -851,7 +851,7 @@ class GameScene: SKScene {
     
     
     func spawnAlien() {
-        let alien = SKSpriteNode(imageNamed: "spaceShip")
+        let alien = SKSpriteNode(imageNamed: "Spaceship")
         alien.name = "alienspaceship"
         alien.position = randomSpawnPoint()
         alien.zRotation = CGFloat.random(min: 0, max: 90)
