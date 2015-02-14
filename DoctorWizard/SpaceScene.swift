@@ -16,7 +16,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     //MARK: setup time propertys
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    var totalTime: NSTimeInterval = 0
+    var ellapsedTime: NSTimeInterval = 0
+
     
     //setup screen frame propertys
     let playableRect:CGRect
@@ -55,12 +56,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         dude.position = centerScreen
         
         addChild(backgroundLayer)
-        self.backgroundLayer.addChild(self.dude)
+        self.addChild(self.dude)
+        self.dude.position = self.centerScreen
         addChild(starLayer)
         
+        self.spawnPinkRocks()
         
-        var rockfield = Rocks(backgroundLayer: self.backgroundLayer, scene: self)
-        rockfield.spawnRocks()
+        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
+            if self.paused == false {
+                self.ellapsedTime += 1
+                println(self.ellapsedTime)
+            }
+        })])))
         
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
@@ -85,9 +92,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dt = 0
         }
         lastUpdateTime = currentTime
-        
-        
-        self.dude.position = self.backgroundLayer.convertPoint(centerScreen, fromNode: self)
+
+
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }
@@ -107,13 +113,37 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case colisionBitMaskDude:
             println("firstBody is dude")
         default:
+            secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
             println("firstBody is rock")
         }
         
         
     }
+    
 
     
+    func spawnPinkRocks(){
+        let spawnRockAction = SKAction.runBlock { () -> Void in
+            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+            self.backgroundLayer.addChild(rock)
+            rock.fadeInFadeOut()
+            
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnRockAction, SKAction.waitForDuration(0.7)])))
+    }
+    
+    func pinkRockSpawnPoint() -> CGPoint {
+        let posX : CGFloat = CGFloat.random(min: 0, max: 4096) - 1024
+        let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
+        let positionToConvert = CGPoint(x: posX, y: posY)
+        let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
+        return position
+    }
+
+    override func willMoveFromView(view: SKView) {
+        self.paused = true
+        println("pause game")
+    }
     
 
     

@@ -33,6 +33,8 @@ class Player: SKSpriteNode {
         
         self.physicsBody = SKPhysicsBody(texture: texturesLeft[0], alphaThreshold: 0.1, size: self.size)
         self.physicsBody?.categoryBitMask = 0x1
+        self.physicsBody?.dynamic = false
+        self.physicsBody?.collisionBitMask = 0
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,12 +46,10 @@ class Player: SKSpriteNode {
             self.removeAllActions()
             self.runAction(SKAction.repeatActionForever(dudeAnimationLeft))
             self.direction = "left"
-            println(self.direction)
         } else if backgroundDirection.x < CGFloat(0.0) && self.direction != "right" {
             self.removeAllActions()
             self.runAction(SKAction.repeatActionForever(dudeAnimationRight))
             self.direction = "right"
-            println(self.direction)
         }
         
     }

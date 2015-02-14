@@ -138,7 +138,8 @@ class GameScene: SKScene {
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
-        
+        self.removeAllChildren()
+        self.removeAllActions()
         let spaceScene = SpaceScene(size: size)
         self.view?.presentScene(spaceScene)
         
