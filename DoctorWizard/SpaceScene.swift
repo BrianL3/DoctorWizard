@@ -32,7 +32,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 100)
     
     //setup dude and dudes enemys
-    let dude:Dude = Dude()
+    let dude:Player = Player()
     var colisionBitMaskDude :UInt32 = 0x1
     var colisionBitMaskRock :UInt32 = 0x10
 
@@ -52,10 +52,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMoveToView(view: SKView) {
-        dude.sprite.position = centerScreen
+        dude.position = centerScreen
         
         addChild(backgroundLayer)
-        self.backgroundLayer.addChild(self.dude.sprite)
+        self.backgroundLayer.addChild(self.dude)
         addChild(starLayer)
         
         
@@ -87,7 +87,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         lastUpdateTime = currentTime
         
         
-        self.dude.sprite.position = self.backgroundLayer.convertPoint(centerScreen, fromNode: self)
+        self.dude.position = self.backgroundLayer.convertPoint(centerScreen, fromNode: self)
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }

@@ -529,6 +529,8 @@ class GameScene: SKScene {
             
             self.view?.presentScene(winGameScene)
             
+            
+            
         }
         checkCollisions()
         destroyedByBlackHole()
