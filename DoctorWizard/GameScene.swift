@@ -138,6 +138,11 @@ class GameScene: SKScene {
     //MARK: DID MOVE TO VIEW ======================================================================
     
     override func didMoveToView(view: SKView) {
+        self.removeAllChildren()
+        self.removeAllActions()
+        let spaceScene = SpaceScene(size: size)
+        self.view?.presentScene(spaceScene)
+        
         
 //        dude.position = CGPoint(x: 700, y: 400)
         let centerScreen = self.convertPoint(CGPoint(x: 1024, y: 676), fromNode: self.backgroundLayer)
@@ -524,6 +529,8 @@ class GameScene: SKScene {
             }
             
             self.view?.presentScene(winGameScene)
+            
+            
             
         }
         checkCollisions()
