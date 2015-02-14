@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "SPACESHIP.png"
+      "filename" : "Spaceship.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "Spaceship-1.png"
     },
     {
       "idiom" : "universal",

@@ -50,6 +50,7 @@
 		C4EA38651A76C0AB00EC284C /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA38591A76C0AB00EC284C /* SKTEffects.swift */; };
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
+		FA1ADC8A1A8AF41B002DA4AC /* MediaItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */; };
 		FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */; };
 		FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116CB1A78463700FCC212 /* blop_eleven.wav */; };
 		FA4116DE1A78463700FCC212 /* blop_four.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116CC1A78463700FCC212 /* blop_four.wav */; };
@@ -133,6 +134,7 @@
 		C4EA38591A76C0AB00EC284C /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaItemCell.xib; sourceTree = "<group>"; };
 		FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = SKTUtils/MainMenuViewController.swift; sourceTree = "<group>"; };
 		FA4116CB1A78463700FCC212 /* blop_eleven.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blop_eleven.wav; sourceTree = "<group>"; };
 		FA4116CC1A78463700FCC212 /* blop_four.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blop_four.wav; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				55983BB71A7B68F20096CC8A /* dudeParticle.sks */,
 				C4D707CA1A76BEFB00A990A1 /* Supporting Files */,
 				FA95887C1A7ADFAE0008F1FF /* WinScene.swift */,
+				FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */,
 			);
 			path = DoctorWizard;
 			sourceTree = "<group>";
@@ -246,8 +249,8 @@
 				FF9CD9461A7B779B005A3BD5 /* drWizardConsoleBar_3000_wLabels.png */,
 				48D083B81A8832220088B654 /* dragon2.png */,
 				483339D11A76C3AF00344DC8 /* dude.png */,
-				B8F7F8121A7AB86700B55CC7 /* blackhole.png */,
 				48D415581A787019005CE91C /* alienspaceship.png */,
+				B8F7F8121A7AB86700B55CC7 /* blackhole.png */,
 				48D415561A783D60005CE91C /* fireball.png */,
 				487D5DE61A78221300359556 /* Spike.png */,
 				483339D51A76D32000344DC8 /* Rock.png */,
