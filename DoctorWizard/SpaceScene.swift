@@ -13,10 +13,15 @@ import CoreMotion
 
 class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
+    
+    var timeController = GameTime.sharedTameControler;
+    
+    
     //MARK: setup time propertys
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     var ellapsedTime: NSTimeInterval = 0
+
 
     
     //setup screen frame propertys
@@ -60,14 +65,16 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.dude.position = self.centerScreen
         addChild(starLayer)
         
-        self.spawnPinkRocks()
+//        self.spawnPinkRocks()
+
+        self.timeController.startTime = CACurrentMediaTime()
         
-        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
-            if self.paused == false {
-                self.ellapsedTime += 1
-                println(self.ellapsedTime)
-            }
-        })])))
+//        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
+//            if self.paused == false {
+//                self.ellapsedTime += 1
+//                println(self.ellapsedTime)
+//            }
+//        })])))
         
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
@@ -92,7 +99,20 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dt = 0
         }
         lastUpdateTime = currentTime
-
+        
+        
+        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background {
+            self.timeController.currentTime = currentTime;
+//            self.timeController.ellapsedTime += self.timeController.currentTime - self.timeController.startTime;
+            self.timeController.ellapsedTime += 0.01
+            println(self.timeController.ellapsedTime)
+        }
+        
+        println("children: \(self.children.count)")
+        if (round(self.timeController.ellapsedTime * 100) % 500 == 0 ) && self.children.count < 13 {
+            println("lalal")
+            spawnPinkRock()
+        }
 
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
@@ -122,11 +142,13 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
 
     
-    func spawnPinkRocks(){
+    func spawnPinkRock(){
         let spawnRockAction = SKAction.runBlock { () -> Void in
-            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
-            self.backgroundLayer.addChild(rock)
-            rock.fadeInFadeOut()
+            if UIApplication.sharedApplication().applicationState != UIApplicationState.Background{
+                let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+                self.backgroundLayer.addChild(rock)
+                rock.fadeInFadeOut()
+            }
             
         }
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnRockAction, SKAction.waitForDuration(0.7)])))
@@ -144,6 +166,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.paused = true
         println("pause game")
     }
+    
+
+    
     
 
     
