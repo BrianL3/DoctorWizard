@@ -396,7 +396,7 @@ class GameScene: SKScene {
         case .Fifth:
 
             if !dragonOn{
-                actionToSpawnDragon()
+                //actionToSpawnDragon()
                 println("Fifth scene on now")
             }
             
@@ -892,81 +892,6 @@ class GameScene: SKScene {
     
     
     
-    //MARK: DRAGON ==============================================================================
-    
-    func spawnDragon() {
-        
-        singleDragon = SKSpriteNode(imageNamed: "dragon2")
-        dragon.append(singleDragon)
-
-        for index in 1...60 {
-        //random variable for dragon movement
-        var randomXChooser = CGFloat(Int.random(0...Int(playableRect.width)))
-        var randomYChooser = CGFloat(Int.random(0...Int(playableRect.height)))
-        
-        switch generateRandomDragonOrientation() {
-            
-        case 1...5:
-            let actionXPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
-            var actionX = SKAction.moveTo(actionXPoint, duration: 1)
-            sequenceDragonActions.append(actionX)
-            
-        case 6...10:
-            
-            var actionYPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
-            
-
-            let actionY = SKAction.moveTo(actionYPoint, duration: 1)
-            sequenceDragonActions.append(actionY)
-            
-        default:
-            println("DefaultLevel")
-  
-            }
-        }
-        dragon[dragonCounter].name = "dragon"
-        println("I made it to spawnDragon")
-
-        var dragonSpawnPoint = randomSpawnPoint()
-        dragonSpawnPoint /= 2
-        dragonSpawnPoint.x += 1024
-        dragonSpawnPoint.y += 767
-        dragon[dragonCounter].position = dragonSpawnPoint
-        dragon[dragonCounter].setScale(0)
-        dragon[dragonCounter].zPosition = 0
-        self.backgroundLayer.addChild(dragon[dragonCounter])
-        let appear = SKAction.scaleTo(1.3, duration: 1)
-        dragon[dragonCounter].runAction(appear)
-        
-        let actionDragonAttack = SKAction.sequence(sequenceDragonActions)
-        
-        //dragon.runAction(SKAction.sequence(sequenceDragonActions))
-        
-        let actionRemove = SKAction.removeFromParent()
-        
-        let dragonKillEverything = [actionDragonAttack, actionRemove]
-        
-        dragon[dragonCounter].runAction(SKAction.sequence(dragonKillEverything))
-        
-        dragonCounter++
-        //println(dragonCounter)
-
-    }
-    
-    // MAARK: END OF DRAGON SECTION ==============================================================
-    
-    func generateRandomDragonOrientation() -> Int {
-        
-        return Int.random(1...10)
-        
-    }
-    
-    func runDragonActions(dragonActions : [SKAction]) {
-        for index in 0...19 {
-            dragon[dragonCounter].runAction(dragonActions[index])
-        }
-    }
-    
     
     //MARK: COLLISIONS ==========================================================================
     
@@ -1361,15 +1286,6 @@ class GameScene: SKScene {
         println("Alien on scene on now")
     }
     
-    
-    
-    func actionToSpawnDragon() {
-        dragonOn = true
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnDragon),
-                SKAction.waitForDuration(10)])))
-        println("Dragon on scene on now")
-    }
     
     //MARK: start acceleromiter updates
     

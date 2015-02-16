@@ -60,8 +60,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.dude.position = self.centerScreen
         addChild(starLayer)
         
-        //self.spawnPinkRocks()
-        self.spawnBlackHole()
+        //MARK: Area to spawn enemies based on song time interval ================================
+        self.spawnPinkRocks()
+        //self.spawnBlackHole()
+        //self.spawnDragon()
         
         self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
             if self.paused == false {
@@ -117,8 +119,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
             println("firstBody is rock")
         }
-        
-        
+ 
     }
     
     func spawnBlackHole() {
@@ -129,6 +130,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
         println("Spawning Black Hole")
+    }
+    
+    func spawnDragon() {
+        let spawnDragonAction = SKAction.runBlock{ () -> Void in
+            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(dragon)
+            dragon.spawnDragon(self.backgroundLayer)
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(45)])))
+        println("Spawning Dragon")
+
     }
     
 
