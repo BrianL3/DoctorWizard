@@ -140,6 +140,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         self.removeAllChildren()
         self.removeAllActions()
+        //presents new space scene
         let spaceScene = SpaceScene(size: size)
         self.view?.presentScene(spaceScene)
         
@@ -331,7 +332,6 @@ class GameScene: SKScene {
         if self.paused == false {
             
             self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
-            println("timePassed = \(timePassed)")
         }
         
         println(self.dt)
@@ -366,7 +366,7 @@ class GameScene: SKScene {
         self.magicEmitter.emissionAngle = CGFloat(magicEmitterAngle)
         
         //Sections that determines which enemmies come to playing field based on Level of tune
-        
+        //println("I'm on update from Game Scene")
         switch currentLevelIs()
         {
             
@@ -390,7 +390,7 @@ class GameScene: SKScene {
             
         case .Fourth:
             if !blackHoleOn {
-                actionToSpawnBlackHole()
+                //actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
@@ -891,38 +891,6 @@ class GameScene: SKScene {
 
     
     
-    //MARK: BLACK HOLE =========================================================================
-    
-    func spawnBlackHole() {
-        
-        blackHole.name = "blackhole"
-        //logic to detect where blackhole should land based on it massive size and powerful feature
-        
-        let posX : CGFloat = CGFloat.random(min: 0, max: 2048)
-        let posY : CGFloat = CGFloat.random(min: 0, max: 1596)
-        let position = CGPoint(x: posX, y: posY)
-        
-        //let centerScreen = self.backgroundLayer.convertPoint(CGPoint(x: 1024, y: 676), fromNode: self)
-        let centerScreen = self.backgroundLayer.convertPoint(position, fromNode: self)
-        blackHole.position = centerScreen
-        
-        //blackHole.position = self.backgroundLayer.convertPoint(position, fromNode: self)
-        
-       
-        blackHole.setScale(0)
-        blackHole.zPosition = 3
-        self.backgroundLayer.addChild(blackHole)
-        let angle : CGFloat = -CGFloat(M_PI)
-        let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
-        let repeatSpin = SKAction.repeatActionForever(oneSpin)
-        let appear = SKAction.scaleTo(4, duration: 15.0)
-        let inplode = SKAction.scaleTo(0, duration: 15.0)
-        let actionRemove = SKAction.removeFromParent()
-        let actions = [appear, inplode, actionRemove]
-        blackHole.runAction(repeatSpin)
-        blackHole.runAction((SKAction.sequence(actions)))}
-    
-    
     
     //MARK: DRAGON ==============================================================================
     
@@ -1393,13 +1361,7 @@ class GameScene: SKScene {
         println("Alien on scene on now")
     }
     
-    func actionToSpawnBlackHole() {
-        blackHoleOn = true
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
-                SKAction.waitForDuration(45)])))
-        println("BlackHole on scene on now")
-    }
+    
     
     func actionToSpawnDragon() {
         dragonOn = true
