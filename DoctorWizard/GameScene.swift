@@ -140,6 +140,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         self.removeAllChildren()
         self.removeAllActions()
+        //presents new space scene
         let spaceScene = SpaceScene(size: size)
         self.view?.presentScene(spaceScene)
         
@@ -331,7 +332,6 @@ class GameScene: SKScene {
         if self.paused == false {
             
             self.timePassed += round(NSTimeInterval(self.dt)*1000)/1000
-            println("timePassed = \(timePassed)")
         }
         
         println(self.dt)
@@ -366,7 +366,7 @@ class GameScene: SKScene {
         self.magicEmitter.emissionAngle = CGFloat(magicEmitterAngle)
         
         //Sections that determines which enemmies come to playing field based on Level of tune
-        
+        //println("I'm on update from Game Scene")
         switch currentLevelIs()
         {
             
@@ -390,13 +390,13 @@ class GameScene: SKScene {
             
         case .Fourth:
             if !blackHoleOn {
-                actionToSpawnBlackHole()
+                //actionToSpawnBlackHole()
                 println("Fourth scene on now")
             }
         case .Fifth:
 
             if !dragonOn{
-                actionToSpawnDragon()
+                //actionToSpawnDragon()
                 println("Fifth scene on now")
             }
             
@@ -891,113 +891,6 @@ class GameScene: SKScene {
 
     
     
-    //MARK: BLACK HOLE =========================================================================
-    
-    func spawnBlackHole() {
-        
-        blackHole.name = "blackhole"
-        //logic to detect where blackhole should land based on it massive size and powerful feature
-        
-        let posX : CGFloat = CGFloat.random(min: 0, max: 2048)
-        let posY : CGFloat = CGFloat.random(min: 0, max: 1596)
-        let position = CGPoint(x: posX, y: posY)
-        
-        //let centerScreen = self.backgroundLayer.convertPoint(CGPoint(x: 1024, y: 676), fromNode: self)
-        let centerScreen = self.backgroundLayer.convertPoint(position, fromNode: self)
-        blackHole.position = centerScreen
-        
-        //blackHole.position = self.backgroundLayer.convertPoint(position, fromNode: self)
-        
-       
-        blackHole.setScale(0)
-        blackHole.zPosition = 3
-        self.backgroundLayer.addChild(blackHole)
-        let angle : CGFloat = -CGFloat(M_PI)
-        let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
-        let repeatSpin = SKAction.repeatActionForever(oneSpin)
-        let appear = SKAction.scaleTo(4, duration: 15.0)
-        let inplode = SKAction.scaleTo(0, duration: 15.0)
-        let actionRemove = SKAction.removeFromParent()
-        let actions = [appear, inplode, actionRemove]
-        blackHole.runAction(repeatSpin)
-        blackHole.runAction((SKAction.sequence(actions)))}
-    
-    
-    
-    //MARK: DRAGON ==============================================================================
-    
-    func spawnDragon() {
-        
-        singleDragon = SKSpriteNode(imageNamed: "dragon2")
-        dragon.append(singleDragon)
-
-        for index in 1...60 {
-        //random variable for dragon movement
-        var randomXChooser = CGFloat(Int.random(0...Int(playableRect.width)))
-        var randomYChooser = CGFloat(Int.random(0...Int(playableRect.height)))
-        
-        switch generateRandomDragonOrientation() {
-            
-        case 1...5:
-            let actionXPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
-            var actionX = SKAction.moveTo(actionXPoint, duration: 1)
-            sequenceDragonActions.append(actionX)
-            
-        case 6...10:
-            
-            var actionYPoint = self.backgroundLayer.convertPoint(randomSpawnPoint(), fromNode: self)
-            
-
-            let actionY = SKAction.moveTo(actionYPoint, duration: 1)
-            sequenceDragonActions.append(actionY)
-            
-        default:
-            println("DefaultLevel")
-  
-            }
-        }
-        dragon[dragonCounter].name = "dragon"
-        println("I made it to spawnDragon")
-
-        var dragonSpawnPoint = randomSpawnPoint()
-        dragonSpawnPoint /= 2
-        dragonSpawnPoint.x += 1024
-        dragonSpawnPoint.y += 767
-        dragon[dragonCounter].position = dragonSpawnPoint
-        dragon[dragonCounter].setScale(0)
-        dragon[dragonCounter].zPosition = 0
-        self.backgroundLayer.addChild(dragon[dragonCounter])
-        let appear = SKAction.scaleTo(1.3, duration: 1)
-        dragon[dragonCounter].runAction(appear)
-        
-        let actionDragonAttack = SKAction.sequence(sequenceDragonActions)
-        
-        //dragon.runAction(SKAction.sequence(sequenceDragonActions))
-        
-        let actionRemove = SKAction.removeFromParent()
-        
-        let dragonKillEverything = [actionDragonAttack, actionRemove]
-        
-        dragon[dragonCounter].runAction(SKAction.sequence(dragonKillEverything))
-        
-        dragonCounter++
-        //println(dragonCounter)
-
-    }
-    
-    // MAARK: END OF DRAGON SECTION ==============================================================
-    
-    func generateRandomDragonOrientation() -> Int {
-        
-        return Int.random(1...10)
-        
-    }
-    
-    func runDragonActions(dragonActions : [SKAction]) {
-        for index in 0...19 {
-            dragon[dragonCounter].runAction(dragonActions[index])
-        }
-    }
     
     
     //MARK: COLLISIONS ==========================================================================
@@ -1393,21 +1286,6 @@ class GameScene: SKScene {
         println("Alien on scene on now")
     }
     
-    func actionToSpawnBlackHole() {
-        blackHoleOn = true
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnBlackHole),
-                SKAction.waitForDuration(45)])))
-        println("BlackHole on scene on now")
-    }
-    
-    func actionToSpawnDragon() {
-        dragonOn = true
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnDragon),
-                SKAction.waitForDuration(10)])))
-        println("Dragon on scene on now")
-    }
     
     //MARK: start acceleromiter updates
     

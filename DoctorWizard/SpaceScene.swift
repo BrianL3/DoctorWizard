@@ -32,7 +32,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 100)
     
-    //setup dude and dudes enemys
+    //setup dude and dudes enemies
     let dude:Player = Player()
     var colisionBitMaskDude :UInt32 = 0x1
     var colisionBitMaskRock :UInt32 = 0x10
@@ -60,12 +60,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.dude.position = self.centerScreen
         addChild(starLayer)
         
+        //MARK: Area to spawn enemies based on song time interval ================================
         self.spawnPinkRocks()
+        //self.spawnBlackHole()
+        //self.spawnDragon()
         
         self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
             if self.paused == false {
                 self.ellapsedTime += 1
                 println(self.ellapsedTime)
+                println("This is ellapsed time")
+
             }
         })])))
         
@@ -92,8 +97,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dt = 0
         }
         lastUpdateTime = currentTime
-
-
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }
@@ -116,12 +119,31 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
             println("firstBody is rock")
         }
-        
-        
+ 
+    }
+    
+    func spawnBlackHole() {
+        let spawnBlackHoleAction = SKAction.runBlock{ () -> Void in
+            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(blackHole)
+            blackHole.spawnBlackHole()
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
+        println("Spawning Black Hole")
+    }
+    
+    func spawnDragon() {
+        let spawnDragonAction = SKAction.runBlock{ () -> Void in
+            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(dragon)
+            dragon.spawnDragon(self.backgroundLayer)
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(45)])))
+        println("Spawning Dragon")
+
     }
     
 
-    
     func spawnPinkRocks(){
         let spawnRockAction = SKAction.runBlock { () -> Void in
             let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
