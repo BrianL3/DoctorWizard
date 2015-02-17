@@ -378,7 +378,7 @@ class GameScene: SKScene {
             
         case .Second:
             if !fireBallOn {
-                actionToSpawnFireBalls()
+                //actionToSpawnFireBalls()
                 println("Second scene on now")
             }
 
@@ -748,84 +748,7 @@ class GameScene: SKScene {
         return position
     }
     
-    
-    
-// func randomPointInNode(node:SKNode) -> CGPoint {
-//        return CGPoint(x: CGFloat.random(min: 0, max: CGRectGetMaxX(node.frame)), y: CGFloat.random(min: 0, max: CGRectGetMaxY(node.frame)))
-//    }
-    
-    //MARK: SPAWN FIREBALLS ====================================================================
 
-//    func spawnFireball() {
-//        let fireBall = SKSpriteNode(imageNamed: "fireball")
-//        let oldPosition = fireBall.position
-//        let upPosition = oldPosition + CGPoint(x: 0, y: 20)
-//        let upEffect = SKTMoveEffect(node: fireBall, duration: 0.9, startPosition: oldPosition, endPosition: upPosition)
-//        upEffect.timingFunction = { t in pow(1, -1 * t) * (sin(t * π * 3))}
-//        let upAction = SKAction.actionWithEffect(upEffect)
-//        let upActionRepeat = SKAction.repeatActionForever(upAction)
-//        
-//        
-//        
-//        fireBall.name = "fireball"
-//        let screenPosition = CGPoint(x: size.width + 100, y: CGFloat.random(min: 0, max: size.height))
-//        fireBall.position = backgroundLayer.convertPoint(screenPosition, fromNode: self)
-//        fireBall.setScale(1)
-//        fireBall.zPosition = 0
-//        self.backgroundLayer.addChild(fireBall)
-//        let appear = SKAction.scaleTo(3, duration: 4.0)
-//        let actions = [appear]
-//        fireBall.runAction(SKAction.sequence(actions))
-//        let actionMove =
-//        SKAction.moveToX(-300, duration: 3.0)
-//        let actionRemove = SKAction.removeFromParent()
-//        fireBall.runAction(SKAction.sequence([SKAction.group([upAction, actionMove]),actionRemove]))
-//    }
-    
-    func spawnFireball(){
-        let fireball = SKSpriteNode(imageNamed: "fireball")
-        let warning = SKSpriteNode(imageNamed: "Rock")
-        fireball.name = "fireball"
-        fireball.position = self.backgroundLayer.convertPoint(generateFireballSpawnPoint(), fromNode: self)
-        var warnignPosition =  self.convertPoint(fireball.position, fromNode: self.backgroundLayer)
-        warnignPosition = CGPoint(x: self.size.width - (self.size.width/8), y: warnignPosition.y)
-        warning.position = warnignPosition
-        warning.alpha = 0
-        
-        addChild(warning)
-        fireball.setScale(1)
-        fireball.zPosition = 0
-        self.backgroundLayer.addChild(fireball)
-        let remove = SKAction.removeFromParent()
-        let warningApear = SKAction.fadeAlphaTo(1, duration: 0.1)
-        let warningDisopear = SKAction.fadeAlphaTo(0, duration: 0.2)
-        let displayWarning = SKAction.sequence([SKAction.repeatAction(SKAction.sequence([warningApear,warningDisopear ]), count: 4), remove])
-        warning.runAction(displayWarning)
-        
-        let moveUp = SKAction.moveToY(fireball.position.y + 20, duration: 0.5)
-        let moveDown = SKAction.moveToY(fireball.position.y - 20, duration: 0.5)
-        var speed :CGFloat = 0.0
-
-        let wiggle = SKAction.repeatActionForever(SKAction.sequence([moveDown,moveUp]))
-        
-//        let moveAcross = SKAction.moveToX(-1024, duration: NSTimeInterval(CGFloat.random(min: 1, max: 2)))
-        var moveTO = self.backgroundLayer.convertPoint(CGPoint(
-            x: -1024, y: 0), fromNode: self)
-        moveTO.y = fireball.position.y
-        let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 1.3), remove])
-
-        let move = SKAction.group([wiggle, moveAcross])
-        fireball.runAction(move)
-        
-    }
-    
-    func generateFireballSpawnPoint() -> CGPoint{
-        let posX = CGFloat(3072)
-        let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
-        return CGPoint(x: posX, y: posY)
-    }
-
- 
     //MARK: COLLISIONS ==========================================================================
     
     func dudeHitObject(enemy: SKSpriteNode) {
@@ -1203,13 +1126,6 @@ class GameScene: SKScene {
         println("Rock on  scene on now")
     }
     
-    func actionToSpawnFireBalls() {
-        fireBallOn = true
-        runAction(SKAction.repeatActionForever(
-            SKAction.sequence([SKAction.runBlock(spawnFireball),
-                SKAction.waitForDuration(2.0)])))
-        println("FireBall on scene on now")
-    }
     
         
     //MARK: start acceleromiter updates
