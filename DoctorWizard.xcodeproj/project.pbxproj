@@ -10,6 +10,8 @@
 		483339D21A76C3AF00344DC8 /* dude.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D11A76C3AF00344DC8 /* dude.png */; };
 		483339D61A76D32000344DC8 /* Rock.png in Resources */ = {isa = PBXBuildFile; fileRef = 483339D51A76D32000344DC8 /* Rock.png */; };
 		487D5DE71A78221300359556 /* Spike.png in Resources */ = {isa = PBXBuildFile; fileRef = 487D5DE61A78221300359556 /* Spike.png */; };
+		48CA06541A92DAEE00E76C05 /* Alien.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA06531A92DAEE00E76C05 /* Alien.swift */; };
+		48CA06561A92E50F00E76C05 /* FireBall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA06551A92E50F00E76C05 /* FireBall.swift */; };
 		48D083B91A8832220088B654 /* dragon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D083B81A8832220088B654 /* dragon2.png */; };
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
@@ -91,6 +93,8 @@
 		483339D11A76C3AF00344DC8 /* dude.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dude.png; sourceTree = "<group>"; };
 		483339D51A76D32000344DC8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
 		487D5DE61A78221300359556 /* Spike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spike.png; sourceTree = "<group>"; };
+		48CA06531A92DAEE00E76C05 /* Alien.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alien.swift; sourceTree = "<group>"; };
+		48CA06551A92E50F00E76C05 /* FireBall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireBall.swift; sourceTree = "<group>"; };
 		48D083B81A8832220088B654 /* dragon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragon2.png; sourceTree = "<group>"; };
 		48D415561A783D60005CE91C /* fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fireball.png; sourceTree = "<group>"; };
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
@@ -228,6 +232,8 @@
 				48F91CA41A911A6300496E42 /* BlackHole.swift */,
 				C0E64CBB1A781A2F009C8D10 /* AnimationController.swift */,
 				C4D707D01A76BEFB00A990A1 /* GameScene.swift */,
+				48CA06531A92DAEE00E76C05 /* Alien.swift */,
+				48CA06551A92E50F00E76C05 /* FireBall.swift */,
 				554877C31A89C22F005DE731 /* myrain.sks */,
 				55236CAE1A8ED74C00C7905B /* Player.swift */,
 				55236CB01A8EE27200C7905B /* PinkRock.swift */,
@@ -480,6 +486,7 @@
 				FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */,
 				FFB495EB1A76F18000A67FF4 /* PopUpMenuController.swift in Sources */,
 				554877C21A89BD6B005DE731 /* BackgroundLayer.swift in Sources */,
+				48CA06541A92DAEE00E76C05 /* Alien.swift in Sources */,
 				C4D707D11A76BEFB00A990A1 /* GameScene.swift in Sources */,
 				48F91CA51A911A6300496E42 /* BlackHole.swift in Sources */,
 				55236CAF1A8ED74C00C7905B /* Player.swift in Sources */,
@@ -496,6 +503,7 @@
 				C4EA385E1A76C0AB00EC284C /* CGVector+Extensions.swift in Sources */,
 				C4EA38601A76C0AB00EC284C /* SKAction+Extensions.swift in Sources */,
 				C4EA38621A76C0AB00EC284C /* SKColor+Extensions.swift in Sources */,
+				48CA06561A92E50F00E76C05 /* FireBall.swift in Sources */,
 				55236CB31A8F181800C7905B /* Chaper.swift in Sources */,
 				55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */,
 				FA95887D1A7ADFAE0008F1FF /* WinScene.swift in Sources */,
