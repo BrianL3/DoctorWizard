@@ -64,6 +64,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.spawnPinkRocks()
         //self.spawnBlackHole()
         //self.spawnDragon()
+        //self.spawnAlien()
         
         self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
             if self.paused == false {
@@ -120,6 +121,16 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             println("firstBody is rock")
         }
  
+    }
+    
+    func spawnAlien() {
+        let spawnAlien = SKAction.runBlock { () -> Void in
+            let alien = Alien(alienImageName: "Spaceship", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(alien);
+            alien.spawnAlien(self.dude.position);
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever((SKAction.sequence([spawnAlien, SKAction.waitForDuration(3)]))))
+        println("Spawning Alien")
     }
     
     func spawnBlackHole() {
