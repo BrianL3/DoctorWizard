@@ -160,6 +160,7 @@
 		FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemTableViewController.swift; sourceTree = "<group>"; };
 		FF9CD9461A7B779B005A3BD5 /* drWizardConsoleBar_3000_wLabels.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drWizardConsoleBar_3000_wLabels.png; sourceTree = "<group>"; };
 		FF9CD94A1A7B852A005A3BD5 /* DrWizardConsoleBarExtender.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DrWizardConsoleBarExtender.png; sourceTree = "<group>"; };
+		FFB0777A1A93DE3F00D77DEB /* GALACTIC_VANGUARDIAN_NCV.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GALACTIC_VANGUARDIAN_NCV.ttf; sourceTree = "<group>"; };
 		FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -249,6 +250,7 @@
 		C4D707CA1A76BEFB00A990A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FFB0777A1A93DE3F00D77DEB /* GALACTIC_VANGUARDIAN_NCV.ttf */,
 				55983BB81A7B68F20096CC8A /* spark.png */,
 				FF9CD94A1A7B852A005A3BD5 /* DrWizardConsoleBarExtender.png */,
 				FF9CD9461A7B779B005A3BD5 /* drWizardConsoleBar_3000_wLabels.png */,
