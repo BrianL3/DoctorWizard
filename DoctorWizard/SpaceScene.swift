@@ -11,6 +11,7 @@ import SpriteKit
 import CoreMotion
 
 
+
 class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: setup time propertys
@@ -38,6 +39,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var colisionBitMaskRock :UInt32 = 0x10
 
     
+    //console labels
+    var playTimeRemainingLabel : SKLabelNode?
+    var doctorWizardsHealthLabel : SKLabelNode?
+    
+    //play remaining time depends on Time Elapsed and Selected Song Duration
+    var playTimeRemainingTicker: NSTimeInterval = 0
+    var timePassed : NSTimeInterval = 0
+    //var songDuration : NSTimeInterval! //needs to be a global variable
+    var songDuration : NSTimeInterval = 100.0
+    
+    //Custom font import
+    var galacticFont = "GALACTIC_VANGUARDIAN_NCV"
     
     override init(size: CGSize) {
         self.playableRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
@@ -90,6 +103,22 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 }
             })
         }
+    
+        //MARK: Adding Game Console Labels ================================
+        playTimeRemainingLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
+        
+            playTimeRemainingLabel!.fontSize = 150;
+
+                if ( playTimeRemainingTicker > 15 ){
+                    playTimeRemainingLabel?.fontColor = SKColor.redColor()
+                }else{
+                    playTimeRemainingLabel?.fontColor = SKColor.yellowColor()
+                }
+
+        playTimeRemainingLabel?.position = CGPoint(x: self.frame.width*0.09, y: self.frame.height*0.85);
+        playTimeRemainingLabel?.zPosition = 20
+        self.addChild(playTimeRemainingLabel!)
+    
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -98,12 +127,44 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         } else {
             dt = 0
         }
+        
         lastUpdateTime = currentTime
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
+    
+        
+        let songTimeAsFloat = self.songDuration as Double
+        
+        var timePassedAsFloat : Double
+       
+        if (self.ellapsedTime as Double) < songTimeAsFloat{
+            timePassedAsFloat = self.ellapsedTime as Double
+        }
+        else{
+            timePassedAsFloat = songTimeAsFloat
+        }
+        
+        
+        
+        //temp: just display elapsed time
+        playTimeRemainingTicker = songDuration - ellapsedTime
+        //playTimeRemainingTicker = ellapsedTime
+        
+        if ( playTimeRemainingTicker > 0 ){
+            
+            playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker,decimalPlaceRequired: 0))"
+            
+            
+        }else{
+            
+            playTimeRemainingLabel?.text = "\(0)"
+            
+        }
+
+    
     }
     
-
+    
     
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody :SKPhysicsBody!
@@ -197,6 +258,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         println("bouta pause game")
         self.removeAllActions()
 
+    }
+    
+    func nSTimeIntervalValueToString(nSTimeIntervalValue: NSTimeInterval, decimalPlaceRequired: Int) -> String {
+        
+        //create the number formatter and remove all decimal places
+        let nf = NSNumberFormatter()
+        nf.numberStyle = .DecimalStyle
+        nf.maximumFractionDigits = decimalPlaceRequired
+        
+        return nf.stringFromNumber(nSTimeIntervalValue)!
+        
     }
     
 

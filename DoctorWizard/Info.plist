@@ -38,7 +38,8 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>GALACTIC_VANGUARDIAN_NCV.ttf</string>
+		<string>GALACTICVANGUARDIANNCV.ttf</string>
+		<string>Audiowide-Regular.ttf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
