@@ -18,12 +18,5 @@ class GameTime {
     }
     
     var ellapsedTime: NSTimeInterval = 0
-    var currentTime: NSTimeInterval = 0
-    var pausedTime: NSTimeInterval = 0
-    var startTime: NSTimeInterval = 0
-    
-    
-    
-    
     
 }

@@ -20,9 +20,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     //MARK: setup time propertys
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
-    var ellapsedTime: NSTimeInterval = 0
-
-
     
     //setup screen frame propertys
     let playableRect:CGRect
@@ -67,7 +64,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
 //        self.spawnPinkRocks()
 
-        self.timeController.startTime = CACurrentMediaTime()
         
 //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
 //            if self.paused == false {
@@ -101,18 +97,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         lastUpdateTime = currentTime
         
         
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background {
-            self.timeController.currentTime = currentTime;
-//            self.timeController.ellapsedTime += self.timeController.currentTime - self.timeController.startTime;
+        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
+
             self.timeController.ellapsedTime += 0.01
             println(self.timeController.ellapsedTime)
         }
-        
-        println("children: \(self.children.count)")
-        if (round(self.timeController.ellapsedTime * 100) % 500 == 0 ) && self.children.count < 13 {
-            println("lalal")
-            spawnPinkRock()
-        }
+
 
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
