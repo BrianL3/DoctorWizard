@@ -21,6 +21,13 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     
+    //setup songduration things
+    var songDuration : NSTimeInterval!
+    var songGenre : String!
+
+    //menu delegate
+    var menuDelegate: MainMenuDelegate?
+    
     //setup screen frame propertys
     let playableRect:CGRect
     let centerScreen:CGPoint
