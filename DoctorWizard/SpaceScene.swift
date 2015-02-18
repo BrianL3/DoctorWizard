@@ -62,8 +62,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.dude.position = self.centerScreen
         addChild(starLayer)
         
+        //MARK: Area to spawn enemies based on song time interval ================================
 //        self.spawnPinkRocks()
-
+        //self.spawnBlackHole()
+        //self.spawnDragon()
+        //self.spawnAlien()
+        //self.spawnFireBall()
         
 //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
 //            if self.paused == false {
@@ -166,6 +170,19 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         println("Spawning Dragon")
 
     }
+    
+    func spawnFireBall() {
+        let spawnFireBallAction = SKAction.runBlock{ () -> Void in
+            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(fireBall)
+            fireBall.spawnFireBall(self.backgroundLayer)
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(3)])))
+        println("Spawning Dragon")
+        
+    }
+    
+
     
     func spawnPinkRock(){
         let spawnRockAction = SKAction.runBlock { () -> Void in

@@ -505,6 +505,7 @@
 				C4EA385E1A76C0AB00EC284C /* CGVector+Extensions.swift in Sources */,
 				C4EA38601A76C0AB00EC284C /* SKAction+Extensions.swift in Sources */,
 				C4EA38621A76C0AB00EC284C /* SKColor+Extensions.swift in Sources */,
+				48CA06561A92E50F00E76C05 /* FireBall.swift in Sources */,
 				55769C801A91AA4A002B7B1B /* GameTime.swift in Sources */,
 				55236CB31A8F181800C7905B /* Chaper.swift in Sources */,
 				55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */,
