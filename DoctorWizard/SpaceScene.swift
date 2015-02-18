@@ -63,11 +63,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         addChild(starLayer)
         
         //MARK: Area to spawn enemies based on song time interval ================================
-        //self.spawnPinkRocks()
+        //self.spawnPinkRock()
         //self.spawnBlackHole()
         //self.spawnDragon()
-        self.spawnAlien()
-        //self.spawnFireBall()
+        //self.spawnAlien()
+        self.spawnFireBall()
         
 //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
 //            if self.paused == false {
@@ -172,9 +172,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         let spawnFireBallAction = SKAction.runBlock{ () -> Void in
             let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint()) //use same spawn code as rocks
             self.backgroundLayer.addChild(fireBall)
-            fireBall.spawnFireBall(self.dude.position)
+            fireBall.spawnFireBall(self.backgroundLayer)
         }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(3)])))
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(0.5)])))
         println("Spawning FireBall")  
     }
     
@@ -202,9 +202,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func fireBallSpawnPoint() -> CGPoint {
-        let posX : CGFloat = playableRect.width
+        let posX : CGFloat = 3072
 
-        let posY : CGFloat = CGFloat.random(min: 0, max: playableRect.height) - 100
+        let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
         let positionToConvert = CGPoint(x: posX, y: posY)
         let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
         return position
