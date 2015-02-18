@@ -71,8 +71,8 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         scene?.menuDelegate = self
         let skView = SKView(frame: self.view.frame)
         self.view.addSubview(skView)
-//        skView.showsFPS = true
-//        skView.showsNodeCount = true
+        skView.showsFPS = true
+        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         self.scene!.scaleMode = .AspectFill
         skView.presentScene(scene)
