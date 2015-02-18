@@ -11,6 +11,7 @@ import SpriteKit
 import CoreMotion
 
 
+
 class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     
@@ -39,6 +40,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var colisionBitMaskDude :UInt32 = 0x1
     var colisionBitMaskRock :UInt32 = 0x10
 
+    //set up for game console labels
+    var galacticFont = "GALACTIC_VANGUARDIAN_NCV"
+    var playTimeRemainingLabel : SKLabelNode?
+    var playTimeRemainingTicker: NSTimeInterval = 0
+    var songDuration : NSTimeInterval = 100.0 //need songDuration from MediaItemTableViewController
+    var doctorWizardsHealthLabel : SKLabelNode?
     
     
     override init(size: CGSize) {
@@ -90,7 +97,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 }
             })
         }
+        
+        //Adding Game Console Labels~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+        playTimeRemainingLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
+        playTimeRemainingLabel!.fontSize = 120;
+        playTimeRemainingLabel?.position = CGPoint(x: self.frame.width*0.07, y: self.frame.height*0.9);
+        playTimeRemainingLabel?.zPosition = 20
+        self.addChild(playTimeRemainingLabel!)
+    
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     }
+    
     
     override func update(currentTime: NSTimeInterval) {
         if lastUpdateTime > 0 {
@@ -110,9 +128,31 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
+    
+        
+        //Adding console label ticker~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        playTimeRemainingTicker = songDuration - self.timeController.ellapsedTime*10
+        
+            if ( playTimeRemainingTicker > 0 ){
+                playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker,decimalPlaceRequired: 0))"
+                    if ( playTimeRemainingTicker > 15 ){
+                        playTimeRemainingLabel?.fontColor = SKColor.yellowColor()
+                    }else{
+                        playTimeRemainingLabel?.fontColor = SKColor.redColor()
+                    }
+            }else{
+                playTimeRemainingLabel?.text = "\(0)"
+            }
+        
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    
     }
     
-
+    
+    
+    
     
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody :SKPhysicsBody!
@@ -209,6 +249,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         println("bouta pause game")
         self.removeAllActions()
 
+    }
+    
+    func nSTimeIntervalValueToString(nSTimeIntervalValue: NSTimeInterval, decimalPlaceRequired: Int) -> String {
+        
+        //create the number formatter and remove all decimal places
+        let nf = NSNumberFormatter()
+        nf.numberStyle = .DecimalStyle
+        nf.maximumFractionDigits = decimalPlaceRequired
+        
+        return nf.stringFromNumber(nSTimeIntervalValue)!
+        
     }
     
 
