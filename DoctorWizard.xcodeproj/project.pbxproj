@@ -25,6 +25,7 @@
 		554877C21A89BD6B005DE731 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554877C11A89BD6B005DE731 /* BackgroundLayer.swift */; };
 		554877C41A89C22F005DE731 /* myrain.sks in Resources */ = {isa = PBXBuildFile; fileRef = 554877C31A89C22F005DE731 /* myrain.sks */; };
 		554877C61A89E8EE005DE731 /* testCreatePhisicsBody.sks in Resources */ = {isa = PBXBuildFile; fileRef = 554877C51A89E8EE005DE731 /* testCreatePhisicsBody.sks */; };
+		55769C801A91AA4A002B7B1B /* GameTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55769C7F1A91AA4A002B7B1B /* GameTime.swift */; };
 		55983BB91A7B68F20096CC8A /* dudeParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 55983BB71A7B68F20096CC8A /* dudeParticle.sks */; };
 		55983BBA1A7B68F20096CC8A /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 55983BB81A7B68F20096CC8A /* spark.png */; };
 		55D7F6C91A79914E006E8753 /* LooserScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D7F6C81A79914E006E8753 /* LooserScene.swift */; };
@@ -109,6 +110,7 @@
 		554877C11A89BD6B005DE731 /* BackgroundLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
 		554877C31A89C22F005DE731 /* myrain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = myrain.sks; sourceTree = "<group>"; };
 		554877C51A89E8EE005DE731 /* testCreatePhisicsBody.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = testCreatePhisicsBody.sks; sourceTree = "<group>"; };
+		55769C7F1A91AA4A002B7B1B /* GameTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTime.swift; sourceTree = "<group>"; };
 		55983BB71A7B68F20096CC8A /* dudeParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = dudeParticle.sks; path = ../dudeParticle.sks; sourceTree = "<group>"; };
 		55983BB81A7B68F20096CC8A /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../spark.png; sourceTree = "<group>"; };
 		55D7F6C81A79914E006E8753 /* LooserScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooserScene.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				FA4116C91A78463700FCC212 /* Sounds */,
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
+				55769C7F1A91AA4A002B7B1B /* GameTime.swift */,
 				55228CDE1A798F1100E573D1 /* WinnerScene.swift */,
 				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
 				FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */,
@@ -464,6 +467,7 @@
 				FA4116E81A78463700FCC212 /* clicks_two.wav in Resources */,
 				B8A0F5181A7B1C4F00EB9362 /* bokeh.png in Resources */,
 				FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */,
+				FA1ADC8A1A8AF41B002DA4AC /* MediaItemCell.xib in Resources */,
 				554877C41A89C22F005DE731 /* myrain.sks in Resources */,
 				FA4116DF1A78463700FCC212 /* blop_nine.wav in Resources */,
 				FA4116E21A78463700FCC212 /* blop_three.wav in Resources */,
@@ -508,6 +512,7 @@
 				C4EA38601A76C0AB00EC284C /* SKAction+Extensions.swift in Sources */,
 				C4EA38621A76C0AB00EC284C /* SKColor+Extensions.swift in Sources */,
 				48CA06561A92E50F00E76C05 /* FireBall.swift in Sources */,
+				55769C801A91AA4A002B7B1B /* GameTime.swift in Sources */,
 				55236CB31A8F181800C7905B /* Chaper.swift in Sources */,
 				55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */,
 				FA95887D1A7ADFAE0008F1FF /* WinScene.swift in Sources */,
