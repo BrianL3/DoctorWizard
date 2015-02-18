@@ -61,10 +61,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         addChild(starLayer)
         
         //MARK: Area to spawn enemies based on song time interval ================================
-        self.spawnPinkRocks()
+        //self.spawnPinkRocks()
         //self.spawnBlackHole()
         //self.spawnDragon()
-        //self.spawnAlien()
+        self.spawnAlien()
         //self.spawnFireBall()
         
         self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
@@ -126,9 +126,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
  
     }
     
-    
-    
-    
     func spawnAlien() {
         let spawnAlien = SKAction.runBlock { () -> Void in
             let alien = Alien(alienImageName: "Spaceship", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
@@ -164,13 +161,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     func spawnFireBall() {
         let spawnFireBallAction = SKAction.runBlock{ () -> Void in
-            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint()) //use same spawn code as rocks
             self.backgroundLayer.addChild(fireBall)
-            fireBall.spawnFireBall(self.backgroundLayer)
+            fireBall.spawnFireBall(self.dude.position)
         }
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(3)])))
-        println("Spawning Dragon")
-        
+        println("Spawning FireBall")  
     }
     
 
@@ -184,9 +180,19 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnRockAction, SKAction.waitForDuration(0.7)])))
     }
     
+    
     func pinkRockSpawnPoint() -> CGPoint {
         let posX : CGFloat = CGFloat.random(min: 0, max: 4096) - 1024
         let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
+        let positionToConvert = CGPoint(x: posX, y: posY)
+        let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
+        return position
+    }
+    
+    func fireBallSpawnPoint() -> CGPoint {
+        let posX : CGFloat = playableRect.width
+
+        let posY : CGFloat = CGFloat.random(min: 0, max: playableRect.height) - 100
         let positionToConvert = CGPoint(x: posX, y: posY)
         let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
         return position
