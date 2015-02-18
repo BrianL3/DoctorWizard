@@ -34,7 +34,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 100)
     
-    //setup dude and dudes enemys
+    //setup dude and dudes enemies
     let dude:Player = Player()
     var colisionBitMaskDude :UInt32 = 0x1
     var colisionBitMaskRock :UInt32 = 0x10
@@ -108,6 +108,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     }
     
+
+    
     func didBeginContact(contact: SKPhysicsContact) {
         var firstBody :SKPhysicsBody!
         var secondBody :SKPhysicsBody!
@@ -126,11 +128,44 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
             println("firstBody is rock")
         }
-        
-        
+ 
     }
     
+    
+    
+    
+    func spawnAlien() {
+        let spawnAlien = SKAction.runBlock { () -> Void in
+            let alien = Alien(alienImageName: "Spaceship", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(alien);
+            alien.spawnAlien(self.dude.position);
+        }
+        
+        let spawnAction = SKAction.repeatActionForever((SKAction.sequence([spawnAlien, SKAction.waitForDuration(3)])))
+        self.backgroundLayer.runAction(spawnAction)
 
+    }
+    
+    func spawnBlackHole() {
+        let spawnBlackHoleAction = SKAction.runBlock{ () -> Void in
+            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(blackHole)
+            blackHole.spawnBlackHole()
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
+        println("Spawning Black Hole")
+    }
+    
+    func spawnDragon() {
+        let spawnDragonAction = SKAction.runBlock{ () -> Void in
+            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            self.backgroundLayer.addChild(dragon)
+            dragon.spawnDragon(self.backgroundLayer)
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(45)])))
+        println("Spawning Dragon")
+
+    }
     
     func spawnPinkRock(){
         let spawnRockAction = SKAction.runBlock { () -> Void in
@@ -154,7 +189,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
     override func willMoveFromView(view: SKView) {
         self.paused = true
-        println("pause game")
+        println("bouta pause game")
+        self.removeAllActions()
+
     }
     
 
