@@ -403,6 +403,7 @@
 				TargetAttributes = {
 					C4D707C61A76BEFB00A990A1 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 5SDHS833A5;
 					};
 					C4D707DF1A76BEFC00A990A1 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -467,7 +468,6 @@
 				FA4116E81A78463700FCC212 /* clicks_two.wav in Resources */,
 				B8A0F5181A7B1C4F00EB9362 /* bokeh.png in Resources */,
 				FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */,
-				FA1ADC8A1A8AF41B002DA4AC /* MediaItemCell.xib in Resources */,
 				554877C41A89C22F005DE731 /* myrain.sks in Resources */,
 				FA4116DF1A78463700FCC212 /* blop_nine.wav in Resources */,
 				FA4116E21A78463700FCC212 /* blop_three.wav in Resources */,
@@ -647,6 +647,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = DoctorWizard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -657,6 +658,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = DoctorWizard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

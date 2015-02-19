@@ -10,7 +10,11 @@ import Foundation
 import SpriteKit
 import CoreMotion
 
+protocol MainMenuDelegate {
 
+    func restartWithSameSong(usingDefaultSong: Bool)
+    func restartWithDifferentSong()
+}
 
 class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
@@ -21,6 +25,13 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     //MARK: setup time propertys
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
+    
+    //setup songduration things
+    var songDuration : NSTimeInterval!
+    var songGenre : String!
+
+    //menu delegate
+    var menuDelegate: MainMenuDelegate?
     
     //setup screen frame propertys
     let playableRect:CGRect
@@ -44,8 +55,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var galacticFont = "GALACTIC_VANGUARDIAN_NCV"
     var playTimeRemainingLabel : SKLabelNode?
     var playTimeRemainingTicker: NSTimeInterval = 0
-    var songDuration : NSTimeInterval = 100.0 //need songDuration from MediaItemTableViewController
     var doctorWizardsHealthLabel : SKLabelNode?
+    
+    //set up win-loss condition
+    // false means lose, true means win
+    var winCondition: Bool?
+    
+    //our current level
+    var curLevel : Level = .First
     
     
     override init(size: CGSize) {
@@ -111,6 +128,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(currentTime: NSTimeInterval) {
+
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
         } else {
@@ -124,7 +142,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             self.timeController.ellapsedTime += 0.01
             println(self.timeController.ellapsedTime)
         }
-
+        self.curLevel = currentLevelIs()
+       // spawnCurrentEnemies()
 
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
@@ -150,8 +169,32 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     }
     
-    
-    
+//MARK: DID EVALUATE ACTIONS
+    override func didEvaluateActions() {
+
+        if let didWin = self.winCondition {
+            if didWin == true{
+                self.scene?.paused = true
+                let winGameScene = WinScene(size: self.size)
+                winGameScene.mainMenuDelegate = self.menuDelegate
+                if self.songGenre == "DefaultDuncanSong"{
+                    winGameScene.isDefaultSong = true
+                }
+                
+                self.view?.presentScene(winGameScene)
+
+            }else if didWin == false {
+                self.scene?.paused = true
+                let lostGameScene = LooserScene(size: self.size)
+                lostGameScene.mainMenuDelegate = self.menuDelegate
+                if self.songGenre == "DefaultDuncanSong"{
+                    lostGameScene.isDefaultSong = true
+                }
+                
+                self.view?.presentScene(lostGameScene)
+            }
+        }
+    }
     
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -236,6 +279,28 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnRockAction, SKAction.waitForDuration(0.7)])))
     }
     
+    //MARK: SPAWN CURRENT ENEMIES
+    func spawnCurrentEnemies(){
+        switch currentLevelIs()
+        {
+        case .First:
+            spawnPinkRock()
+            println("first scene")
+        case .Second:
+            spawnPinkRock()
+            println("Second scene")
+        case .Third:
+            println("Third scene on now")
+        case .Fourth:
+            spawnDragon()
+            println("Fourth scene on now")
+        case .Fifth:
+            println("Fifth scene on now")
+        default:
+            println("DefaultLevel")
+        }
+    }
+    
     func pinkRockSpawnPoint() -> CGPoint {
         let posX : CGFloat = CGFloat.random(min: 0, max: 4096) - 1024
         let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
@@ -262,9 +327,77 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-
+    //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
+    func playRockCollisionSound(){
+        if self.songGenre == "DefaultDuncanSong"{
+            let randomNum = CGFloat.random(min: 0, max: 4)
+            switch randomNum{
+            case 0..<1 :
+                SKTAudio.sharedInstance().playSoundEffect("clicks_one.wav")
+            case 1..<2 :
+                SKTAudio.sharedInstance().playSoundEffect("blop_eleven.wav")
+            case 2..<3 :
+                SKTAudio.sharedInstance().playSoundEffect("blop_four.wav")
+            case 3...4 :
+                SKTAudio.sharedInstance().playSoundEffect("blop_nine.wav")
+                
+            default:
+                println("fucked something up")
+            }
+            
+            SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 1.0
+        }
+    }
     
+    func playAlienCollisionSound(){
+        if self.songGenre == "DefaultDuncanSong" {
+            let randomNum = CGFloat.random(min: 1, max: 2)
+            if randomNum <= 1 {
+                SKTAudio.sharedInstance().playSoundEffect("rerrr.wav")
+            }else{
+                SKTAudio.sharedInstance().playSoundEffect("blop_seven.wav")
+            }
+        }
+    }
+    //MARK: Determining the current level
+    enum Level {
+        case First
+        case Second
+        case Third
+        case Fourth
+        case Fifth
+    }
     
+    func currentLevelIs() -> Level {
+        let songTimeAsFloat = self.songDuration as Double
+        var timePassedAsFloat : Double
+        if (timeController.ellapsedTime as Double) < songTimeAsFloat{
+            timePassedAsFloat = timeController.ellapsedTime as Double
+        }else{
+            timePassedAsFloat = songTimeAsFloat
+        }
+        let twentyPercent = songTimeAsFloat/5
+        let fortyPercent = (songTimeAsFloat/5) * 2
+        let sixtyPercent = (songTimeAsFloat/5) * 3
+        let eightyPercent = (songTimeAsFloat/5) * 4
+        
+        switch timePassedAsFloat {
+            //first 20% of the song
+        case 0..<twentyPercent :
+            self.curLevel = .First
+        case twentyPercent..<fortyPercent :
+            self.curLevel = .Second
+        case fortyPercent..<sixtyPercent :
+            self.curLevel = .Third
+        case sixtyPercent..<eightyPercent :
+            self.curLevel = .Fourth
+        case eightyPercent..<songTimeAsFloat :
+            self.curLevel = .Fifth
+        default:
+            self.curLevel = .First
+        }
+        return self.curLevel
+    }
 
     
 }
