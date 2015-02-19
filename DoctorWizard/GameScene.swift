@@ -194,7 +194,7 @@ class GameScene: SKScene {
             rocks.append("pinkRock\(i)")
         }
         
-        playTimeRemainingLabel = SKLabelNode(fontNamed:"Futura")
+        playTimeRemainingLabel = SKLabelNode(fontNamed:"GALACTIC_VANGUARDIAN_NCV")
         playTimeRemainingLabel?.fontSize = 40;
             if ( playTimeRemainingTicker <= 15 ){
                 playTimeRemainingLabel?.fontColor = SKColor.blueColor()
