@@ -23,7 +23,7 @@ class Alien: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func spawnAlien(dudePosition : CGPoint) {
+    func spawnAlien(layer : BackgroundLayer, dudePosition : CGPoint) {
         self.zRotation = CGFloat.random(min:0, max: 90)
         var directions : [SKAction] = []
         var points : [CGPoint] = []
