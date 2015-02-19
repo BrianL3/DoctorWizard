@@ -16,7 +16,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     var songDuration : NSTimeInterval = 100.0
     var songGenre : String = "DefaultDuncanSong"
-    var scene : GameScene?
+    var scene : SpaceScene?
     var popUpVC = PopUpMenuController()
     let musicPlayer = MPMusicPlayerController.applicationMusicPlayer()
     var currentSong : MPMediaItemCollection?
@@ -63,7 +63,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
 // MARK: Game Funcs
     func launchGame(){
         self.scene = nil
-        self.scene = GameScene(size:CGSize(width: 2048, height: 1536))
+        self.scene = SpaceScene(size:CGSize(width: 2048, height: 1536))
         println(self.songGenre)
         scene?.songGenre = self.songGenre
         println(self.songDuration)
