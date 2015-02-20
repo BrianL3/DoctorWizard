@@ -57,6 +57,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var playTimeRemainingTicker: NSTimeInterval = 0
     var doctorWizardsHealthLabel : SKLabelNode?
     
+    
+    var healthPoints :CGFloat = 742
+    
     //set up win-loss condition
     // false means lose, true means win
     var winCondition: Bool?
@@ -119,10 +122,20 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
         playTimeRemainingLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
         playTimeRemainingLabel!.fontSize = 120;
-        playTimeRemainingLabel?.position = CGPoint(x: self.frame.width*0.07, y: self.frame.height*0.9);
+        playTimeRemainingLabel?.position = CGPoint(x: self.view!.frame.width*0.2, y: self.view!.frame.height*0.9);
         playTimeRemainingLabel?.zPosition = 20
         self.addChild(playTimeRemainingLabel!)
-    
+        
+
+        doctorWizardsHealthLabel = SKLabelNode(fontNamed:"Futura")
+        doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
+        doctorWizardsHealthLabel?.fontSize = 45;
+        doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
+        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1840,y:CGRectGetMinY(self.frame)+213)
+        
+        doctorWizardsHealthLabel?.zPosition = 16
+        self.addChild(doctorWizardsHealthLabel!)
+        
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     }
     
@@ -149,7 +162,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     
         
-        //Adding console label ticker~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //MARK: GAME CONSOLEr
+        //~~~Time to Play Ticker~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
         
         playTimeRemainingTicker = songDuration - self.timeController.ellapsedTime*10
         
@@ -163,6 +178,57 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             }else{
                 playTimeRemainingLabel?.text = "\(0)"
             }
+        
+        //~~~Health Points~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+                 //MARK: Display Spaceman's Health Status Label
+        
+                    var fullHealthStatus: CGFloat = 742.0
+        
+                    let healthyIconEmoji: String = "🍏"
+                    let unhealthyIconEmoji: String = "🍊"
+                    let expiredEmoji: String = "😑"
+        
+        
+        
+                        if (healthPoints == 0 ){
+                                //Player is spacedust
+                                doctorWizardsHealthLabel?.text = "\(expiredEmoji)"
+                        }else{
+        
+        
+                                //strongest >= 80%
+                            if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
+                                    //println("strongest condition reached")
+                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+                            }
+        
+                                //strong <= 80% && >=60%
+                            if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
+                                    //println("strong condition reached")
+                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
+                            }
+        
+                                //ok <= 60% && >=40%
+                            if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
+                                    //println("ok condition reached")
+                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+                            }
+        
+                                //weak <= 40% && >=20%
+                            if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
+                                    //println("weak condition reached")
+                                    doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
+                            }
+                
+                                //weakest <= 20%
+                                if(healthPoints <= fullHealthStatus*0.2){
+                                    //println("weakest condition reached")
+                                    doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
+                                }
+                
+                            }
+
         
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
