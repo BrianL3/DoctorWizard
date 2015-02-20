@@ -15,6 +15,7 @@ class GameCenterKit: NSObject {
     var lastError: NSError?
     var gameCenterEnabled: Bool
     let PresentAuthenticationViewController = "PresentAuthenticationViewController"
+    let achievementHelper = AchievementsHelper()
     
     
     // gamecenter singleton
