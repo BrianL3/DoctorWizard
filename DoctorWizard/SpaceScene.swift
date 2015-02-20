@@ -65,7 +65,15 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     //our current level
     var curLevel : Level = .First
     
+    //Physics Category bitmask
+    let categoryDude:UInt32 =      0x1
+    let categoryPinkROck:UInt32 =  0x10
+    let categoryFireball:UInt32 =  0x100
+    let categoryAlien:UInt32 =     0x1000
+    let categoryBlackHole:UInt32 = 0x10000
+    let categoryDragon:UInt32 =    0x100000
     
+
     override init(size: CGSize) {
         self.playableRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         self.centerScreen = CGPoint(x: playableRect.width/2, y: playableRect.height/2)
@@ -136,14 +144,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dt = 0
         }
         lastUpdateTime = currentTime
-        println("I'm updating")
-        println(self.dude.position.x)
+//        println("I'm updating")
+//        println(self.dude.position.x)
         
 
         if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
 
             self.timeController.ellapsedTime += 0.01
-            println(self.timeController.ellapsedTime)
+//            println(self.timeController.ellapsedTime)
         }
         self.curLevel = currentLevelIs()
        // spawnCurrentEnemies()
@@ -174,7 +182,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
 //MARK: DID EVALUATE ACTIONS
     override func didEvaluateActions() {
-                self.spawnFireBall()
+        self.spawnFireBall()
+//        self.spawnPinkRock()
 
         if let didWin = self.winCondition {
             if didWin == true{
@@ -202,23 +211,39 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     
     func didBeginContact(contact: SKPhysicsContact) {
-        var firstBody :SKPhysicsBody!
-        var secondBody :SKPhysicsBody!
-        if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
-            firstBody = contact.bodyA
-            secondBody = contact.bodyB
+        var dudeBody :SKPhysicsBody?
+        var otherBody :SKPhysicsBody?
+        if contact.bodyA.categoryBitMask == self.categoryDude {
+            dudeBody = contact.bodyA
+            otherBody = contact.bodyB
+        } else if contact.bodyB.categoryBitMask == self.categoryDude {
+            dudeBody = contact.bodyB
+            otherBody = contact.bodyA
         } else {
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
+            dudeBody = nil
+            otherBody = nil
         }
+//        if (contact.bodyA.categoryBitMask == 0x1) {
+//            dudeBody = contact.bodyA
+//            otherBody = contact.bodyB
+//        } else if contact.bodyB.categoryBitMask == 0x1 {
+//            dudeBody = contact.bodyB
+//            otherBody = contact.bodyA
+//        }
+//        
+//        
         
-        switch firstBody.collisionBitMask {
-        case colisionBitMaskDude:
-            println("firstBody is dude")
-        default:
-            secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
-            println("firstBody is rock")
+        
+        if dudeBody != nil {
+            println("dude is one of the contact bodys")
         }
+//        switch contact.bodyA.categoryBitMask {
+//        case self.categoryFireball:
+//            if
+//        default:
+////            secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
+//            println("firstBody is rock")
+//        }
  
     }
     
