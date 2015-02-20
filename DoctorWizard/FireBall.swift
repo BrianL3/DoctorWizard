@@ -24,20 +24,14 @@ class FireBall: SKSpriteNode {
     }
     
     func spawnFireBall(layer : BackgroundLayer) {
-        let warning = SKSpriteNode(imageNamed: "Rock")
-        var warnignPosition =  self.convertPoint(self.position, fromNode: layer)
-        warnignPosition = CGPoint(x: self.size.width - (self.size.width/8), y: warnignPosition.y)
-        warning.position = warnignPosition
-        warning.alpha = 0
-        
-        addChild(warning)
-        self.setScale(1)
+
+        self.setScale(2)
         self.zPosition = 0
         let remove = SKAction.removeFromParent()
         let warningApear = SKAction.fadeAlphaTo(1, duration: 0.1)
         let warningDisopear = SKAction.fadeAlphaTo(0, duration: 0.2)
         let displayWarning = SKAction.sequence([SKAction.repeatAction(SKAction.sequence([warningApear,warningDisopear ]), count: 4), remove])
-        warning.runAction(displayWarning)
+        //warning.runAction(displayWarning)
         
         let moveUp = SKAction.moveToY(self.position.y + 20, duration: 0.5)
         let moveDown = SKAction.moveToY(self.position.y - 20, duration: 0.5)
@@ -45,15 +39,13 @@ class FireBall: SKSpriteNode {
         
         let wiggle = SKAction.repeatActionForever(SKAction.sequence([moveDown,moveUp]))
         
-        //let moveAcross = SKAction.moveToX(-1024, duration: NSTimeInterval(CGFloat.random(min: 1, max: 2)))
+        //        let moveAcross = SKAction.moveToX(-1024, duration: NSTimeInterval(CGFloat.random(min: 1, max: 2)))
         var moveTO = layer.convertPoint(CGPoint(
-            x: -1024, y: 0), fromNode: self)
+            x: -2048, y: 0), fromNode: self)
         moveTO.y = self.position.y
         let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 1.3), remove])
-        
         let move = SKAction.group([wiggle, moveAcross])
         self.runAction(move)
-
     }
 }
 

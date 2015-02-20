@@ -89,11 +89,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         addChild(starLayer)
         
         //MARK: Area to spawn enemies based on song time interval ================================
-//        self.spawnPinkRocks()
+        //self.spawnPinkRock()
         //self.spawnBlackHole()
         //self.spawnDragon()
         //self.spawnAlien()
-        //self.spawnFireBall()
+        self.spawnFireBall()
         
 //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
 //            if self.paused == false {
@@ -147,6 +147,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dt = 0
         }
         lastUpdateTime = currentTime
+        println("I'm updating")
+        println(self.dude.position.x)
         
         
         if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
@@ -283,17 +285,26 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
  
     }
     
+    func spawnFireBall() {
+        let spawnFireBallAction = SKAction.runBlock{ () -> Void in
+            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
+            self.backgroundLayer.addChild(fireBall)
+            fireBall.spawnFireBall(self.backgroundLayer)
+        }
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(0.5)])))
+        println("Spawning FireBall")
+    }
     
-    
+
     
     func spawnAlien() {
         let spawnAlien = SKAction.runBlock { () -> Void in
             let alien = Alien(alienImageName: "Spaceship", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
             self.backgroundLayer.addChild(alien);
-            alien.spawnAlien(self.dude.position);
+            alien.spawnAlien(self.backgroundLayer, dudePosition: self.centerScreen);
         }
         
-        let spawnAction = SKAction.repeatActionForever((SKAction.sequence([spawnAlien, SKAction.waitForDuration(3)])))
+        let spawnAction = SKAction.repeatActionForever((SKAction.sequence([spawnAlien, SKAction.waitForDuration(1)])))
         self.backgroundLayer.runAction(spawnAction)
 
     }
@@ -310,27 +321,15 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     func spawnDragon() {
         let spawnDragonAction = SKAction.runBlock{ () -> Void in
-            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.fireBallSpawnPoint()) 
             self.backgroundLayer.addChild(dragon)
             dragon.spawnDragon(self.backgroundLayer)
         }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(45)])))
+        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(0.5)])))
         println("Spawning Dragon")
-
-    }
+}
     
-    func spawnFireBall() {
-        let spawnFireBallAction = SKAction.runBlock{ () -> Void in
-            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
-            self.backgroundLayer.addChild(fireBall)
-            fireBall.spawnFireBall(self.backgroundLayer)
-        }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(3)])))
-        println("Spawning Dragon")
-        
-    }
     
-
     
     func spawnPinkRock(){
         let spawnRockAction = SKAction.runBlock { () -> Void in
@@ -344,30 +343,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnRockAction, SKAction.waitForDuration(0.7)])))
     }
     
-    //MARK: SPAWN CURRENT ENEMIES
-    func spawnCurrentEnemies(){
-        switch currentLevelIs()
-        {
-        case .First:
-            spawnPinkRock()
-            println("first scene")
-        case .Second:
-            spawnPinkRock()
-            println("Second scene")
-        case .Third:
-            println("Third scene on now")
-        case .Fourth:
-            spawnDragon()
-            println("Fourth scene on now")
-        case .Fifth:
-            println("Fifth scene on now")
-        default:
-            println("DefaultLevel")
-        }
-    }
     
     func pinkRockSpawnPoint() -> CGPoint {
         let posX : CGFloat = CGFloat.random(min: 0, max: 4096) - 1024
+        let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
+        let positionToConvert = CGPoint(x: posX, y: posY)
+        let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
+        return position
+    }
+    
+    func fireBallSpawnPoint() -> CGPoint {
+        let posX : CGFloat = 3072
+
         let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
         let positionToConvert = CGPoint(x: posX, y: posY)
         let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
