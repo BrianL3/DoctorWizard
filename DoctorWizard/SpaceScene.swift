@@ -57,8 +57,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var playTimeRemainingTicker: NSTimeInterval = 0
     var doctorWizardsHealthLabel : SKLabelNode?
     
-    
-    var healthPoints :CGFloat = 742
+    var healthPoints :CGFloat = 742 //need colisions to decrement from this
     
     //set up win-loss condition
     // false means lose, true means win
