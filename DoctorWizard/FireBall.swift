@@ -33,8 +33,8 @@ class FireBall: SKSpriteNode {
         let displayWarning = SKAction.sequence([SKAction.repeatAction(SKAction.sequence([warningApear,warningDisopear ]), count: 4), remove])
         //warning.runAction(displayWarning)
         
-        let moveUp = SKAction.moveToY(self.position.y + 20, duration: 0.5)
-        let moveDown = SKAction.moveToY(self.position.y - 20, duration: 0.5)
+        let moveUp = SKAction.moveToY(self.position.y + 20, duration: 0.9)
+        let moveDown = SKAction.moveToY(self.position.y - 20, duration: 0.9)
         var speed :CGFloat = 0.0
         
         let wiggle = SKAction.repeatActionForever(SKAction.sequence([moveDown,moveUp]))
@@ -43,7 +43,7 @@ class FireBall: SKSpriteNode {
         var moveTO = layer.convertPoint(CGPoint(
             x: -2048, y: 0), fromNode: self)
         moveTO.y = self.position.y
-        let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 1.3), remove])
+        let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 1.7), remove])
         let move = SKAction.group([wiggle, moveAcross])
         self.runAction(move)
     }

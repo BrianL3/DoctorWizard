@@ -25,6 +25,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     //MARK: setup time propertys
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
+    var updateCounterForSpawing: Int = 0
     
     //setup songduration things
     var songDuration : NSTimeInterval!
@@ -93,7 +94,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //self.spawnBlackHole()
         //self.spawnDragon()
         //self.spawnAlien()
-        self.spawnFireBall()
+
         
 //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
 //            if self.paused == false {
@@ -140,7 +141,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(currentTime: NSTimeInterval) {
-
+        self.updateCounterForSpawing += 1
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
         } else {
@@ -150,7 +151,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         println("I'm updating")
         println(self.dude.position.x)
         
-        
+
         if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
 
             self.timeController.ellapsedTime += 0.01
@@ -238,6 +239,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
 //MARK: DID EVALUATE ACTIONS
     override func didEvaluateActions() {
+                self.spawnFireBall()
 
         if let didWin = self.winCondition {
             if didWin == true{
@@ -286,13 +288,20 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnFireBall() {
-        let spawnFireBallAction = SKAction.runBlock{ () -> Void in
+//        let spawnFireBallAction = SKAction.runBlock{ () -> Void in
+//            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
+//            self.backgroundLayer.addChild(fireBall)
+//            fireBall.spawnFireBall(self.backgroundLayer)
+//        }
+//        
+        if self.updateCounterForSpawing % Int(2.5 * 60) == 0 {
             let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
             self.backgroundLayer.addChild(fireBall)
             fireBall.spawnFireBall(self.backgroundLayer)
+                    println("Spawning FireBall")
         }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(0.5)])))
-        println("Spawning FireBall")
+//        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(0.5)])))
+
     }
     
 
@@ -303,6 +312,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             self.backgroundLayer.addChild(alien);
             alien.spawnAlien(self.backgroundLayer, dudePosition: self.centerScreen);
         }
+        
         
         let spawnAction = SKAction.repeatActionForever((SKAction.sequence([spawnAlien, SKAction.waitForDuration(1)])))
         self.backgroundLayer.runAction(spawnAction)
