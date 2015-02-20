@@ -15,8 +15,14 @@ class FireBall: SKSpriteNode {
     
     init(fireBallImageName : String, initialPosition: CGPoint) {
         let fireBallTexture = SKTexture(imageNamed: fireBallImageName)
+        let fireBallPhysicsBody = SKPhysicsBody(texture: fireBallTexture, alphaThreshold: 0.1, size: fireBallTexture.size())
         super.init(texture: fireBallTexture, color: nil, size: fireBallTexture.size())
         self.position = initialPosition
+        self.physicsBody = fireBallPhysicsBody
+        self.physicsBody?.categoryBitMask = 0x100
+        self.physicsBody?.collisionBitMask = 0x0
+        self.physicsBody?.contactTestBitMask = 0x1
+        self.physicsBody?.dynamic = true
     }
     
     required init?(coder aDecoder: NSCoder) {

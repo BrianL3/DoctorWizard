@@ -54,5 +54,19 @@ class Player: SKSpriteNode {
         
     }
     
+    func setInvincible(){
+        self.isInvincible = true
+        println("is now set invicble")
+//        let wait = SKAction.waitForDuration(0.7)
+//
+//        let disable = SKAction.runBlock { () -> Void in
+//            self.isInvincible = false
+//            println("self.dude is should not be invincible now")
+//        }
+//        
+//        let seq = SKAction.sequence([wait,disable])
+//        self.runAction(seq)
+    }
+    
     
 }

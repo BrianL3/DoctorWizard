@@ -1,0 +1,31 @@
+DEVNOTes
+
+
+--- Physics
+
+- Category bitmasks
+Dude            0x1
+PinkRocks       0x10
+FireBall        0x100
+Alien           0x1000
+BlackHole       0x10000
+Dragon          0x100000
+
+- Collision bitmask (how things react to gravity)
+Dude            0x0         (no one)
+PinkRocks       0x101011    (dude,pinkrock,alien,dragon)
+FireBall        0x0         (no one)
+Alien           0x0         (no one)
+BlackHole       0x0         (no one)
+Dragon          0x0         (no one)
+
+- Contact bitmask
+Dude            0x111110    (everone but dude)
+PinkRocks       0x1         (only dude)
+FireBall        0x1         (only dude)
+Alien           0x1         (only dude)
+BlackHole       0x1         (only dude)
+Dragon          0x1         (only dude)
+
+
+
