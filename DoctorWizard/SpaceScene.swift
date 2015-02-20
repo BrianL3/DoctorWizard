@@ -103,7 +103,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //self.spawnPinkRock()
         //self.spawnBlackHole()
         //self.spawnDragon()
-        //self.spawnAlien()
+
 
         
 //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
@@ -186,7 +186,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //~~~Time to Play Ticker~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
         
-        playTimeRemainingTicker = songDuration - (self.timeController.ellapsedTime * 10)
+        playTimeRemainingTicker = songDuration - (self.timeController.ellapsedTime)
         
             if ( playTimeRemainingTicker > 0 ){
                 playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker, decimalPlaceRequired: 0))"
@@ -260,10 +260,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
 //MARK: DID EVALUATE ACTIONS (occurs every frame) =========================================
     override func didEvaluateActions() {
-        self.spawnFireBall()
-        self.spawnPinkRock()
-        //this code evaluates the win condition flag every frame to check win/lose status
-        
+//        self.spawnFireBall()
+//        self.spawnPinkRock()
+//        self.spawnAlien()
+
         if let didWin = self.winCondition {
             // player won
             if didWin == true{
@@ -326,6 +326,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 160, -self.backgroundLayer.verticalDirection * 160)
             case self.categoryFireball :
                 self.dude.healthPoints -= 100
+            case self.categoryAlien :
+                self.dude.healthPoints -= 150
+                println("dude hit alien")
             default:
                 println("")
 
@@ -365,15 +368,27 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
     
     func spawnAlien() {
-        let spawnAlien = SKAction.runBlock { () -> Void in
-            let alien = Alien(alienImageName: "Spaceship", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
-            self.backgroundLayer.addChild(alien);
-            alien.spawnAlien(self.backgroundLayer, dudePosition: self.centerScreen);
+
+        if self.updateCounterForSpawing % Int(60 * 1.5) == 0 {
+
+            let topRight = CGPoint(x: 2048 + 100, y: 1536 + 100)
+            let bottomRight = CGPoint(x: 2048 + 100, y: 0 - 100)
+            let topLeft = CGPoint(x: 0  - 100, y: 1536 + 100)
+            let bottomLeft = CGPoint(x: 0 - 100, y: 0 - 100)
+            let cornerPointArray = [topLeft, topRight, bottomRight, bottomLeft]
+            
+            var random = Int((CGFloat.random()*4))
+            if random == 4 {
+                random = 3 //covernin my ass 
+                // #yolo
+            }
+            
+            let initPosition = self.backgroundLayer.convertPoint(cornerPointArray[random], fromNode: self)
+            let destPosition = self.backgroundLayer.convertPoint(cornerPointArray[(random + 2) % 4], fromNode: self)
+            let alien = Alien(alienImageName: "spaceship", initialPosition: initPosition)
+            self.backgroundLayer.addChild(alien)
+            alien.spawnAlien(destPosition)
         }
-        
-        
-        let spawnAction = SKAction.repeatActionForever((SKAction.sequence([spawnAlien, SKAction.waitForDuration(1)])))
-        self.backgroundLayer.runAction(spawnAction)
 
     }
     
