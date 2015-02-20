@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 import CoreMotion
+import GameKit
 
 protocol MainMenuDelegate {
 
@@ -245,6 +246,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             if didWin == true{
                 self.scene?.paused = true
                 let winGameScene = WinScene(size: self.size)
+                var achievementsArray = [GKAchievement]()
+                achievementsArray.append(GameCenterKit.sharedGameCenter.achievementHelper.minuteAchievement(timeController.ellapsedTime))
+                GameCenterKit.sharedGameCenter.reportAchievements(achievementsArray)
                 winGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     winGameScene.isDefaultSong = true
