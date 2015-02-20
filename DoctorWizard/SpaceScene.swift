@@ -258,25 +258,33 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     }
     
-//MARK: DID EVALUATE ACTIONS
+//MARK: DID EVALUATE ACTIONS (occurs every frame) =========================================
     override func didEvaluateActions() {
         self.spawnFireBall()
         self.spawnPinkRock()
-
+        //this code evaluates the win condition flag every frame to check win/lose status
+        
         if let didWin = self.winCondition {
+            // player won
             if didWin == true{
                 self.scene?.paused = true
                 let winGameScene = WinScene(size: self.size)
+                // create achievements, if any
                 var achievementsArray = [GKAchievement]()
                 achievementsArray.append(GameCenterKit.sharedGameCenter.achievementHelper.minuteAchievement(timeController.ellapsedTime))
+                // send achievements to gamecenter
                 GameCenterKit.sharedGameCenter.reportAchievements(achievementsArray)
+                // log the time as a score, rounded to an int
+                let scoreDouble = self.timeController.ellapsedTime as Double
+                let score : Int64 = Int64(round(scoreDouble))
+                GameCenterKit.sharedGameCenter.reportScore(score, forLeaderBoardId: "games.doctorwizard.longest_song")
                 winGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     winGameScene.isDefaultSong = true
                 }
                 
                 self.view?.presentScene(winGameScene)
-
+                //player lost
             }else if didWin == false {
                 self.scene?.paused = true
                 let lostGameScene = LooserScene(size: self.size)

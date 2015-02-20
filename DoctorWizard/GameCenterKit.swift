@@ -59,4 +59,25 @@ class GameCenterKit: NSObject {
             return
         }
     }
+    
+    func reportScore(score: Int64, forLeaderBoardId leaderBoardId: String){
+        if gameCenterEnabled{
+            //make a score reporter, put it in a reporting array
+            let scoreReporter = GKScore(leaderboardIdentifier: leaderBoardId)
+            scoreReporter.value = score
+            scoreReporter.context = 0
+            let scores = [scoreReporter]
+            //report the array to gamecenter
+            GKScore.reportScores(scores, withCompletionHandler: { (error) -> Void in
+                //error reporting, if any
+                self.lastError = error
+                if error != nil {
+                    println(error.localizedDescription)
+                }
+            })
+        }else{
+            println("Local player is not authenticated")
+            return
+        }
+    }
 }
