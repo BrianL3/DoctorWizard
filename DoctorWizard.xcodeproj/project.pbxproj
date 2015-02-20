@@ -21,6 +21,7 @@
 		55236CAF1A8ED74C00C7905B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CAE1A8ED74C00C7905B /* Player.swift */; };
 		55236CB11A8EE27200C7905B /* PinkRock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CB01A8EE27200C7905B /* PinkRock.swift */; };
 		55236CB31A8F181800C7905B /* Chaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CB21A8F181800C7905B /* Chaper.swift */; };
+		552457421A96BB950065BF5D /* DevNotes in Resources */ = {isa = PBXBuildFile; fileRef = 552457411A96BB950065BF5D /* DevNotes */; };
 		554877C01A89BAC4005DE731 /* SpaceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554877BF1A89BAC4005DE731 /* SpaceScene.swift */; };
 		554877C21A89BD6B005DE731 /* BackgroundLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554877C11A89BD6B005DE731 /* BackgroundLayer.swift */; };
 		554877C41A89C22F005DE731 /* myrain.sks in Resources */ = {isa = PBXBuildFile; fileRef = 554877C31A89C22F005DE731 /* myrain.sks */; };
@@ -107,6 +108,7 @@
 		55236CAE1A8ED74C00C7905B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		55236CB01A8EE27200C7905B /* PinkRock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinkRock.swift; sourceTree = "<group>"; };
 		55236CB21A8F181800C7905B /* Chaper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chaper.swift; sourceTree = "<group>"; };
+		552457411A96BB950065BF5D /* DevNotes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DevNotes; sourceTree = "<group>"; };
 		554877BF1A89BAC4005DE731 /* SpaceScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpaceScene.swift; sourceTree = "<group>"; };
 		554877C11A89BD6B005DE731 /* BackgroundLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLayer.swift; sourceTree = "<group>"; };
 		554877C31A89C22F005DE731 /* myrain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = myrain.sks; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 		C4D707BE1A76BEFB00A990A1 = {
 			isa = PBXGroup;
 			children = (
+				552457411A96BB950065BF5D /* DevNotes */,
 				554877C51A89E8EE005DE731 /* testCreatePhisicsBody.sks */,
 				C4D707C91A76BEFB00A990A1 /* DoctorWizard */,
 				C4D707E31A76BEFC00A990A1 /* DoctorWizardTests */,
@@ -479,6 +482,7 @@
 				FA4116ED1A78463700FCC212 /* lux.wav in Resources */,
 				FA4116E81A78463700FCC212 /* clicks_two.wav in Resources */,
 				B8A0F5181A7B1C4F00EB9362 /* bokeh.png in Resources */,
+				552457421A96BB950065BF5D /* DevNotes in Resources */,
 				FA4116EC1A78463700FCC212 /* tick_two.wav in Resources */,
 				554877C41A89C22F005DE731 /* myrain.sks in Resources */,
 				FA4116DF1A78463700FCC212 /* blop_nine.wav in Resources */,
