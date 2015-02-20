@@ -59,7 +59,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var playTimeRemainingTicker: NSTimeInterval = 0
     var doctorWizardsHealthLabel : SKLabelNode?
     
-    var healthPoints :CGFloat = 742 //need colisions to decrement from this
+    var healthPoints :CGFloat?
     
     //set up win-loss condition
     // false means lose, true means win
@@ -192,7 +192,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     let unhealthyIconEmoji: String = "🍊"
                     let expiredEmoji: String = "😑"
         
+                    healthPoints =  CGFloat(dude.healthPoints)
         
+                        println("dudes health points = \(dude.healthPoints)");
         
                         if (healthPoints == 0 ){
                                 //Player is spacedust
