@@ -118,20 +118,20 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //Adding Game Console Labels~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
+        // Labels positions need to be dynamically set
+        
         playTimeRemainingLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
-        playTimeRemainingLabel!.fontSize = 120;
-        playTimeRemainingLabel?.position = CGPoint(x: self.view!.frame.width*0.2, y: self.view!.frame.height*0.9);
+        playTimeRemainingLabel!.fontSize = 100;
+        playTimeRemainingLabel?.position = CGPoint(x: self.view!.frame.width*0.2, y: self.view!.frame.height*0.8);
         playTimeRemainingLabel?.zPosition = 20
         self.addChild(playTimeRemainingLabel!)
         
 
-        doctorWizardsHealthLabel = SKLabelNode(fontNamed:"Futura")
+        doctorWizardsHealthLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
         doctorWizardsHealthLabel?.fontSize = 45;
         doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
-        doctorWizardsHealthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame)+1840,y:CGRectGetMinY(self.frame)+213)
-        
+        doctorWizardsHealthLabel?.position = CGPoint(x: self.view!.frame.width*2.8, y: self.view!.frame.height*0.8);
         doctorWizardsHealthLabel?.zPosition = 16
         self.addChild(doctorWizardsHealthLabel!)
         
