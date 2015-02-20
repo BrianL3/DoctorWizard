@@ -186,7 +186,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //~~~Time to Play Ticker~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
         
-        playTimeRemainingTicker = songDuration - (self.timeController.ellapsedTime * 10)
+        playTimeRemainingTicker = songDuration - (self.timeController.ellapsedTime)
         
             if ( playTimeRemainingTicker > 0 ){
                 playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker, decimalPlaceRequired: 0))"
