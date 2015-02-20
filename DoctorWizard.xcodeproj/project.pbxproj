@@ -56,6 +56,7 @@
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
 		FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */; };
+		FA3FA04A1A96A80200D6A1F3 /* GameCenterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FA0491A96A80200D6A1F3 /* GameCenterKit.swift */; };
 		FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116CB1A78463700FCC212 /* blop_eleven.wav */; };
 		FA4116DE1A78463700FCC212 /* blop_four.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116CC1A78463700FCC212 /* blop_four.wav */; };
 		FA4116DF1A78463700FCC212 /* blop_nine.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116CD1A78463700FCC212 /* blop_nine.wav */; };
@@ -146,6 +147,7 @@
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaItemCell.xib; sourceTree = "<group>"; };
 		FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = SKTUtils/MainMenuViewController.swift; sourceTree = "<group>"; };
+		FA3FA0491A96A80200D6A1F3 /* GameCenterKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterKit.swift; sourceTree = "<group>"; };
 		FA4116CB1A78463700FCC212 /* blop_eleven.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blop_eleven.wav; sourceTree = "<group>"; };
 		FA4116CC1A78463700FCC212 /* blop_four.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blop_four.wav; sourceTree = "<group>"; };
 		FA4116CD1A78463700FCC212 /* blop_nine.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blop_nine.wav; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 		C4D707C91A76BEFB00A990A1 /* DoctorWizard */ = {
 			isa = PBXGroup;
 			children = (
+				FA3FA0481A96A6D600D6A1F3 /* Game Center */,
 				B8A0F5061A7B1B1600EB9362 /* Particles */,
 				FA4116C91A78463700FCC212 /* Sounds */,
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
@@ -312,6 +315,14 @@
 				C4EA385B1A76C0AB00EC284C /* Vector3.swift */,
 			);
 			path = SKTUtils;
+			sourceTree = "<group>";
+		};
+		FA3FA0481A96A6D600D6A1F3 /* Game Center */ = {
+			isa = PBXGroup;
+			children = (
+				FA3FA0491A96A80200D6A1F3 /* GameCenterKit.swift */,
+			);
+			name = "Game Center";
 			sourceTree = "<group>";
 		};
 		FA4116C91A78463700FCC212 /* Sounds */ = {
@@ -500,6 +511,7 @@
 				48F91CA51A911A6300496E42 /* BlackHole.swift in Sources */,
 				55236CAF1A8ED74C00C7905B /* Player.swift in Sources */,
 				C0E2189F1A795DE300880E41 /* MediaItemCell.swift in Sources */,
+				FA3FA04A1A96A80200D6A1F3 /* GameCenterKit.swift in Sources */,
 				FAE5408F1A7866A000B72DFD /* MediaItemTableViewController.swift in Sources */,
 				554877C01A89BAC4005DE731 /* SpaceScene.swift in Sources */,
 				C4EA385D1A76C0AB00EC284C /* CGPoint+Extensions.swift in Sources */,

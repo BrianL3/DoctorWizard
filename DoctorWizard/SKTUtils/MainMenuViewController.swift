@@ -28,6 +28,11 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //authenticate the local user
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("showAuthenticationViewController"), name: "PresentAuthenticationViewController", object: nil)
+        GameCenterKit.sharedGameCenter.authenticateLocalPlayer()
+        
+        
         self.launchGame()
         self.pauseGame()
         //create pop up controller
@@ -57,6 +62,17 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         
         super.viewDidAppear(animated)
         
+    }
+    //MARK: AUTHENTICATION
+    
+    func showAuthenticationViewController(){
+        if let authenticationViewController = GameCenterKit.sharedGameCenter.authenticationViewController {
+            self.presentViewController(authenticationViewController, animated: true, completion: nil)
+        }
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     
