@@ -19,6 +19,7 @@ class PinkRock: SKSpriteNode {
         self.physicsBody = pinkRockPhysicsBody
         self.physicsBody?.categoryBitMask = 0x10
         self.physicsBody?.contactTestBitMask = 0x1
+        self.physicsBody?.collisionBitMask = 0x101011
         self.position = initialPosition
         self.setScale(0)
         self.alpha = 0

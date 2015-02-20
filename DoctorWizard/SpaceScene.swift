@@ -60,7 +60,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var doctorWizardsHealthLabel : SKLabelNode?
     
     var healthPoints :CGFloat = 742 //need colisions to decrement from this
-    
+    var dudeSetInvincibleCount:Int = 0
+
     //set up win-loss condition
     // false means lose, true means win
     var winCondition: Bool?
@@ -160,6 +161,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //        println("I'm updating")
 //        println(self.dude.position.x)
         
+        
+        if self.dude.isInvincible == true {
+            if self.updateCounterForSpawing -  self.dudeSetInvincibleCount > Int(60 * 1.5) {
+                self.dude.isInvincible = false
+                println("we have set  the dude invincible to false")
+            }
+        }
+        
 
         if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
 
@@ -177,10 +186,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //~~~Time to Play Ticker~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
         
-        playTimeRemainingTicker = songDuration - self.timeController.ellapsedTime*10
+        playTimeRemainingTicker = songDuration - (self.timeController.ellapsedTime * 10)
         
             if ( playTimeRemainingTicker > 0 ){
-                playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker,decimalPlaceRequired: 0))"
+                playTimeRemainingLabel?.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker, decimalPlaceRequired: 0))"
                     if ( playTimeRemainingTicker > 15 ){
                         playTimeRemainingLabel?.fontColor = SKColor.yellowColor()
                     }else{
@@ -202,44 +211,45 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         
         
-                        if (healthPoints == 0 ){
-                                //Player is spacedust
-                                doctorWizardsHealthLabel?.text = "\(expiredEmoji)"
-                        }else{
-        
-        
-                                //strongest >= 80%
-                            if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
-                                    //println("strongest condition reached")
-                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
-                            }
-        
-                                //strong <= 80% && >=60%
-                            if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
-                                    //println("strong condition reached")
-                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
-                            }
-        
-                                //ok <= 60% && >=40%
-                            if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
-                                    //println("ok condition reached")
-                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
-                            }
-        
-                                //weak <= 40% && >=20%
-                            if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
-                                    //println("weak condition reached")
-                                    doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
-                            }
-                
-                                //weakest <= 20%
-                                if(healthPoints <= fullHealthStatus*0.2){
-                                    //println("weakest condition reached")
-                                    doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
-                                }
-                
-                            }
-
+//                        if (healthPoints == 0 ){
+//                                //Player is spacedust
+//                                doctorWizardsHealthLabel?.text = "\(expiredEmoji)"
+//                        }else{
+//        
+//        
+//                                //strongest >= 80%
+//                            if (healthPoints >= fullHealthStatus*0.8 && healthPoints <= fullHealthStatus){
+//                                    //println("strongest condition reached")
+//                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+//                            }
+//        
+//                                //strong <= 80% && >=60%
+//                            if(healthPoints <= fullHealthStatus*0.8 && healthPoints >= fullHealthStatus*0.6){
+//                                    //println("strong condition reached")
+//                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji) \(healthyIconEmoji)"
+//                            }
+//        
+//                                //ok <= 60% && >=40%
+//                            if(healthPoints <= fullHealthStatus*0.6 && healthPoints >= fullHealthStatus*0.4){
+//                                    //println("ok condition reached")
+//                                    doctorWizardsHealthLabel?.text = "\(healthyIconEmoji)\(healthyIconEmoji)\(healthyIconEmoji)"
+//                            }
+//        
+//                                //weak <= 40% && >=20%
+//                            if(healthPoints <= fullHealthStatus*0.4 && healthPoints >= fullHealthStatus*0.2){
+//                                    //println("weak condition reached")
+//                                    doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)\(unhealthyIconEmoji)"
+//                            }
+//                
+//                                //weakest <= 20%
+//                                if(healthPoints <= fullHealthStatus*0.2){
+//                                    //println("weakest condition reached")
+//                                    doctorWizardsHealthLabel?.text = "\(unhealthyIconEmoji)"
+//                                }
+//                
+//                            }
+//
+            self.doctorWizardsHealthLabel?.text = "\(self.dude.healthPoints)"
         
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
@@ -249,7 +259,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //MARK: DID EVALUATE ACTIONS
     override func didEvaluateActions() {
         self.spawnFireBall()
-//        self.spawnPinkRock()
+        self.spawnPinkRock()
 
         if let didWin = self.winCondition {
             if didWin == true{
@@ -292,20 +302,28 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dudeBody = nil
             otherBody = nil
         }
-//        if (contact.bodyA.categoryBitMask == 0x1) {
-//            dudeBody = contact.bodyA
-//            otherBody = contact.bodyB
-//        } else if contact.bodyB.categoryBitMask == 0x1 {
-//            dudeBody = contact.bodyB
-//            otherBody = contact.bodyA
-//        }
-//        
-//        
-        
-        
-        if dudeBody != nil {
+    
+
+        if dudeBody != nil && self.dude.isInvincible != true {
             println("dude is one of the contact bodys")
+            self.dude.setInvincible()
+            self.dudeSetInvincibleCount = self.updateCounterForSpawing
+            
+            switch otherBody!.categoryBitMask {
+            case self.categoryPinkROck :
+                self.dude.healthPoints -= 30
+            case self.categoryFireball :
+                self.dude.healthPoints -= 100
+            default:
+                println("")
+
+                }
+            }
+            
         }
+        
+        
+        
 //        switch contact.bodyA.categoryBitMask {
 //        case self.categoryFireball:
 //            if
@@ -314,22 +332,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //            println("firstBody is rock")
 //        }
  
-    }
+    
     
     func spawnFireBall() {
-//        let spawnFireBallAction = SKAction.runBlock{ () -> Void in
-//            let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
-//            self.backgroundLayer.addChild(fireBall)
-//            fireBall.spawnFireBall(self.backgroundLayer)
-//        }
-//        
+
         if self.updateCounterForSpawing % Int(2.5 * 60) == 0 {
             let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
             self.backgroundLayer.addChild(fireBall)
             fireBall.spawnFireBall(self.backgroundLayer)
                     println("Spawning FireBall")
         }
-//        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnFireBallAction, SKAction.waitForDuration(0.5)])))
+
 
     }
     
@@ -366,20 +379,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(0.5)])))
         println("Spawning Dragon")
-}
+    }
     
     
     
     func spawnPinkRock(){
-        let spawnRockAction = SKAction.runBlock { () -> Void in
-            if UIApplication.sharedApplication().applicationState != UIApplicationState.Background{
-                let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
-                self.backgroundLayer.addChild(rock)
-                rock.fadeInFadeOut()
-            }
-            
+
+        if self.updateCounterForSpawing % Int(60 * 0.7) == 0 {
+            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+            self.backgroundLayer.addChild(rock)
+            rock.fadeInFadeOut()
         }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnRockAction, SKAction.waitForDuration(0.7)])))
+        
     }
     
     
