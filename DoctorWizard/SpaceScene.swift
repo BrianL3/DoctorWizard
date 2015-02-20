@@ -262,7 +262,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     override func didEvaluateActions() {
         self.spawnFireBall()
         self.spawnPinkRock()
-//this code evaluates the win condition flag every frame to check win/lose status
+        //this code evaluates the win condition flag every frame to check win/lose status
+        
         if let didWin = self.winCondition {
             // player won
             if didWin == true{
