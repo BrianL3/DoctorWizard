@@ -7,7 +7,7 @@
 //
 
 import GameKit
-import Foundation
+import UIKit
 
 class GameCenterKit: NSObject {
     // game center properties
@@ -15,6 +15,7 @@ class GameCenterKit: NSObject {
     var lastError: NSError?
     var gameCenterEnabled: Bool
     let PresentAuthenticationViewController = "PresentAuthenticationViewController"
+    let achievementHelper = AchievementsHelper()
     
     
     // gamecenter singleton
@@ -29,7 +30,7 @@ class GameCenterKit: NSObject {
         gameCenterEnabled = true
         super.init()
     }
-    
+//MARK: AUTHENTICATION
     func authenticateLocalPlayer(){
         let localPlayer = GKLocalPlayer.localPlayer()
     
@@ -46,5 +47,16 @@ class GameCenterKit: NSObject {
                 self.gameCenterEnabled = false
             }//eo: checking authentication
         }//eo: authenticate handler completion block
+    }
+//MARK: TALKING TO GAMECENTER
+    func reportAchievements(achievements: [GKAchievement]){
+        if gameCenterEnabled{
+            GKAchievement.reportAchievements(achievements, withCompletionHandler: { (error) -> Void in
+                self.lastError = error
+            })
+        }else{
+            println("Local player is not authenticated")
+            return
+        }
     }
 }
