@@ -209,7 +209,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     let unhealthyIconEmoji: String = "🍊"
                     let expiredEmoji: String = "😑"
         
+                    healthPoints =  CGFloat(dude.healthPoints)
         
+                        println("dudes health points = \(dude.healthPoints)");
         
 //                        if (healthPoints == 0 ){
 //                                //Player is spacedust
