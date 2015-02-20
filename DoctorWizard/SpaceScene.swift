@@ -211,7 +211,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
                     healthPoints =  CGFloat(dude.healthPoints)
         
-                        println("dudes health points = \(dude.healthPoints)");
+//                        println("dudes health points = \(dude.healthPoints)");
         
 //                        if (healthPoints == 0 ){
 //                                //Player is spacedust
@@ -306,6 +306,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
     
 
+
         if dudeBody != nil && self.dude.isInvincible != true {
             println("dude is one of the contact bodys")
             self.dude.setInvincible()
@@ -314,15 +315,20 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             switch otherBody!.categoryBitMask {
             case self.categoryPinkROck :
                 self.dude.healthPoints -= 30
+                otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 160, -self.backgroundLayer.verticalDirection * 160)
             case self.categoryFireball :
                 self.dude.healthPoints -= 100
             default:
                 println("")
 
                 }
-            }
+        } else if (dudeBody != nil ) && (otherBody!.categoryBitMask == self.categoryPinkROck) {
+            otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 160, -self.backgroundLayer.verticalDirection * 160)
+        }
+        
             
         }
+
         
         
         
