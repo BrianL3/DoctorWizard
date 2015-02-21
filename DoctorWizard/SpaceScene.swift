@@ -171,7 +171,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         
 
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
+        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
 
             self.timeController.ellapsedTime += 0.01
 //            println(self.timeController.ellapsedTime)
