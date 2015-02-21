@@ -262,7 +262,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //MARK: DID EVALUATE ACTIONS (occurs every frame) =========================================
     override func didEvaluateActions() {
 //        self.spawnFireBall()
-//        self.spawnPinkRock()
+        self.spawnPinkRock()
 //        self.spawnAlien()
 //        self.spawnBlackHole()
 
@@ -325,7 +325,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             switch otherBody!.categoryBitMask {
             case self.categoryPinkROck :
                 self.dude.healthPoints -= 30
-                otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 160, -self.backgroundLayer.verticalDirection * 160)
+                otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 90, -self.backgroundLayer.verticalDirection * 90)
             case self.categoryFireball :
                 self.dude.healthPoints -= 100
             case self.categoryAlien :
@@ -361,7 +361,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
                 }
         } else if (dudeBody != nil ) && (otherBody!.categoryBitMask == self.categoryPinkROck) {
-            otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 160, -self.backgroundLayer.verticalDirection * 160)
+            otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 90, -self.backgroundLayer.verticalDirection * 90)
         }
         
 
