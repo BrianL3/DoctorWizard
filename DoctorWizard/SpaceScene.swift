@@ -170,7 +170,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         
 
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive{
+        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
 
             self.timeController.ellapsedTime += 0.01
 //            println(self.timeController.ellapsedTime)
@@ -263,7 +263,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //        self.spawnFireBall()
 //        self.spawnPinkRock()
 //        self.spawnAlien()
-
+        
+        println("The current time \(timeController.ellapsedTime) and the song duration is \(self.songDuration)")
+        if dude.healthPoints < 0 {
+            self.winCondition = false
+        }
+        if timeController.ellapsedTime > self.songDuration{
+            self.winCondition = true
+        }
         if let didWin = self.winCondition {
             // player won
             if didWin == true{

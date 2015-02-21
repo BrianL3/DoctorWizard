@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 
 class Player: SKSpriteNode {
-    var healthPoints: Int = 742
+    var healthPoints: Int = 742000
     var direction:String = "right"
     let dudeAnimationRight:SKAction
     let dudeAnimationLeft:SKAction
