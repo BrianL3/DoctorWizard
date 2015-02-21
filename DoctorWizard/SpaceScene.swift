@@ -76,7 +76,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let categoryAlien:UInt32 =     0x1000
     let categoryBlackHole:UInt32 = 0x10000
     let categoryDragon:UInt32 =    0x100000
-    
+
 
     override init(size: CGSize) {
         self.playableRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
@@ -97,6 +97,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         addChild(backgroundLayer)
         self.addChild(self.dude)
         self.dude.position = self.centerScreen
+        self.dude.zPosition = 4
         addChild(starLayer)
         
         //MARK: Area to spawn enemies based on song time interval ================================
@@ -263,6 +264,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //        self.spawnFireBall()
 //        self.spawnPinkRock()
 //        self.spawnAlien()
+//        self.spawnBlackHole()
 
         if let didWin = self.winCondition {
             // player won
@@ -329,6 +331,31 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             case self.categoryAlien :
                 self.dude.healthPoints -= 150
                 println("dude hit alien")
+            case self.categoryBlackHole :
+                self.backgroundLayer.enumerateChildNodesWithName("blackhole", usingBlock: { (node, _) -> Void in
+                    let blackWhole = node as SKSpriteNode
+
+                    let dudePositionOnBG = self.backgroundLayer.convertPoint(self.dude.position, fromNode: self)
+                    let dudeFrameOnBG = CGRect(origin: dudePositionOnBG, size: self.dude.size)
+                    println("we found the blackwhole \(blackWhole.frame)")
+                    println("dude position is         \(dudeFrameOnBG)")
+                    if CGRectIntersectsRect(blackWhole.frame, dudeFrameOnBG){
+                        println("what is up we hit the blackWhole")
+                        let angle : CGFloat = -CGFloat(M_PI)
+                        let oneSpin = SKAction.rotateByAngle(angle, duration: 0.5)
+//                        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+                        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+                        let implode = SKAction.scaleTo(0, duration: 2.0)
+                        let moveDudeToPoint = self.convertPoint(blackWhole.position, fromNode: self.backgroundLayer)
+                        let moveAction = SKAction.moveTo(moveDudeToPoint, duration: 2)
+                        let actionRemove = SKAction.removeFromParent()
+                        let groupDeathAction = SKAction.group([repeatSpin,moveAction,implode])
+                        let seq = SKAction.sequence([groupDeathAction, actionRemove])
+                        self.dude.runAction(seq)
+                        
+                    }
+                })
+
             default:
                 println("")
 
@@ -337,12 +364,35 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 160, -self.backgroundLayer.verticalDirection * 160)
         }
         
-            
-        }
 
-        
-        
-        
+            
+    }
+    
+//    func destroyByBlackHole {
+//
+//            
+//            let angle : CGFloat = -CGFloat(M_PI)
+//            let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+//            let repeatSpin = SKAction.repeatActionForever(oneSpin)
+//            let implode = SKAction.scaleTo(0, duration: 2.0)
+//            let actionRemove = SKAction.removeFromParent()
+//            let actionTowardsBlackHoleXCoord = SKAction.moveToX(self.blackHole.position.x, duration: 1.0)
+//            self.dude.runAction(actionTowardsBlackHoleXCoord)
+//            let actionTowardsBlackHoleYCoord = SKAction.moveToY(self.blackHole.position.y, duration: 1.0)
+//            self.dude.runAction(actionTowardsBlackHoleYCoord)
+//            let actions = [implode, actionRemove]
+//            dudeHit.runAction(repeatSpin)
+//            dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
+//                if self.invincible == false {
+//                    self.healthPoints = 0
+//                }
+//            })
+//        }
+//    }
+
+    
+    
+    
 //        switch contact.bodyA.categoryBitMask {
 //        case self.categoryFireball:
 //            if
@@ -393,13 +443,25 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnBlackHole() {
-        let spawnBlackHoleAction = SKAction.runBlock{ () -> Void in
-            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
-            self.backgroundLayer.addChild(blackHole)
-            blackHole.spawnBlackHole()
+//        let spawnBlackHoleAction = SKAction.runBlock{ () -> Void in
+//            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+//            self.backgroundLayer.addChild(blackHole)
+//            blackHole.spawnBlackHole()
+//        }
+//        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
+//        println("Spawning Black Hole")
+
+        if self.updateCounterForSpawing % Int(60 * 7) == 0 {
+////            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+////            self.backgroundLayer.addChild(rock)
+////            rock.fadeInFadeOut()
+            println("bout to spawn a balckwhole")
+        let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+        self.backgroundLayer.addChild(blackHole)
+        blackHole.spawnBlackHole()
+            println("black whole has spawned")
+//
         }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
-        println("Spawning Black Hole")
     }
     
     func spawnDragon() {
