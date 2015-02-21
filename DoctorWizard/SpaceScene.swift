@@ -352,7 +352,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                         let groupDeathAction = SKAction.group([repeatSpin,moveAction,implode])
                         let seq = SKAction.sequence([groupDeathAction, actionRemove])
                         self.dude.runAction(seq)
-                        
                     }
                 })
 
@@ -478,10 +477,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     func spawnPinkRock(){
 
-        if self.updateCounterForSpawing % Int(60 * 0.7) == 0 {
+        if self.updateCounterForSpawing % Int(60 * 1.2) == 0 {
             let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
             self.backgroundLayer.addChild(rock)
-            rock.fadeInFadeOut()
+//            rock.fadeInFadeOut()
+            rock.spawnRock()
         }
         
     }
