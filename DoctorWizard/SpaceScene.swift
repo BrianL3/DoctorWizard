@@ -52,6 +52,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let dude:Player = Player()
     var colisionBitMaskDude :UInt32 = 0x1
     var colisionBitMaskRock :UInt32 = 0x10
+    
+    //touch location
+    var lastTouchLocation :CGPoint?
+    
+    //setup dragon
+    var dragon: Dragon?
 
     //set up for game console labels
     var galacticFont = "GALACTIC_VANGUARDIAN_NCV"
@@ -256,16 +262,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-    
+        moveDude()
     }
     
 //MARK: DID EVALUATE ACTIONS (occurs every frame) =========================================
     override func didEvaluateActions() {
 //        self.spawnFireBall()
-        self.spawnPinkRock()
+//        self.spawnPinkRock()
 //        self.spawnAlien()
 //        self.spawnBlackHole()
-
+//        self.spawnDragon()
+        
         if let didWin = self.winCondition {
             // player won
             if didWin == true{
@@ -352,10 +359,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                         let groupDeathAction = SKAction.group([repeatSpin,moveAction,implode])
                         let seq = SKAction.sequence([groupDeathAction, actionRemove])
                         self.dude.runAction(seq)
-                        
                     }
                 })
-
+            case self.categoryDragon:
+                println("yaawww the dude hit the dragon")
+                self.dude.healthPoints -= 200
             default:
                 println("")
 
@@ -465,23 +473,46 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnDragon() {
-        let spawnDragonAction = SKAction.runBlock{ () -> Void in
-            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.fireBallSpawnPoint()) 
-            self.backgroundLayer.addChild(dragon)
-            dragon.spawnDragon(self.backgroundLayer)
+        if self.dragon == nil {
+            println("fuccck in der is a dragon")
+            let spawnPoint = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.8)
+            let bgSpawnPoint = self.backgroundLayer.convertPoint(spawnPoint, fromNode: self)
+            self.dragon = Dragon(dragonImageName: "dragon2", initialPosition: bgSpawnPoint)
+            self.addChild(self.dragon!)
+        } else if self.updateCounterForSpawing % Int(1.5 * 60) == 0 {
+            let moveToPoint = self.backgroundLayer.convertPoint(dragonMoveToRandomPoint(), fromNode: self)
+            self.dragon?.moveDragonTo(dragonMoveToRandomPoint())
         }
-        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(0.5)])))
-        println("Spawning Dragon")
+        
+        
+//        let spawnDragonAction = SKAction.runBlock{ () -> Void in
+//            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.fireBallSpawnPoint()) 
+//            self.backgroundLayer.addChild(dragon)
+//            dragon.spawnDragon(self.backgroundLayer)
+//        }
+//        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(0.5)])))
+//        println("Spawning Dragon")
+    }
+    
+    
+    //dont call this function unless the dragon exisits
+    func dragonMoveToRandomPoint() -> CGPoint {
+        let dragonWidth = self.dragon!.size.width
+        let dragonHeigh = self.dragon!.size.height
+        let posX : CGFloat = CGFloat.random(min: dragonWidth, max: self.size.width - dragonWidth)
+        let posY : CGFloat = CGFloat.random(min: dragonHeigh, max: self.size.height - dragonHeigh)
+        return CGPoint(x: posX, y: posY)
     }
     
     
     
     func spawnPinkRock(){
 
-        if self.updateCounterForSpawing % Int(60 * 0.7) == 0 {
+        if self.updateCounterForSpawing % Int(60 * 1.2) == 0 {
             let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
             self.backgroundLayer.addChild(rock)
-            rock.fadeInFadeOut()
+//            rock.fadeInFadeOut()
+            rock.spawnRock()
         }
         
     }
@@ -520,6 +551,59 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         return nf.stringFromNumber(nSTimeIntervalValue)!
         
+    }
+    
+    func moveDude() {
+        
+        
+        let amountToMove = CGPoint(x: self.dude.velocity.x * CGFloat(dt),
+            y: self.dude.velocity.y * CGFloat(dt))
+        //        println("Amount to move: \(amountToMove)")
+//        if self.dude.position == self.lastTouchLocation {
+//            self.dude.position = self.lastTouchLocation!
+//        } else {
+        if let lastTouch = lastTouchLocation {
+            
+            let diff = lastTouch - dude.position
+            
+            if (diff.length() <= 600 * CGFloat(dt)) {
+                dude.position = lastTouchLocation!
+                self.dude.velocity = CGPointZero
+            } else{
+                
+            self.dude.position = CGPoint(
+                x: self.dude.position.x + amountToMove.x,
+                y: self.dude.position.y + amountToMove.y)
+        }
+    }
+    }
+    
+    func moveDudeToward(location: CGPoint) {
+        
+        let offset = location - self.dude.position
+        let direction = offset.normalized()
+        
+        self.dude.velocity = direction * 600
+    }
+    
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let touchLocation = touch.locationInNode(self)
+        sceneTouched(touchLocation)
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let touchLocation = touch.locationInNode(self)
+        sceneTouched(touchLocation)
+
+    }
+    
+    func sceneTouched(touchLocation:CGPoint) {
+        
+        lastTouchLocation = touchLocation
+        moveDudeToward(touchLocation)
+        //        println("song duration is : \(songDuration)")
     }
     
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
