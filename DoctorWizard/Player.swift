@@ -10,11 +10,12 @@ import UIKit
 import SpriteKit
 
 class Player: SKSpriteNode {
-    var healthPoints: Int = 742000
+    var healthPoints: Int = 500
     var direction:String = "right"
     let dudeAnimationRight:SKAction
     let dudeAnimationLeft:SKAction
     var isInvincible:Bool = false
+    var hitByBlackHole = false
     var velocity = CGPointZero
     
     override init(){

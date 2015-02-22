@@ -58,6 +58,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     //setup dragon
     var dragon: Dragon?
+    
 
     //set up for game console labels
     var galacticFont = "GALACTIC_VANGUARDIAN_NCV"
@@ -205,6 +206,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     }
             }else{
                 playTimeRemainingLabel?.text = "\(0)"
+                self.winCondition = true
             }
         
         //~~~Health Points~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -274,6 +276,16 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //        self.spawnBlackHole()
 //        self.spawnDragon()
         
+        if self.dude.hitByBlackHole == true {
+            self.dude.healthPoints -= 3
+        }
+        
+        if self.dude.healthPoints <= 0 {
+            self.winCondition = false
+        }
+        
+
+        
         if let didWin = self.winCondition {
             // player won
             if didWin == true{
@@ -325,7 +337,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
 
 
-        if dudeBody != nil && self.dude.isInvincible != true {
+        if (dudeBody != nil && self.dude.isInvincible != true) || self.dude.hitByBlackHole{
             println("dude is one of the contact bodys")
             self.dude.setInvincible()
             self.dudeSetInvincibleCount = self.updateCounterForSpawing
@@ -340,7 +352,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 self.dude.healthPoints -= 150
                 println("dude hit alien")
             case self.categoryBlackHole :
+//                self.dude.healthPoints -= 2
+                self.dude.hitByBlackHole = true
                 self.backgroundLayer.enumerateChildNodesWithName("blackhole", usingBlock: { (node, _) -> Void in
+                    
                     let blackWhole = node as SKSpriteNode
 
                     let dudePositionOnBG = self.backgroundLayer.convertPoint(self.dude.position, fromNode: self)
@@ -479,10 +494,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             let spawnPoint = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.8)
             let bgSpawnPoint = self.backgroundLayer.convertPoint(spawnPoint, fromNode: self)
             self.dragon = Dragon(dragonImageName: "dragon2", initialPosition: bgSpawnPoint)
-            self.addChild(self.dragon!)
+            self.backgroundLayer.addChild(self.dragon!)
         } else if self.updateCounterForSpawing % Int(1.5 * 60) == 0 {
             let moveToPoint = self.backgroundLayer.convertPoint(dragonMoveToRandomPoint(), fromNode: self)
-            self.dragon?.moveDragonTo(dragonMoveToRandomPoint())
+            self.dragon?.moveDragonTo(moveToPoint)
         }
         
         
@@ -559,7 +574,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         let amountToMove = CGPoint(x: self.dude.velocity.x * CGFloat(dt),
             y: self.dude.velocity.y * CGFloat(dt))
-        //        println("Amount to move: \(amountToMove)")
+//        println("Amount to move: \(amountToMove)")
 //        if self.dude.position == self.lastTouchLocation {
 //            self.dude.position = self.lastTouchLocation!
 //        } else {
@@ -701,12 +716,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case twentyPercent..<fortyPercent :
             self.spawnFireBall()
             self.spawnPinkRock()
+
             println("second level")
         case fortyPercent..<sixtyPercent :
             self.spawnPinkRock()
             self.spawnAlien()
             println("third level")
         case sixtyPercent..<eightyPercent :
+            self.spawnPinkRock()
             self.spawnBlackHole()
             println("fourth level")
         case eightyPercent..<songTimeAsFloat :
