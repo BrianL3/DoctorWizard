@@ -271,7 +271,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //        self.spawnPinkRock()
 //        self.spawnAlien()
 //        self.spawnBlackHole()
-        self.spawnDragon()
+//        self.spawnDragon()
         
         if let didWin = self.winCondition {
             // player won
