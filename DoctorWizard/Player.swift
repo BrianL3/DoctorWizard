@@ -15,6 +15,7 @@ class Player: SKSpriteNode {
     let dudeAnimationRight:SKAction
     let dudeAnimationLeft:SKAction
     var isInvincible:Bool = false
+    var velocity = CGPointZero
     
     override init(){
         var texturesRight: [SKTexture] = []
