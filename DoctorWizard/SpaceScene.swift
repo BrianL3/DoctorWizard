@@ -182,7 +182,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             self.timeController.ellapsedTime += 0.01
 //            println(self.timeController.ellapsedTime)
         }
-        self.curLevel = currentLevelIs()
+//        self.curLevel = currentLevelIs()
+        self.currentLevel()
        // spawnCurrentEnemies()
 
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
@@ -647,7 +648,39 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case Fifth
     }
     
-    func currentLevelIs() -> Level {
+//    func currentLevelIs() -> Level {
+//        let songTimeAsFloat = self.songDuration as Double
+//        var timePassedAsFloat : Double
+//        if (timeController.ellapsedTime as Double) < songTimeAsFloat{
+//            timePassedAsFloat = timeController.ellapsedTime as Double
+//        }else{
+//            timePassedAsFloat = songTimeAsFloat
+//        }
+//        let twentyPercent = songTimeAsFloat/5
+//        let fortyPercent = (songTimeAsFloat/5) * 2
+//        let sixtyPercent = (songTimeAsFloat/5) * 3
+//        let eightyPercent = (songTimeAsFloat/5) * 4
+//        
+//        switch timePassedAsFloat {
+//            //first 20% of the song
+//        case 0..<twentyPercent :
+//            self.curLevel = .First
+//        case twentyPercent..<fortyPercent :
+//            self.curLevel = .Second
+//        case fortyPercent..<sixtyPercent :
+//            self.curLevel = .Third
+//        case sixtyPercent..<eightyPercent :
+//            self.curLevel = .Fourth
+//        case eightyPercent..<songTimeAsFloat :
+//            self.curLevel = .Fifth
+//        default:
+//            self.curLevel = .First
+//        }
+//        return self.curLevel
+//    }
+
+    
+    func currentLevel() {
         let songTimeAsFloat = self.songDuration as Double
         var timePassedAsFloat : Double
         if (timeController.ellapsedTime as Double) < songTimeAsFloat{
@@ -663,20 +696,26 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         switch timePassedAsFloat {
             //first 20% of the song
         case 0..<twentyPercent :
-            self.curLevel = .First
+            self.spawnPinkRock()
+            println("first level")
         case twentyPercent..<fortyPercent :
-            self.curLevel = .Second
+            self.spawnFireBall()
+            self.spawnPinkRock()
+            println("second level")
         case fortyPercent..<sixtyPercent :
-            self.curLevel = .Third
+            self.spawnPinkRock()
+            self.spawnAlien()
+            println("third level")
         case sixtyPercent..<eightyPercent :
-            self.curLevel = .Fourth
+            self.spawnBlackHole()
+            println("fourth level")
         case eightyPercent..<songTimeAsFloat :
-            self.curLevel = .Fifth
+            self.spawnDragon()
+            println("fith level")
         default:
-            self.curLevel = .First
+            self.spawnPinkRock()
+            println("secondlevel")
         }
-        return self.curLevel
     }
-
     
 }
