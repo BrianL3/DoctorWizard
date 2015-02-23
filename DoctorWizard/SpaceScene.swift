@@ -43,10 +43,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let motionManager = CMMotionManager()
     
     //setup layers
-    let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 60)
+    let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 50)
     var backgroundDirection = CGPoint(x: 1.0 , y: 1.0)
     
-    let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 100)
+    let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 30)
+    
+    let debriLayer = BackgroundLayer(backgroundImageName: "dunk_debri", backgroundIdentifier: "debri", movePointsPerSec: 20)
+    
+    let bigDebriLayer = BackgroundLayer(backgroundImageName: "debri_big3", backgroundIdentifier: "big_debri", movePointsPerSec: 45)
     
     //setup dude and dudes enemies
     let dude:Player = Player()
@@ -106,6 +110,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.dude.position = self.centerScreen
         self.dude.zPosition = 4
         addChild(starLayer)
+        addChild(debriLayer)
+        addChild(bigDebriLayer)
         
         //MARK: Area to spawn enemies based on song time interval ================================
         //self.spawnPinkRock()
@@ -189,6 +195,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
         starLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
         backgroundLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
+        debriLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
+        bigDebriLayer.moveBackground(currentScene: self, direction: self.backgroundDirection, deltaTime: self.dt)
     
         
         //MARK: GAME CONSOLEr

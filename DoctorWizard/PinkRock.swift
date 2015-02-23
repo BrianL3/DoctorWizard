@@ -23,8 +23,9 @@ class PinkRock: SKSpriteNode {
         self.position = initialPosition
         self.setScale(0)
         self.alpha = 0
-//        self.zRotation = CGFloat.random(min: 0, max: 90)
-//        self.physicsBody?.velocity = CGVectorMake(CGFloat.random(min: -100, max: 100) , CGFloat.random(min: -100, max: 100))
+//        self.physicsBody
+        self.zRotation = CGFloat.random(min: 0, max: 90)
+        self.physicsBody?.velocity = CGVectorMake(CGFloat.random(min: -200, max: 200) , CGFloat.random(min: -100, max: 100))
     }
     
 
@@ -38,7 +39,7 @@ class PinkRock: SKSpriteNode {
         self.zPosition = 2
         let scaleIn = SKAction.scaleTo(CGFloat.random(min: 0.5, max: 1.5), duration: 1)
         let scaleOut = SKAction.scaleTo(0, duration: 1)
-        let fadeIn = SKAction.fadeAlphaTo(0.9, duration: 1)
+        let fadeIn = SKAction.fadeAlphaTo(0.5, duration: 1)
         let fadeOut = SKAction.fadeAlphaTo(0, duration: 1)
         let appear = SKAction.group([fadeIn,scaleIn])
         let disappear = SKAction.group([fadeOut,scaleOut])
