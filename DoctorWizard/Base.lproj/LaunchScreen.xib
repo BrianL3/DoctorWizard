@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="GALACTICVANGUARDIANNCV.ttf">
+            <string>GALACTICVANGUARDIANNCV</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -11,31 +15,60 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 codefellows. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="-214" y="345" width="908" height="18"/>
+                    <string key="text">  Sound and Art (c) 2015 Duncan Marsh. Code (c) Duncan Marsh, Rodrigo Carballo, Brian Ledbetter, Carol Young. All rights reserved.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DoctorWizard" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="140" width="441" height="43"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="36"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <rect key="frame" x="63" y="222" width="355" height="36"/>
+                    <fontDescription key="fontDescription" name="GALACTICVANGUARDIANNCV" family="GALACTIC VANGUARDIAN NCV" pointSize="36"/>
+                    <color key="textColor" red="1" green="0.76599832619999997" blue="0.39136477600000003" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="large_wizzard_hat" translatesAutoresizingMaskIntoConstraints="NO" id="cy8-iS-4r8">
+                    <rect key="frame" x="120" y="97" width="240" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="1cb-XU-8G0"/>
+                        <constraint firstAttribute="height" constant="128" id="gsu-hq-UXd"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="debri_big" translatesAutoresizingMaskIntoConstraints="NO" id="36O-bi-UDU">
+                    <rect key="frame" x="8" y="65" width="464" height="575"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="debri_big2" translatesAutoresizingMaskIntoConstraints="NO" id="t8q-2k-1bR">
+                    <rect key="frame" x="8" y="8" width="464" height="159"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="159" id="hBR-3V-0lM"/>
+                    </constraints>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.10980392160000001" green="0.14901960780000001" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="1/3" constant="1" id="5cJ-9S-tgC"/>
-                <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
-                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstItem="36O-bi-UDU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="1Qk-JF-gwl"/>
+                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="2sc-tg-Hjn"/>
+                <constraint firstItem="36O-bi-UDU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="66S-XU-mgZ"/>
+                <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="9ap-50-Zw8"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="87" id="A6O-aZ-V0u"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="cy8-iS-4r8" secondAttribute="bottom" constant="120" id="CAj-tU-stF"/>
+                <constraint firstAttribute="centerY" secondItem="kId-c2-rCX" secondAttribute="centerY" id="OPV-nn-szQ"/>
+                <constraint firstAttribute="trailing" secondItem="36O-bi-UDU" secondAttribute="trailing" constant="8" id="QR6-mP-esW"/>
+                <constraint firstAttribute="centerX" secondItem="cy8-iS-4r8" secondAttribute="centerX" id="Raw-ka-40a"/>
+                <constraint firstItem="t8q-2k-1bR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="Rmx-O2-Sbl"/>
+                <constraint firstAttribute="bottom" secondItem="36O-bi-UDU" secondAttribute="bottom" constant="-160" id="ofh-pf-xx0"/>
+                <constraint firstAttribute="trailing" secondItem="t8q-2k-1bR" secondAttribute="trailing" constant="8" id="pMF-U1-NuC"/>
+                <constraint firstItem="t8q-2k-1bR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="q4m-LJ-8VT"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
+    <resources>
+        <image name="debri_big" width="2048" height="1536"/>
+        <image name="debri_big2" width="2048" height="1536"/>
+        <image name="large_wizzard_hat" width="1009" height="996"/>
+    </resources>
 </document>
