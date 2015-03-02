@@ -296,9 +296,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
         
         if let didWin = self.winCondition {
+            println("entered win condition loop because winCondition was set as true or false")
             // player won
             if didWin == true{
-                self.scene?.paused = true
+                println("winCondtion's status is TRUE")
+                self.paused = true
                 let winGameScene = WinScene(size: self.size)
                 // create achievements, if any
                 var achievementsArray = [GKAchievement]()
@@ -315,17 +317,20 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 }
 
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-                self.view?.presentScene(winGameScene, transition: reveal)
+                
+                view?.presentScene(winGameScene, transition: reveal)
                 //player lost
             }else if didWin == false {
-                self.scene?.paused = true
+
+                println("winCondtion's status is FALSE")
+                self.paused = true
                 let lostGameScene = LooserScene(size: self.size)
                 lostGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     lostGameScene.isDefaultSong = true
                 }
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-                self.view?.presentScene(lostGameScene, transition: reveal)
+                view?.presentScene(lostGameScene, transition: reveal)
             }
         }
     }
