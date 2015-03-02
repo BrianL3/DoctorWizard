@@ -171,7 +171,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
                 
                 self.timeController.ellapsedTime += dt
-                println(self.timeController.ellapsedTime)
             }
         } else {
             dt = 0
@@ -302,15 +301,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 println("winCondtion's status is TRUE")
                 self.paused = true
                 let winGameScene = WinScene(size: self.size)
-                // create achievements, if any
-                var achievementsArray = [GKAchievement]()
-                achievementsArray.append(GameCenterKit.sharedGameCenter.achievementHelper.minuteAchievement(timeController.ellapsedTime))
-                // send achievements to gamecenter
-                GameCenterKit.sharedGameCenter.reportAchievements(achievementsArray)
-                // log the time as a score, rounded to an int
-                let scoreDouble = self.timeController.ellapsedTime as Double
-                let score : Int64 = Int64(round(scoreDouble))
-                GameCenterKit.sharedGameCenter.reportScore(score, forLeaderBoardId: "games.doctorwizard.longest_song")
+                if GameCenterKit.sharedGameCenter.gameCenterEnabled == true{
+                    // create achievements, if any
+                    var achievementsArray = [GKAchievement]()
+                    achievementsArray.append(GameCenterKit.sharedGameCenter.achievementHelper.minuteAchievement(timeController.ellapsedTime))
+                    // send achievements to gamecenter
+                    GameCenterKit.sharedGameCenter.reportAchievements(achievementsArray)
+                    // log the time as a score, rounded to an int
+                    let scoreDouble = self.timeController.ellapsedTime as Double
+                    let score : Int64 = Int64(round(scoreDouble))
+                    GameCenterKit.sharedGameCenter.reportScore(score, forLeaderBoardId: "games.doctorwizard.longest_song")
+                }
                 winGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     winGameScene.isDefaultSong = true
