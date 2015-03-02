@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 codefellows. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SpriteKit
 import CoreMotion
 import GameKit
@@ -312,8 +312,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 if self.songGenre == "DefaultDuncanSong"{
                     winGameScene.isDefaultSong = true
                 }
-                
-                self.view?.presentScene(winGameScene)
+
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                self.view?.presentScene(winGameScene, transition: reveal)
                 //player lost
             }else if didWin == false {
                 self.scene?.paused = true
@@ -322,8 +323,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 if self.songGenre == "DefaultDuncanSong"{
                     lostGameScene.isDefaultSong = true
                 }
-                
-                self.view?.presentScene(lostGameScene)
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                self.view?.presentScene(lostGameScene, transition: reveal)
             }
         }
     }
