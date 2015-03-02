@@ -300,7 +300,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             if didWin == true{
                 println("winCondtion's status is TRUE")
                 self.paused = true
-                let winGameScene = WinScene(size: self.size)
                 if GameCenterKit.sharedGameCenter.gameCenterEnabled == true{
                     // create achievements, if any
                     var achievementsArray = [GKAchievement]()
@@ -312,13 +311,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     let score : Int64 = Int64(round(scoreDouble))
                     GameCenterKit.sharedGameCenter.reportScore(score, forLeaderBoardId: "games.doctorwizard.longest_song")
                 }
+
+                let winGameScene = WinScene(size: self.size)
                 winGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     winGameScene.isDefaultSong = true
                 }
 
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-                
                 view?.presentScene(winGameScene, transition: reveal)
                 //player lost
             }else if didWin == false {

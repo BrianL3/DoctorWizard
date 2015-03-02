@@ -46,7 +46,6 @@ class WinScene: SKScene {
             let button = node as SKSpriteNode
             
             
-            
             if CGRectIntersectsRect(button.frame, CGRect(origin: self.touchLocation, size: CGSize(width: 50, height: 50))) {
                 if self.isDefaultSong {
                     self.mainMenuDelegate?.restartWithSameSong(true)
