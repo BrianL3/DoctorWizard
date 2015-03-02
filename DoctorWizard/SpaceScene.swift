@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 codefellows. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SpriteKit
 import CoreMotion
 import GameKit
@@ -168,6 +168,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.updateCounterForSpawing += 1
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
+            if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
+                
+                self.timeController.ellapsedTime += dt
+            }
         } else {
             dt = 0
         }
@@ -184,11 +188,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         
 
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
 
-            self.timeController.ellapsedTime += 0.01
-//            println(self.timeController.ellapsedTime)
-        }
 //        self.curLevel = currentLevelIs()
         self.currentLevel()
        // spawnCurrentEnemies()
@@ -295,35 +295,43 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
         
         if let didWin = self.winCondition {
+            println("entered win condition loop because winCondition was set as true or false")
             // player won
             if didWin == true{
-                self.scene?.paused = true
+                println("winCondtion's status is TRUE")
+                self.paused = true
                 let winGameScene = WinScene(size: self.size)
-                // create achievements, if any
-                var achievementsArray = [GKAchievement]()
-                achievementsArray.append(GameCenterKit.sharedGameCenter.achievementHelper.minuteAchievement(timeController.ellapsedTime))
-                // send achievements to gamecenter
-                GameCenterKit.sharedGameCenter.reportAchievements(achievementsArray)
-                // log the time as a score, rounded to an int
-                let scoreDouble = self.timeController.ellapsedTime as Double
-                let score : Int64 = Int64(round(scoreDouble))
-                GameCenterKit.sharedGameCenter.reportScore(score, forLeaderBoardId: "games.doctorwizard.longest_song")
+                if GameCenterKit.sharedGameCenter.gameCenterEnabled == true{
+                    // create achievements, if any
+                    var achievementsArray = [GKAchievement]()
+                    achievementsArray.append(GameCenterKit.sharedGameCenter.achievementHelper.minuteAchievement(timeController.ellapsedTime))
+                    // send achievements to gamecenter
+                    GameCenterKit.sharedGameCenter.reportAchievements(achievementsArray)
+                    // log the time as a score, rounded to an int
+                    let scoreDouble = self.timeController.ellapsedTime as Double
+                    let score : Int64 = Int64(round(scoreDouble))
+                    GameCenterKit.sharedGameCenter.reportScore(score, forLeaderBoardId: "games.doctorwizard.longest_song")
+                }
                 winGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     winGameScene.isDefaultSong = true
                 }
+
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                 
-                self.view?.presentScene(winGameScene)
+                view?.presentScene(winGameScene, transition: reveal)
                 //player lost
             }else if didWin == false {
-                self.scene?.paused = true
+
+                println("winCondtion's status is FALSE")
+                self.paused = true
                 let lostGameScene = LooserScene(size: self.size)
                 lostGameScene.mainMenuDelegate = self.menuDelegate
                 if self.songGenre == "DefaultDuncanSong"{
                     lostGameScene.isDefaultSong = true
                 }
-                
-                self.view?.presentScene(lostGameScene)
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                view?.presentScene(lostGameScene, transition: reveal)
             }
         }
     }
