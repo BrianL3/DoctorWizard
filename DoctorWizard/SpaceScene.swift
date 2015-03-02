@@ -168,6 +168,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.updateCounterForSpawing += 1
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
+            if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
+                
+                self.timeController.ellapsedTime += dt
+                println(self.timeController.ellapsedTime)
+            }
         } else {
             dt = 0
         }
@@ -184,11 +189,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         
 
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background && UIApplication.sharedApplication().applicationState != UIApplicationState.Inactive && !self.paused{
 
-            self.timeController.ellapsedTime += 0.01
-//            println(self.timeController.ellapsedTime)
-        }
 //        self.curLevel = currentLevelIs()
         self.currentLevel()
        // spawnCurrentEnemies()
