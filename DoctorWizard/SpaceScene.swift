@@ -751,7 +751,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             println("fith level")
         default:
             self.spawnPinkRock()
-            println("secondlevel")
+            println("default case of CurrentLevel, current level is: \(self.curLevel)")
         }
     }
     
