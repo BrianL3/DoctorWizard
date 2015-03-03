@@ -132,15 +132,15 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         let destinationVC = self.storyboard?.instantiateViewControllerWithIdentifier("MEDIA_VC") as MediaItemTableViewController    
         destinationVC.delegate = self
         self.presentViewController(destinationVC, animated: true, completion: nil)
+        popUpVC.view.removeFromSuperview()
+
     }
     
     func userDidPressPlayWithoutSong(){
         SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
         self.playSKMusic()
         self.scene?.paused = false
-       //popUpVC.view.removeFromSuperview()
         AnimationController.singleton.slideOffViewController(popUpVC)
-        
     }
     
     //MARK: SongPickerDelegate
@@ -155,7 +155,29 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
                 self.scene!.songGenre = genre!
             }
         })
-        popUpVC.view.removeFromSuperview()
+    }
+    
+    func userDidCancel(){
+        //create pop up controller
+        popUpVC = self.storyboard?.instantiateViewControllerWithIdentifier("PopUpVC") as PopUpMenuController
+        popUpVC.delegate = self
+        
+        //MARK: Main Menu Frame
+        let width           = self.view.frame.width * 1.0
+        let height          = self.view.frame.height * 1.0
+        popUpVC.view.frame  = CGRect(x: 0, y: 0, width: width, height: height)
+        popUpVC.view.center = self.view.center
+        
+        self.view.addSubview(popUpVC.view)
+        
+        //told parent vc that child vc was added
+        self.addChildViewController(popUpVC)
+        
+        //told child it has a parent
+        popUpVC.didMoveToParentViewController(self)
+        
+        //do animation
+        AnimationController.singleton.bounceInViewController(popUpVC)
     }
     
     //MARK: MAIN MENU DELEGATE
@@ -184,19 +206,23 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     func restartWithSameSong(usingDefaultSong : Bool){
         if usingDefaultSong{
+            self.songDuration = 100.0
+            self.songGenre = "DefaultDuncanSong"
+
             self.launchGame()
             pauseGame()
-            userDidPressPlayWithoutSong()
+            SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
+            self.playSKMusic()
+
             unpauseGame()
 
         }else{
-            self.launchGame()
-            pauseGame()
             if musicPlayer.playbackState == .Playing {
                 self.musicPlayer.skipToBeginning()
             }else{
                 userDidSelectSong(currentSong!)
             }
+            self.launchGame()
             unpauseGame()
         }
     }

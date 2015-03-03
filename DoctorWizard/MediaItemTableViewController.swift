@@ -11,6 +11,7 @@ import MediaPlayer
 
 protocol SongPickerDelegate {
     func userDidSelectSong(song : MPMediaItemCollection)
+    func userDidCancel()
 }
 
 class MediaItemTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
@@ -33,6 +34,7 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     @IBAction func cancelAction(sender: UIBarButtonItem) {
     
         println("cancel")
+        delegate?.userDidCancel()
         dismissViewControllerAnimated(true, completion: nil)
     }
     

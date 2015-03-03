@@ -17,7 +17,6 @@
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
 		48F91CA31A911A0E00496E42 /* Dragon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F91CA21A911A0E00496E42 /* Dragon.swift */; };
 		48F91CA51A911A6300496E42 /* BlackHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F91CA41A911A6300496E42 /* BlackHole.swift */; };
-		55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55228CDE1A798F1100E573D1 /* WinnerScene.swift */; };
 		55236CAF1A8ED74C00C7905B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CAE1A8ED74C00C7905B /* Player.swift */; };
 		55236CB11A8EE27200C7905B /* PinkRock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CB01A8EE27200C7905B /* PinkRock.swift */; };
 		55236CB31A8F181800C7905B /* Chaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CB21A8F181800C7905B /* Chaper.swift */; };
@@ -105,7 +104,6 @@
 		48D415581A787019005CE91C /* alienspaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alienspaceship.png; sourceTree = "<group>"; };
 		48F91CA21A911A0E00496E42 /* Dragon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dragon.swift; sourceTree = "<group>"; };
 		48F91CA41A911A6300496E42 /* BlackHole.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackHole.swift; sourceTree = "<group>"; };
-		55228CDE1A798F1100E573D1 /* WinnerScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerScene.swift; sourceTree = "<group>"; };
 		55236CAE1A8ED74C00C7905B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		55236CB01A8EE27200C7905B /* PinkRock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinkRock.swift; sourceTree = "<group>"; };
 		55236CB21A8F181800C7905B /* Chaper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chaper.swift; sourceTree = "<group>"; };
@@ -231,13 +229,13 @@
 		C4D707C91A76BEFB00A990A1 /* DoctorWizard */ = {
 			isa = PBXGroup;
 			children = (
+				FA231A1D1AA640FD00794296 /* Win and Lose Scenes */,
 				FA3FA0481A96A6D600D6A1F3 /* Game Center */,
 				B8A0F5061A7B1B1600EB9362 /* Particles */,
 				FA4116C91A78463700FCC212 /* Sounds */,
 				C4EA384F1A76C0AB00EC284C /* SKTUtils */,
 				C4D707CC1A76BEFB00A990A1 /* AppDelegate.swift */,
 				55769C7F1A91AA4A002B7B1B /* GameTime.swift */,
-				55228CDE1A798F1100E573D1 /* WinnerScene.swift */,
 				FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */,
 				FAE5408E1A7866A000B72DFD /* MediaItemTableViewController.swift */,
 				C0E2189E1A795DE300880E41 /* MediaItemCell.swift */,
@@ -253,14 +251,12 @@
 				55236CB21A8F181800C7905B /* Chaper.swift */,
 				554877BF1A89BAC4005DE731 /* SpaceScene.swift */,
 				554877C11A89BD6B005DE731 /* BackgroundLayer.swift */,
-				55D7F6C81A79914E006E8753 /* LooserScene.swift */,
 				C4D707D41A76BEFB00A990A1 /* Main.storyboard */,
 				FFB495EA1A76F18000A67FF4 /* PopUpMenuController.swift */,
 				C4D707D71A76BEFB00A990A1 /* Images.xcassets */,
 				C4D707D91A76BEFB00A990A1 /* LaunchScreen.xib */,
 				55983BB71A7B68F20096CC8A /* dudeParticle.sks */,
 				C4D707CA1A76BEFB00A990A1 /* Supporting Files */,
-				FA95887C1A7ADFAE0008F1FF /* WinScene.swift */,
 				FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */,
 			);
 			path = DoctorWizard;
@@ -320,6 +316,15 @@
 				C4EA385B1A76C0AB00EC284C /* Vector3.swift */,
 			);
 			path = SKTUtils;
+			sourceTree = "<group>";
+		};
+		FA231A1D1AA640FD00794296 /* Win and Lose Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				55D7F6C81A79914E006E8753 /* LooserScene.swift */,
+				FA95887C1A7ADFAE0008F1FF /* WinScene.swift */,
+			);
+			name = "Win and Lose Scenes";
 			sourceTree = "<group>";
 		};
 		FA3FA0481A96A6D600D6A1F3 /* Game Center */ = {
@@ -534,7 +539,6 @@
 				48CA06561A92E50F00E76C05 /* FireBall.swift in Sources */,
 				55769C801A91AA4A002B7B1B /* GameTime.swift in Sources */,
 				55236CB31A8F181800C7905B /* Chaper.swift in Sources */,
-				55228CDF1A798F1100E573D1 /* WinnerScene.swift in Sources */,
 				FA95887D1A7ADFAE0008F1FF /* WinScene.swift in Sources */,
 				C4EA385F1A76C0AB00EC284C /* Int+Extensions.swift in Sources */,
 				FA3FA04E1A96BE7000D6A1F3 /* AchievementsHelper.swift in Sources */,
