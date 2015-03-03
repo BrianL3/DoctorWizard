@@ -15,19 +15,6 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="-214" y="345" width="908" height="18"/>
-                    <string key="text">  Sound and Art (c) 2015 Duncan Marsh. Code (c) Duncan Marsh, Rodrigo Carballo, Brian Ledbetter, Carol Young. All rights reserved.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DoctorWizard" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="63" y="222" width="355" height="36"/>
-                    <fontDescription key="fontDescription" name="GALACTICVANGUARDIANNCV" family="GALACTIC VANGUARDIAN NCV" pointSize="36"/>
-                    <color key="textColor" red="1" green="0.76599832619999997" blue="0.39136477600000003" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="large_wizzard_hat" translatesAutoresizingMaskIntoConstraints="NO" id="cy8-iS-4r8">
                     <rect key="frame" x="120" y="97" width="240" height="128"/>
                     <constraints>
@@ -44,6 +31,19 @@
                         <constraint firstAttribute="height" constant="159" id="hBR-3V-0lM"/>
                     </constraints>
                 </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DoctorWizard" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="63" y="222" width="355" height="36"/>
+                    <fontDescription key="fontDescription" name="GALACTICVANGUARDIANNCV" family="GALACTIC VANGUARDIAN NCV" pointSize="36"/>
+                    <color key="textColor" red="1" green="0.76599832619999997" blue="0.39136477600000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="8" y="345" width="464" height="36"/>
+                    <string key="text">  Sound and Art (c) 2015 Duncan Marsh. Code (c) Duncan Marsh, Rodrigo Carballo, Brian Ledbetter, Carol Young. All rights reserved.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.10980392160000001" green="0.14901960780000001" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -53,6 +53,8 @@
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="9ap-50-Zw8"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="87" id="A6O-aZ-V0u"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="cy8-iS-4r8" secondAttribute="bottom" constant="120" id="CAj-tU-stF"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="GSM-1s-8pa"/>
+                <constraint firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" constant="8" id="JAU-wa-ORV"/>
                 <constraint firstAttribute="centerY" secondItem="kId-c2-rCX" secondAttribute="centerY" id="OPV-nn-szQ"/>
                 <constraint firstAttribute="trailing" secondItem="36O-bi-UDU" secondAttribute="trailing" constant="8" id="QR6-mP-esW"/>
                 <constraint firstAttribute="centerX" secondItem="cy8-iS-4r8" secondAttribute="centerX" id="Raw-ka-40a"/>
