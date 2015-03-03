@@ -14,7 +14,7 @@ import SpriteKit
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate {
     
-    var songDuration : NSTimeInterval = 5.0
+    var songDuration : NSTimeInterval = 100.0
     var songGenre : String = "DefaultDuncanSong"
     var scene : SpaceScene?
     var popUpVC = PopUpMenuController()
