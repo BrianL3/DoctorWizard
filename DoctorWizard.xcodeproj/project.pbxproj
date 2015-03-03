@@ -425,11 +425,11 @@
 				TargetAttributes = {
 					C4D707C61A76BEFB00A990A1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 5SDHS833A5;
+						DevelopmentTeam = 33F9QSSJDD;
 					};
 					C4D707DF1A76BEFC00A990A1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2558H3Z4V9;
+						DevelopmentTeam = 33F9QSSJDD;
 						TestTargetID = C4D707C61A76BEFB00A990A1;
 					};
 				};

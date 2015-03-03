@@ -94,6 +94,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.playableRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         self.centerScreen = CGPoint(x: playableRect.width/2, y: playableRect.height/2)
        
+        let screenSize :CGRect = UIScreen.mainScreen().bounds
+        
+        
         super.init(size: size)
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         self.physicsWorld.contactDelegate = self
@@ -148,16 +151,26 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         playTimeRemainingLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
         playTimeRemainingLabel!.fontSize = 100;
-        playTimeRemainingLabel?.position = CGPoint(x: self.view!.frame.width*0.2, y: self.view!.frame.height*0.8);
+//        playTimeRemainingLabel?.position = CGPoint(x: self.view!.frame.width*0.2, y: self.view!.frame.height*0.8);
+        
+        let screenSize :CGRect = UIScreen.mainScreen().bounds
+        let xScalar = screenSize.width/self.playableRect.width
+        let yScalar = screenSize.height/self.playableRect.height
+        
+        playTimeRemainingLabel?.position = CGPoint(x: self.centerScreen.x - self.playableRect.width*xScalar*0.9, y: self.centerScreen.y - self.playableRect.height*yScalar);
+        println("PlayTime position")
+        println(playTimeRemainingLabel?.position)
         playTimeRemainingLabel?.zPosition = 20
         self.addChild(playTimeRemainingLabel!)
         
 
         doctorWizardsHealthLabel = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV")
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
-        doctorWizardsHealthLabel?.fontSize = 45;
-        doctorWizardsHealthLabel?.position = CGPoint(x: 1700, y: 350)
-        doctorWizardsHealthLabel?.position = CGPoint(x: self.view!.frame.width*2.8, y: self.view!.frame.height*0.8);
+        doctorWizardsHealthLabel?.fontSize = 100;
+
+        doctorWizardsHealthLabel?.position = CGPoint(x: self.centerScreen.x + self.playableRect.width*xScalar*0.9, y: self.centerScreen.y - self.playableRect.height*yScalar);
+        println("Wizard Health position")
+        println(doctorWizardsHealthLabel?.position)
         doctorWizardsHealthLabel?.zPosition = 16
         self.addChild(doctorWizardsHealthLabel!)
         
