@@ -14,24 +14,27 @@ class LooserScene: SKScene {
     var currentSong : String?
     var mainMenuDelegate : MainMenuDelegate?
     
-    let retryButton = SKSpriteNode(imageNamed: "ResetButton") // aka OLD
+    let retryButton = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV") // aka OLD
     var touchLocation :CGPoint = CGPointZero
     
-    let repickButton = SKSpriteNode(imageNamed: "RepickButton") // aka NEW
+    let repickButton = SKLabelNode(fontNamed:"GALACTICVANGUARDIANNCV") // aka NEW
 
     
     override func didMoveToView(view: SKView) {
+        
         let background = SKSpriteNode(imageNamed: "youLost")
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         background.zPosition = -1
         addChild(background)
         
+        retryButton.text = "RETRY"
         retryButton.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         retryButton.setScale(4.0)
         retryButton.name = "retry"
         retryButton.zPosition = 2
         addChild(retryButton)
         
+        repickButton.text = "REPICK"
         repickButton.position = CGPoint(x: self.size.width*0.8, y: self.size.height/2)
         repickButton.setScale(4.0)
         repickButton.name = "repick"
@@ -46,7 +49,7 @@ class LooserScene: SKScene {
         self.touchLocation = touch.locationInNode(self)
         
         enumerateChildNodesWithName("retry", usingBlock: { (node, _) -> Void in
-            let button = node as SKSpriteNode
+            let button = node as SKLabelNode
             if CGRectIntersectsRect(button.frame, CGRect(origin: self.touchLocation, size: CGSize(width: 50, height: 50))) {
                 if self.isDefaultSong {
                     self.mainMenuDelegate?.restartWithSameSong(true)
@@ -57,7 +60,7 @@ class LooserScene: SKScene {
         })
         
         enumerateChildNodesWithName("repick", usingBlock: { (node, _) -> Void in
-            let button = node as SKSpriteNode
+            let button = node as SKLabelNode
             if CGRectIntersectsRect(button.frame, CGRect(origin: self.touchLocation, size: CGSize(width: 50, height: 50))) {
                 self.mainMenuDelegate?.restartWithDifferentSong()
             }
