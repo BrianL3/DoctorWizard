@@ -14,7 +14,7 @@ import SpriteKit
 
 class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate, popUpMenuDelegate, SongPickerDelegate, MainMenuDelegate {
     
-    var songDuration : NSTimeInterval = 100.0
+    var songDuration : NSTimeInterval = 5.0
     var songGenre : String = "DefaultDuncanSong"
     var scene : SpaceScene?
     var popUpVC = PopUpMenuController()
@@ -138,9 +138,7 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
         self.playSKMusic()
         self.scene?.paused = false
-       //popUpVC.view.removeFromSuperview()
         AnimationController.singleton.slideOffViewController(popUpVC)
-        
     }
     
     //MARK: SongPickerDelegate
@@ -184,19 +182,23 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     
     func restartWithSameSong(usingDefaultSong : Bool){
         if usingDefaultSong{
+            self.songDuration = 100.0
+            self.songGenre = "DefaultDuncanSong"
+
             self.launchGame()
             pauseGame()
-            userDidPressPlayWithoutSong()
+            SKTAudio.sharedInstance().playSoundEffect("tick_two.wav")
+            self.playSKMusic()
+
             unpauseGame()
 
         }else{
-            self.launchGame()
-            pauseGame()
             if musicPlayer.playbackState == .Playing {
                 self.musicPlayer.skipToBeginning()
             }else{
                 userDidSelectSong(currentSong!)
             }
+            self.launchGame()
             unpauseGame()
         }
     }

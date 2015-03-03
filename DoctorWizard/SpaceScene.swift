@@ -300,7 +300,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 println("entered win condition loop because winCondition was set as true or false")
                 // player won
                 if didWin == true{
-
+                    
                     self.paused = true
                     if GameCenterKit.sharedGameCenter.gameCenterEnabled == true{
                         // create achievements, if any
@@ -317,9 +317,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     let winGameScene = WinScene(size: self.size)
                     winGameScene.mainMenuDelegate = self.menuDelegate
                     if self.songGenre == "DefaultDuncanSong"{
+                        SKTAudio.sharedInstance().pauseBackgroundMusic()
                         winGameScene.isDefaultSong = true
                     }
-                    
+                    GameTime.sharedTameControler.ellapsedTime = 0.0
                     let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                     view?.presentScene(winGameScene, transition: reveal)
                     self.isPresenting = true  // setting a flag: without this flag didEvaluateActions calls Present many times and bugs out
@@ -332,6 +333,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     if self.songGenre == "DefaultDuncanSong"{
                         lostGameScene.isDefaultSong = true
                     }
+                    GameTime.sharedTameControler.ellapsedTime = 0.0
                     let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                     view?.presentScene(lostGameScene, transition: reveal)
                     self.isPresenting = true  // setting a flag: without this flag didEvaluateActions calls Present many times and bugs out
