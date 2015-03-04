@@ -355,7 +355,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }  
     }
     
-    
+    //MARK: CONTACT BETWEEN PHYSICS BODIES
     func didBeginContact(contact: SKPhysicsContact) {
         var dudeBody :SKPhysicsBody?
         var otherBody :SKPhysicsBody?
@@ -370,10 +370,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             otherBody = nil
         }
     
-
+/*
+        SKAction *pulseRed = [self colorizeChoosenSpriteNodeWithColor:[SKColor redColor]];
+        [_easyImage runAction: pulseRed];
+*/
 
         if (dudeBody != nil && self.dude.isInvincible != true) || self.dude.hitByBlackHole{
             println("dude is one of the contact bodys")
+            self.dude.runAction(flashDude())
             self.dude.setInvincible()
             self.dudeSetInvincibleCount = self.updateCounterForSpawing
             
@@ -656,6 +660,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         moveDudeToward(touchLocation)
         //        println("song duration is : \(songDuration)")
     }
+    //MARK: COLORIZE
+    func flashDude() -> SKAction{
+
+        let changeColorToRedAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 64, 64), colorBlendFactor: 1.0, duration: 0.1)
+        let changeColorToWhiteAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 255, 255), colorBlendFactor: 1.0, duration: 0.1)
+        
+        let waitAction = SKAction.waitForDuration(0.2)
+        let hitAction = SKAction.sequence([changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction])
+        return hitAction
+    }
+
     
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
     func playRockCollisionSound(){

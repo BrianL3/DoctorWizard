@@ -37,6 +37,7 @@ class Player: SKSpriteNode {
         self.physicsBody?.categoryBitMask = 0x1
         self.physicsBody?.dynamic = false
         self.physicsBody?.collisionBitMask = 0
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
