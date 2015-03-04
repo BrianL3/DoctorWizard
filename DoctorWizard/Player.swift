@@ -37,6 +37,7 @@ class Player: SKSpriteNode {
         self.physicsBody?.categoryBitMask = 0x1
         self.physicsBody?.dynamic = false
         self.physicsBody?.collisionBitMask = 0
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,6 +55,17 @@ class Player: SKSpriteNode {
             self.direction = "right"
         }
         
+    }
+    
+    //MARK: COLORIZE
+    func flashDude() -> SKAction{
+        
+        let changeColorToRedAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 64, 64), colorBlendFactor: 1.0, duration: 0.1)
+        let changeColorToWhiteAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 255, 255), colorBlendFactor: 1.0, duration: 0.1)
+        
+        let waitAction = SKAction.waitForDuration(0.2)
+        let hitAction = SKAction.sequence([changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction])
+        return hitAction
     }
     
     func setInvincible(){
