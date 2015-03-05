@@ -15,6 +15,7 @@
 		48D083B91A8832220088B654 /* dragon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D083B81A8832220088B654 /* dragon2.png */; };
 		48D415571A783D60005CE91C /* fireball.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415561A783D60005CE91C /* fireball.png */; };
 		48D415591A787019005CE91C /* alienspaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 48D415581A787019005CE91C /* alienspaceship.png */; };
+		48DD4C141AA8F9490044490F /* MediaItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */; };
 		48F91CA31A911A0E00496E42 /* Dragon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F91CA21A911A0E00496E42 /* Dragon.swift */; };
 		48F91CA51A911A6300496E42 /* BlackHole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F91CA41A911A6300496E42 /* BlackHole.swift */; };
 		55236CAF1A8ED74C00C7905B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55236CAE1A8ED74C00C7905B /* Player.swift */; };
@@ -466,6 +467,7 @@
 				B8A0F50A1A7B1B8300EB9362 /* spark.png in Resources */,
 				FA4116E91A78463700FCC212 /* garbal_blips.wav in Resources */,
 				FA4116E41A78463700FCC212 /* chom_one.wav in Resources */,
+				48DD4C141AA8F9490044490F /* MediaItemCell.xib in Resources */,
 				48D415571A783D60005CE91C /* fireball.png in Resources */,
 				FF9CD94B1A7B852A005A3BD5 /* DrWizardConsoleBarExtender.png in Resources */,
 				FA4116E61A78463700FCC212 /* clicks_one.wav in Resources */,
