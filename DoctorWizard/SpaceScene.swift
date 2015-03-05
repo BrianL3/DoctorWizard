@@ -776,7 +776,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case 0..<twentyPercent :
             self.spawnPinkRock()
             self.spawnBlackHole()
-            spawnDragon()
+//            spawnDragon()
 //            println("first level")
         case twentyPercent..<fortyPercent :
             self.spawnFireBall()
