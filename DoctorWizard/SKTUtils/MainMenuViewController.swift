@@ -32,6 +32,15 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("showAuthenticationViewController"), name: "PresentAuthenticationViewController", object: nil)
         GameCenterKit.sharedGameCenter.authenticateLocalPlayer()
         
+        if NSUserDefaults.standardUserDefaults().boolForKey("HasLaunchedOnce"){
+            
+        }else{
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasLaunchedOnce")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let tutorialVC = storyboard.instantiateViewControllerWithIdentifier("TUTORIAL") as TutorialViewController
+            self.presentViewController(tutorialVC, animated: true, completion: nil)
+        }
         
         self.launchGame()
         self.pauseGame()

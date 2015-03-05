@@ -31,6 +31,40 @@
             </objects>
             <point key="canvasLocation" x="687" y="34"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="Z9Y-yL-ekX">
+            <objects>
+                <viewController storyboardIdentifier="TUTORIAL" id="dq0-hi-dsu" customClass="TutorialViewController" customModule="DoctorWizard" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rH0-ei-vjg"/>
+                        <viewControllerLayoutGuide type="bottom" id="yc1-PJ-YQc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="77K-h8-0ox">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="abp-Ar-DQX">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <gestureRecognizers/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="abp-Ar-DQX" secondAttribute="trailing" constant="-16" id="0rz-zB-pq5"/>
+                            <constraint firstItem="abp-Ar-DQX" firstAttribute="leading" secondItem="77K-h8-0ox" secondAttribute="leadingMargin" constant="-16" id="2K6-R1-61I"/>
+                            <constraint firstItem="yc1-PJ-YQc" firstAttribute="top" secondItem="abp-Ar-DQX" secondAttribute="bottom" id="7r8-2o-Tx8"/>
+                            <constraint firstItem="abp-Ar-DQX" firstAttribute="top" secondItem="77K-h8-0ox" secondAttribute="topMargin" id="s46-A1-2yq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="abp-Ar-DQX" id="ejQ-12-VIh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dVb-BW-g1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="646" y="681"/>
+        </scene>
         <!--Pop Up Menu Controller-->
         <scene sceneID="lQl-bn-brO">
             <objects>

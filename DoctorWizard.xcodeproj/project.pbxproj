@@ -57,6 +57,8 @@
 		C4EA38661A76C0AB00EC284C /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385A1A76C0AB00EC284C /* SKTTimingFunctions.swift */; };
 		C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA385B1A76C0AB00EC284C /* Vector3.swift */; };
 		FA203EEF1A76C23C00FF4D64 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */; };
+		FA29491B1AA8FF2A00A36182 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA29491A1AA8FF2A00A36182 /* TutorialViewController.swift */; };
+		FA29491C1AA9048500A36182 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4D707CB1A76BEFB00A990A1 /* Info.plist */; };
 		FA3FA04A1A96A80200D6A1F3 /* GameCenterKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FA0491A96A80200D6A1F3 /* GameCenterKit.swift */; };
 		FA3FA04E1A96BE7000D6A1F3 /* AchievementsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FA04D1A96BE7000D6A1F3 /* AchievementsHelper.swift */; };
 		FA4116DD1A78463700FCC212 /* blop_eleven.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA4116CB1A78463700FCC212 /* blop_eleven.wav */; };
@@ -149,6 +151,7 @@
 		C4EA385B1A76C0AB00EC284C /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		FA1ADC891A8AF41B002DA4AC /* MediaItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaItemCell.xib; sourceTree = "<group>"; };
 		FA203EEE1A76C23C00FF4D64 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = SKTUtils/MainMenuViewController.swift; sourceTree = "<group>"; };
+		FA29491A1AA8FF2A00A36182 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		FA3FA0491A96A80200D6A1F3 /* GameCenterKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterKit.swift; sourceTree = "<group>"; };
 		FA3FA04D1A96BE7000D6A1F3 /* AchievementsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsHelper.swift; sourceTree = "<group>"; };
 		FA4116CB1A78463700FCC212 /* blop_eleven.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blop_eleven.wav; sourceTree = "<group>"; };
@@ -230,6 +233,7 @@
 		C4D707C91A76BEFB00A990A1 /* DoctorWizard */ = {
 			isa = PBXGroup;
 			children = (
+				FA2949191AA8FF0F00A36182 /* Controllers */,
 				FA231A1D1AA640FD00794296 /* Win and Lose Scenes */,
 				FA3FA0481A96A6D600D6A1F3 /* Game Center */,
 				B8A0F5061A7B1B1600EB9362 /* Particles */,
@@ -326,6 +330,14 @@
 				FA95887C1A7ADFAE0008F1FF /* WinScene.swift */,
 			);
 			name = "Win and Lose Scenes";
+			sourceTree = "<group>";
+		};
+		FA2949191AA8FF0F00A36182 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FA29491A1AA8FF2A00A36182 /* TutorialViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		FA3FA0481A96A6D600D6A1F3 /* Game Center */ = {
@@ -426,7 +438,7 @@
 				TargetAttributes = {
 					C4D707C61A76BEFB00A990A1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2558H3Z4V9;
+						DevelopmentTeam = 5SDHS833A5;
 					};
 					C4D707DF1A76BEFC00A990A1 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -479,6 +491,7 @@
 				FA4116E51A78463700FCC212 /* chom_two.wav in Resources */,
 				B8A0F5141A7B1C3300EB9362 /* Magic.sks in Resources */,
 				FA4116E11A78463700FCC212 /* blop_thirteen.wav in Resources */,
+				FA29491C1AA9048500A36182 /* Info.plist in Resources */,
 				FA4116E31A78463700FCC212 /* chaos.wav in Resources */,
 				C4D707DB1A76BEFB00A990A1 /* LaunchScreen.xib in Resources */,
 				FF9CD9471A7B779B005A3BD5 /* drWizardConsoleBar_3000_wLabels.png in Resources */,
@@ -547,6 +560,7 @@
 				48F91CA31A911A0E00496E42 /* Dragon.swift in Sources */,
 				C4EA38631A76C0AB00EC284C /* SKNode+Extensions.swift in Sources */,
 				C4EA38641A76C0AB00EC284C /* SKTAudio.swift in Sources */,
+				FA29491B1AA8FF2A00A36182 /* TutorialViewController.swift in Sources */,
 				C4EA385C1A76C0AB00EC284C /* CGFloat+Extensions.swift in Sources */,
 				C4EA38671A76C0AB00EC284C /* Vector3.swift in Sources */,
 				C4D707CD1A76BEFB00A990A1 /* AppDelegate.swift in Sources */,
