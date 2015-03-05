@@ -11,12 +11,21 @@ import UIKit
 import SpriteKit
 
 class BlackHole: SKSpriteNode {
+    var blackHoleAnimation: SKAction
     
     init(blacHoleImageName : String, initialPosition: CGPoint) {
-        let blackHoleText  = SKTexture(imageNamed: blacHoleImageName)
+        var animationTextues:[SKTexture] = []
+        for i in 0...10 {
+            animationTextues.append(SKTexture(imageNamed: "blackWhole-animation_\(i)"))
+        }
+       self.blackHoleAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(animationTextues, timePerFrame: 0.05))
+        
+        let blackHoleText  = SKTexture(imageNamed: "blackWhole-animation_1")
         let blackHoleBody = SKPhysicsBody(texture: blackHoleText, alphaThreshold: 0.1, size: blackHoleText.size())
         super.init(texture: blackHoleText, color: nil, size: blackHoleText.size())
+        self.runAction(SKAction.repeatActionForever(self.blackHoleAnimation))
         self.physicsBody = blackHoleBody
+
         self.physicsBody?.categoryBitMask = 0x10000
         self.physicsBody?.contactTestBitMask = 0x1
         self.physicsBody?.collisionBitMask = 0x0
@@ -36,7 +45,7 @@ class BlackHole: SKSpriteNode {
         let oneSpin = SKAction.rotateByAngle(angle, duration: 5)
 //        let repeatSpin = SKAction.repeatActionForever(oneSpin)
         let repeatSpin = SKAction.repeatAction(oneSpin, count: 5)
-        let appear = SKAction.scaleTo(5, duration: 3.0)
+        let appear = SKAction.scaleTo(2.5, duration: 3.0)
         let appearAndSpin = SKAction.group([appear,repeatSpin])
         let implode = SKAction.scaleTo(0, duration: 3.0)
         let implodeAndSpin = SKAction.group([implode,repeatSpin])
