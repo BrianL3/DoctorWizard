@@ -70,7 +70,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var playTimeRemainingTicker: NSTimeInterval = 0
     var doctorWizardsHealthLabel : SKLabelNode?
     
-    var healthPoints :CGFloat = 742 //need colisions to decrement from this
+
     var dudeSetInvincibleCount:Int = 0
 
     //set up win-loss condition
@@ -234,15 +234,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //~~~Health Points~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
                  //MARK: Display Spaceman's Health Status Label
-        
-                    var fullHealthStatus: CGFloat = 742.0
-        
                     let healthyIconEmoji: String = "🍏"
                     let unhealthyIconEmoji: String = "🍊"
                     let expiredEmoji: String = "😑"
         
-                    healthPoints =  CGFloat(dude.healthPoints)
-        
+
 //                        println("dudes health points = \(dude.healthPoints)");
         
 //                        if (healthPoints == 0 ){
@@ -377,7 +373,6 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
         if (dudeBody != nil && self.dude.isInvincible != true) || self.dude.hitByBlackHole{
             println("dude is one of the contact bodys")
-            self.dude.runAction(dude.flashDude())
             self.dude.setInvincible()
             self.dudeSetInvincibleCount = self.updateCounterForSpawing
             
@@ -423,6 +418,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 println("")
 
                 }
+            self.dude.runAction(dude.flashDude())
+
         } else if (dudeBody != nil ) && (otherBody!.categoryBitMask == self.categoryPinkROck) {
             otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 90, -self.backgroundLayer.verticalDirection * 90)
         }
@@ -753,23 +750,23 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             //first 20% of the song
         case 0..<twentyPercent :
             self.spawnPinkRock()
-            println("first level")
+//            println("first level")
         case twentyPercent..<fortyPercent :
             self.spawnFireBall()
             self.spawnPinkRock()
 
-            println("second level")
+//            println("second level")
         case fortyPercent..<sixtyPercent :
             self.spawnPinkRock()
             self.spawnAlien()
-            println("third level")
+//            println("third level")
         case sixtyPercent..<eightyPercent :
             self.spawnPinkRock()
             self.spawnBlackHole()
-            println("fourth level")
+//            println("fourth level")
         case eightyPercent..<songTimeAsFloat :
             self.spawnDragon()
-            println("fith level")
+//            println("fith level")
         default:
             self.spawnPinkRock()
             println("default case of CurrentLevel, current level is: \(self.curLevel)")
