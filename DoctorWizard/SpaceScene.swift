@@ -582,8 +582,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     func spawnPinkRock(){
 
+        
+        let randomRockString = "pinkRock\((arc4random()%5) + 1)"
+        
         if self.updateCounterForSpawing % Int(60 * 1.2) == 0 {
-            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+            let rock = PinkRock(rockImageName: randomRockString, initialPosition: self.pinkRockSpawnPoint())
             self.backgroundLayer.addChild(rock)
 //            rock.fadeInFadeOut()
             rock.spawnRock()
@@ -772,6 +775,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             //first 20% of the song
         case 0..<twentyPercent :
             self.spawnPinkRock()
+            self.spawnBlackHole()
 //            println("first level")
         case twentyPercent..<fortyPercent :
             self.spawnFireBall()
