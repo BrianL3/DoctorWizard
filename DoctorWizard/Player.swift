@@ -11,6 +11,7 @@ import SpriteKit
 
 class Player: SKSpriteNode {
     var healthPoints: Int = 500
+    let maximumHealthPoints : Int = 500
     var direction:String = "right"
     let dudeAnimationRight:SKAction
     let dudeAnimationLeft:SKAction
@@ -62,10 +63,25 @@ class Player: SKSpriteNode {
         
         let changeColorToRedAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 64, 64), colorBlendFactor: 1.0, duration: 0.1)
         let changeColorToWhiteAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 255, 255), colorBlendFactor: 1.0, duration: 0.1)
-        
+        let changeColorToYellowAction = SKAction.colorizeWithColor(SKColorWithRGB(255, 255, 0), colorBlendFactor: 1.0, duration: 0.1)
         let waitAction = SKAction.waitForDuration(0.2)
-        let hitAction = SKAction.sequence([changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction])
-        return hitAction
+
+        let healthPercentage : Float = Float(self.healthPoints)/Float(self.maximumHealthPoints)
+        println(self.healthPoints)
+        println(self.maximumHealthPoints)
+        println("health percentage is at: \(healthPercentage)")
+        switch healthPercentage{
+        case 0..<0.25 :
+            let hitAction = SKAction.sequence([changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction])
+            return hitAction
+        case 0.25..<0.5:
+            let hitAction = SKAction.sequence([changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToYellowAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction])
+            return hitAction
+        default :
+            let hitAction = SKAction.sequence([changeColorToYellowAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToYellowAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToYellowAction, waitAction, changeColorToWhiteAction])
+            return hitAction
+
+        }
     }
     
     func setInvincible(){
