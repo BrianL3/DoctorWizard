@@ -463,7 +463,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             
             let initPosition = self.backgroundLayer.convertPoint(cornerPointArray[random], fromNode: self)
             let destPosition = self.backgroundLayer.convertPoint(cornerPointArray[(random + 2) % 4], fromNode: self)
-            let alien = Alien(alienImageName: "spaceship", initialPosition: initPosition)
+            let alien = Alien(alienImageName: "alienCrystal", initialPosition: initPosition)
             self.backgroundLayer.addChild(alien)
             alien.spawnAlien(destPosition)
         }
