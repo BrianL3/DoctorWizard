@@ -43,14 +43,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let motionManager = CMMotionManager()
     
     //setup layers
-    let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 50)
+    let backgroundLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "background0", backgroundIdentifier: "background", movePointsPerSec: 7)
     var backgroundDirection = CGPoint(x: 1.0 , y: 1.0)
     
-    let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 30)
+    let starLayer:BackgroundLayer = BackgroundLayer(backgroundImageName: "starsFinal", backgroundIdentifier: "stars", movePointsPerSec: 15)
     
     let debriLayer = BackgroundLayer(backgroundImageName: "dunk_debri", backgroundIdentifier: "debri", movePointsPerSec: 20)
     
-    let bigDebriLayer = BackgroundLayer(backgroundImageName: "debri_big3", backgroundIdentifier: "big_debri", movePointsPerSec: 45)
+    let bigDebriLayer = BackgroundLayer(backgroundImageName: "debri_big3", backgroundIdentifier: "big_debri", movePointsPerSec: 20)
     
     //setup dude and dudes enemies
     let dude:Player = Player()
@@ -635,7 +635,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         let offset = location - self.dude.position
         let direction = offset.normalized()
         
-        self.dude.velocity = direction * 600
+        self.dude.velocity = direction * 800
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
