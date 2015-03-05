@@ -551,7 +551,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             println("fuccck in der is a dragon")
             let spawnPoint = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.8)
             let bgSpawnPoint = self.backgroundLayer.convertPoint(spawnPoint, fromNode: self)
-            self.dragon = Dragon(dragonImageName: "dragon2", initialPosition: bgSpawnPoint)
+            self.dragon = Dragon(dragonImageName: "dragon_final", initialPosition: bgSpawnPoint)
             self.backgroundLayer.addChild(self.dragon!)
         } else if self.updateCounterForSpawing % Int(1.5 * 60) == 0 {
             let moveToPoint = self.backgroundLayer.convertPoint(dragonMoveToRandomPoint(), fromNode: self)
@@ -776,6 +776,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case 0..<twentyPercent :
             self.spawnPinkRock()
             self.spawnBlackHole()
+            spawnDragon()
 //            println("first level")
         case twentyPercent..<fortyPercent :
             self.spawnFireBall()
