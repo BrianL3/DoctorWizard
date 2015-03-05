@@ -88,7 +88,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let categoryBlackHole:UInt32 = 0x10000
     let categoryDragon:UInt32 =    0x100000
     
-    
+    //for clockfix
+    var gamePausedAt : NSTimeInterval?
+
+
     override init(size: CGSize) {
         self.playableRect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         self.centerScreen = CGPoint(x: playableRect.width/2, y: playableRect.height/2)
@@ -134,15 +137,15 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         //self.spawnPinkRock()
         //self.spawnBlackHole()
         //self.spawnDragon()
+
+
         
-        
-        
-        //        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
-        //            if self.paused == false {
-        //                self.ellapsedTime += 1
-        //                println(self.ellapsedTime)
-        //            }
-        //        })])))
+//        self.runAction(SKAction.repeatActionForever( SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
+//            if self.paused == false {
+//                self.ellapsedTime += 1
+//                println(self.ellapsedTime)
+//            }
+//        })])))
         
         if motionManager.accelerometerAvailable {
             self.motionManager.accelerometerUpdateInterval = 0.1
@@ -153,7 +156,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     self.backgroundDirection.y = CGFloat(verticalData * 50.0)
                     self.backgroundDirection.x = CGFloat(horizontalData * 50.0)
                     self.dude.animateDude(self.backgroundDirection)
-                    
+
                     //  println("we got acceleromiter data : \(verticleData)")
                 }
             })
@@ -173,7 +176,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         healthStatusBarLabel.textColor = UIColor.yellowColor()
         healthStatusBarLabel.font = UIFont(name: "GALACTICVANGUARDIANNCV", size: 24.0);
         self.view?.addSubview(healthStatusBarLabel);
+
         
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        //clockfix
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+
     }
     
     
@@ -240,17 +250,17 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             }
         
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
+    
         moveDude()
     }
     
-    //MARK: DID EVALUATE ACTIONS (occurs every frame) =========================================
+//MARK: DID EVALUATE ACTIONS (occurs every frame) =========================================
     override func didEvaluateActions() {
-        //        self.spawnFireBall()
-        //        self.spawnPinkRock()
-        //        self.spawnAlien()
-        //        self.spawnBlackHole()
-        //        self.spawnDragon()
+//        self.spawnFireBall()
+//        self.spawnPinkRock()
+//        self.spawnAlien()
+//        self.spawnBlackHole()
+//        self.spawnDragon()
         
         if self.dude.hitByBlackHole == true {
             self.dude.healthPoints -= 3
@@ -260,7 +270,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             self.winCondition = false
         }
         
-        
+
         
         if let didWin = self.winCondition{
             if self.isPresenting == false {
@@ -306,7 +316,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     self.isPresenting = true  // setting a flag: without this flag didEvaluateActions calls Present many times and bugs out
                 }  //eo win or lose check
             }  //eo special flag check
-        }
+        }  
     }
     
     //MARK: CONTACT BETWEEN PHYSICS BODIES
@@ -323,12 +333,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             dudeBody = nil
             otherBody = nil
         }
-        
-        /*
+    
+/*
         SKAction *pulseRed = [self colorizeChoosenSpriteNodeWithColor:[SKColor redColor]];
         [_easyImage runAction: pulseRed];
-        */
-        
+*/
+
         if (dudeBody != nil && self.dude.isInvincible != true) || self.dude.hitByBlackHole{
             println("dude is one of the contact bodys")
             self.dude.setInvincible()
@@ -344,12 +354,12 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 self.dude.healthPoints -= 150
                 println("dude hit alien")
             case self.categoryBlackHole :
-                //                self.dude.healthPoints -= 2
+//                self.dude.healthPoints -= 2
                 self.dude.hitByBlackHole = true
                 self.backgroundLayer.enumerateChildNodesWithName("blackhole", usingBlock: { (node, _) -> Void in
                     
                     let blackWhole = node as SKSpriteNode
-                    
+
                     let dudePositionOnBG = self.backgroundLayer.convertPoint(self.dude.position, fromNode: self)
                     let dudeFrameOnBG = CGRect(origin: dudePositionOnBG, size: self.dude.size)
                     println("we found the blackwhole \(blackWhole.frame)")
@@ -358,7 +368,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                         println("what is up we hit the blackWhole")
                         let angle : CGFloat = -CGFloat(M_PI)
                         let oneSpin = SKAction.rotateByAngle(angle, duration: 0.5)
-                        //                        let repeatSpin = SKAction.repeatActionForever(oneSpin)
+//                        let repeatSpin = SKAction.repeatActionForever(oneSpin)
                         let repeatSpin = SKAction.repeatActionForever(oneSpin)
                         let implode = SKAction.scaleTo(0, duration: 2.0)
                         let moveDudeToPoint = self.convertPoint(blackWhole.position, fromNode: self.backgroundLayer)
@@ -374,71 +384,71 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 self.dude.healthPoints -= 200
             default:
                 println("")
-                
-            }
+
+                }
             self.dude.runAction(dude.flashDude())
-            
+
         } else if (dudeBody != nil ) && (otherBody!.categoryBitMask == self.categoryPinkROck) {
             otherBody!.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 90, -self.backgroundLayer.verticalDirection * 90)
         }
         
-        
-        
+
+            
     }
     
-    //    func destroyByBlackHole {
-    //
-    //
-    //            let angle : CGFloat = -CGFloat(M_PI)
-    //            let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
-    //            let repeatSpin = SKAction.repeatActionForever(oneSpin)
-    //            let implode = SKAction.scaleTo(0, duration: 2.0)
-    //            let actionRemove = SKAction.removeFromParent()
-    //            let actionTowardsBlackHoleXCoord = SKAction.moveToX(self.blackHole.position.x, duration: 1.0)
-    //            self.dude.runAction(actionTowardsBlackHoleXCoord)
-    //            let actionTowardsBlackHoleYCoord = SKAction.moveToY(self.blackHole.position.y, duration: 1.0)
-    //            self.dude.runAction(actionTowardsBlackHoleYCoord)
-    //            let actions = [implode, actionRemove]
-    //            dudeHit.runAction(repeatSpin)
-    //            dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
-    //                if self.invincible == false {
-    //                    self.healthPoints = 0
-    //                }
-    //            })
-    //        }
-    //    }
+//    func destroyByBlackHole {
+//
+//            
+//            let angle : CGFloat = -CGFloat(M_PI)
+//            let oneSpin = SKAction.rotateByAngle(angle, duration: 3.5)
+//            let repeatSpin = SKAction.repeatActionForever(oneSpin)
+//            let implode = SKAction.scaleTo(0, duration: 2.0)
+//            let actionRemove = SKAction.removeFromParent()
+//            let actionTowardsBlackHoleXCoord = SKAction.moveToX(self.blackHole.position.x, duration: 1.0)
+//            self.dude.runAction(actionTowardsBlackHoleXCoord)
+//            let actionTowardsBlackHoleYCoord = SKAction.moveToY(self.blackHole.position.y, duration: 1.0)
+//            self.dude.runAction(actionTowardsBlackHoleYCoord)
+//            let actions = [implode, actionRemove]
+//            dudeHit.runAction(repeatSpin)
+//            dudeHit.runAction(SKAction.sequence(actions), completion: { () -> Void in
+//                if self.invincible == false {
+//                    self.healthPoints = 0
+//                }
+//            })
+//        }
+//    }
+
     
     
     
-    
-    //        switch contact.bodyA.categoryBitMask {
-    //        case self.categoryFireball:
-    //            if
-    //        default:
-    ////            secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
-    //            println("firstBody is rock")
-    //        }
-    
-    
+//        switch contact.bodyA.categoryBitMask {
+//        case self.categoryFireball:
+//            if
+//        default:
+////            secondBody.velocity = CGVectorMake(-self.backgroundLayer.horizontalDirection * 100, -self.backgroundLayer.verticalDirection * 100)
+//            println("firstBody is rock")
+//        }
+ 
+//MARK: SPAWN ENEMIES  ==========================================================================================
     
     func spawnFireBall() {
-        
+
         if self.updateCounterForSpawing % Int(2.5 * 60) == 0 {
             let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
             self.backgroundLayer.addChild(fireBall)
             fireBall.spawnFireBall(self.backgroundLayer)
-            println("Spawning FireBall")
+                    println("Spawning FireBall")
         }
-        
-        
+
+
     }
     
-    
+
     
     func spawnAlien() {
-        
+
         if self.updateCounterForSpawing % Int(60 * 1.5) == 0 {
-            
+
             let topRight = CGPoint(x: 2048 + 100, y: 1536 + 100)
             let bottomRight = CGPoint(x: 2048 + 100, y: 0 - 100)
             let topLeft = CGPoint(x: 0  - 100, y: 1536 + 100)
@@ -447,7 +457,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             
             var random = Int((CGFloat.random()*4))
             if random == 4 {
-                random = 3 //covernin my ass
+                random = 3 //covernin my ass 
                 // #yolo
             }
             
@@ -457,28 +467,28 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             self.backgroundLayer.addChild(alien)
             alien.spawnAlien(destPosition)
         }
-        
+
     }
     
     func spawnBlackHole() {
-        //        let spawnBlackHoleAction = SKAction.runBlock{ () -> Void in
-        //            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
-        //            self.backgroundLayer.addChild(blackHole)
-        //            blackHole.spawnBlackHole()
-        //        }
-        //        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
-        //        println("Spawning Black Hole")
-        
+//        let spawnBlackHoleAction = SKAction.runBlock{ () -> Void in
+//            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+//            self.backgroundLayer.addChild(blackHole)
+//            blackHole.spawnBlackHole()
+//        }
+//        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnBlackHoleAction, SKAction.waitForDuration(10)])))
+//        println("Spawning Black Hole")
+
         if self.updateCounterForSpawing % Int(60 * 7) == 0 {
-            ////            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
-            ////            self.backgroundLayer.addChild(rock)
-            ////            rock.fadeInFadeOut()
+////            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+////            self.backgroundLayer.addChild(rock)
+////            rock.fadeInFadeOut()
             println("bout to spawn a balckwhole")
-            let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
-            self.backgroundLayer.addChild(blackHole)
-            blackHole.spawnBlackHole()
+        let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
+        self.backgroundLayer.addChild(blackHole)
+        blackHole.spawnBlackHole()
             println("black whole has spawned")
-            //
+//
         }
     }
     
@@ -495,13 +505,13 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        //        let spawnDragonAction = SKAction.runBlock{ () -> Void in
-        //            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.fireBallSpawnPoint())
-        //            self.backgroundLayer.addChild(dragon)
-        //            dragon.spawnDragon(self.backgroundLayer)
-        //        }
-        //        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(0.5)])))
-        //        println("Spawning Dragon")
+//        let spawnDragonAction = SKAction.runBlock{ () -> Void in
+//            let dragon = Dragon(dragonImageName: "dragon2", initialPosition: self.fireBallSpawnPoint()) 
+//            self.backgroundLayer.addChild(dragon)
+//            dragon.spawnDragon(self.backgroundLayer)
+//        }
+//        self.backgroundLayer.runAction(SKAction.repeatActionForever( SKAction.sequence([spawnDragonAction, SKAction.waitForDuration(0.5)])))
+//        println("Spawning Dragon")
     }
     
     
@@ -517,11 +527,14 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     
     func spawnPinkRock(){
+
+        
+        let randomRockString = "pinkRock\((arc4random()%5) + 1)"
         
         if self.updateCounterForSpawing % Int(60 * 1.2) == 0 {
             let rock = PinkRock(rockImageName: randomRockString, initialPosition: self.pinkRockSpawnPoint())
             self.backgroundLayer.addChild(rock)
-            //            rock.fadeInFadeOut()
+//            rock.fadeInFadeOut()
             rock.spawnRock()
         }
         
@@ -538,18 +551,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     func fireBallSpawnPoint() -> CGPoint {
         let posX : CGFloat = 3072
-        
+
         let posY : CGFloat = CGFloat.random(min: 0, max: 3072) - 767
         let positionToConvert = CGPoint(x: posX, y: posY)
         let position = self.backgroundLayer.convertPoint(positionToConvert, fromNode: self)
         return position
     }
-    
+
     override func willMoveFromView(view: SKView) {
         self.paused = true
         println("bouta pause game")
         self.removeAllActions()
-        
+
     }
     
     func nSTimeIntervalValueToString(nSTimeIntervalValue: NSTimeInterval, decimalPlaceRequired: Int) -> String {
@@ -568,10 +581,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         let amountToMove = CGPoint(x: self.dude.velocity.x * CGFloat(dt),
             y: self.dude.velocity.y * CGFloat(dt))
-        //        println("Amount to move: \(amountToMove)")
-        //        if self.dude.position == self.lastTouchLocation {
-        //            self.dude.position = self.lastTouchLocation!
-        //        } else {
+//        println("Amount to move: \(amountToMove)")
+//        if self.dude.position == self.lastTouchLocation {
+//            self.dude.position = self.lastTouchLocation!
+//        } else {
         if let lastTouch = lastTouchLocation {
             
             let diff = lastTouch - dude.position
@@ -581,11 +594,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 self.dude.velocity = CGPointZero
             } else{
                 
-                self.dude.position = CGPoint(
-                    x: self.dude.position.x + amountToMove.x,
-                    y: self.dude.position.y + amountToMove.y)
-            }
+            self.dude.position = CGPoint(
+                x: self.dude.position.x + amountToMove.x,
+                y: self.dude.position.y + amountToMove.y)
         }
+    }
     }
     
     func moveDudeToward(location: CGPoint) {
@@ -606,7 +619,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
         sceneTouched(touchLocation)
-        
+
     }
     
     func sceneTouched(touchLocation:CGPoint) {
@@ -615,8 +628,8 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         moveDudeToward(touchLocation)
         //        println("song duration is : \(songDuration)")
     }
-    
-    
+
+
     
     //MARK: SOUND EFFECTS BEEP BOOP PSSSSH
     func playRockCollisionSound(){
@@ -659,37 +672,37 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case Fifth
     }
     
-    //    func currentLevelIs() -> Level {
-    //        let songTimeAsFloat = self.songDuration as Double
-    //        var timePassedAsFloat : Double
-    //        if (timeController.ellapsedTime as Double) < songTimeAsFloat{
-    //            timePassedAsFloat = timeController.ellapsedTime as Double
-    //        }else{
-    //            timePassedAsFloat = songTimeAsFloat
-    //        }
-    //        let twentyPercent = songTimeAsFloat/5
-    //        let fortyPercent = (songTimeAsFloat/5) * 2
-    //        let sixtyPercent = (songTimeAsFloat/5) * 3
-    //        let eightyPercent = (songTimeAsFloat/5) * 4
-    //
-    //        switch timePassedAsFloat {
-    //            //first 20% of the song
-    //        case 0..<twentyPercent :
-    //            self.curLevel = .First
-    //        case twentyPercent..<fortyPercent :
-    //            self.curLevel = .Second
-    //        case fortyPercent..<sixtyPercent :
-    //            self.curLevel = .Third
-    //        case sixtyPercent..<eightyPercent :
-    //            self.curLevel = .Fourth
-    //        case eightyPercent..<songTimeAsFloat :
-    //            self.curLevel = .Fifth
-    //        default:
-    //            self.curLevel = .First
-    //        }
-    //        return self.curLevel
-    //    }
-    
+//    func currentLevelIs() -> Level {
+//        let songTimeAsFloat = self.songDuration as Double
+//        var timePassedAsFloat : Double
+//        if (timeController.ellapsedTime as Double) < songTimeAsFloat{
+//            timePassedAsFloat = timeController.ellapsedTime as Double
+//        }else{
+//            timePassedAsFloat = songTimeAsFloat
+//        }
+//        let twentyPercent = songTimeAsFloat/5
+//        let fortyPercent = (songTimeAsFloat/5) * 2
+//        let sixtyPercent = (songTimeAsFloat/5) * 3
+//        let eightyPercent = (songTimeAsFloat/5) * 4
+//        
+//        switch timePassedAsFloat {
+//            //first 20% of the song
+//        case 0..<twentyPercent :
+//            self.curLevel = .First
+//        case twentyPercent..<fortyPercent :
+//            self.curLevel = .Second
+//        case fortyPercent..<sixtyPercent :
+//            self.curLevel = .Third
+//        case sixtyPercent..<eightyPercent :
+//            self.curLevel = .Fourth
+//        case eightyPercent..<songTimeAsFloat :
+//            self.curLevel = .Fifth
+//        default:
+//            self.curLevel = .First
+//        }
+//        return self.curLevel
+//    }
+
     
     func currentLevel() {
         let songTimeAsFloat = self.songDuration as Double
@@ -714,19 +727,19 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         case twentyPercent..<fortyPercent :
             self.spawnFireBall()
             self.spawnPinkRock()
-            
-            //            println("second level")
+
+//            println("second level")
         case fortyPercent..<sixtyPercent :
             self.spawnPinkRock()
             self.spawnAlien()
-            //            println("third level")
+//            println("third level")
         case sixtyPercent..<eightyPercent :
             self.spawnPinkRock()
             self.spawnBlackHole()
-            //            println("fourth level")
+//            println("fourth level")
         case eightyPercent..<songTimeAsFloat :
             self.spawnDragon()
-            //            println("fith level")
+//            println("fith level")
         default:
             self.spawnPinkRock()
             println("default case of CurrentLevel, current level is: \(self.curLevel)")
