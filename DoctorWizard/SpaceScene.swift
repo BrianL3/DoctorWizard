@@ -157,7 +157,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         let xScalar = screenSize.width/self.playableRect.width
         let yScalar = screenSize.height/self.playableRect.height
         
-        playTimeRemainingLabel?.position = CGPoint(x: self.centerScreen.x - self.playableRect.width*xScalar*0.9, y: self.centerScreen.y - self.playableRect.height*yScalar);
+        playTimeRemainingLabel?.position = CGPoint(x: self.centerScreen.x - self.playableRect.width*xScalar*0.95, y: self.centerScreen.y - self.playableRect.height*yScalar*0.95);
         println("PlayTime position")
         println(playTimeRemainingLabel?.position)
         playTimeRemainingLabel?.zPosition = 20
@@ -168,7 +168,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         doctorWizardsHealthLabel?.fontColor = SKColor.redColor()
         doctorWizardsHealthLabel?.fontSize = 100;
 
-        doctorWizardsHealthLabel?.position = CGPoint(x: self.centerScreen.x + self.playableRect.width*xScalar*0.9, y: self.centerScreen.y - self.playableRect.height*yScalar);
+        doctorWizardsHealthLabel?.position = CGPoint(x: self.centerScreen.x + self.playableRect.width*xScalar*0.95, y: self.centerScreen.y - self.playableRect.height*yScalar*0.95);
         println("Wizard Health position")
         println(doctorWizardsHealthLabel?.position)
         doctorWizardsHealthLabel?.zPosition = 16
