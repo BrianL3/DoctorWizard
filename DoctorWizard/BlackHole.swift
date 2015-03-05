@@ -21,7 +21,8 @@ class BlackHole: SKSpriteNode {
        self.blackHoleAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(animationTextues, timePerFrame: 0.05))
         
         let blackHoleText  = SKTexture(imageNamed: "blackWhole-animation_1")
-        let blackHoleBody = SKPhysicsBody(texture: blackHoleText, alphaThreshold: 0.1, size: blackHoleText.size())
+//        let blackHoleBody = SKPhysicsBody(texture: blackHoleText, alphaThreshold: 0.1, size: blackHoleText.size())
+        let blackHoleBody = SKPhysicsBody(circleOfRadius: blackHoleText.size().width/2 * 0.7)
         super.init(texture: blackHoleText, color: nil, size: blackHoleText.size())
         self.runAction(SKAction.repeatActionForever(self.blackHoleAnimation))
         self.physicsBody = blackHoleBody
