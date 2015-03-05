@@ -23,7 +23,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var timeController = GameTime.sharedTameControler;
     
     
-    //MARK: setup time propertys
+    //MARK: setup time propertys ============================================================
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     var updateCounterForSpawing: Int = 0
@@ -88,6 +88,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     let categoryAlien:UInt32 =     0x1000
     let categoryBlackHole:UInt32 = 0x10000
     let categoryDragon:UInt32 =    0x100000
+    
+    //for clockfix
+    var gamePausedAt : NSTimeInterval?
 
 
     override init(size: CGSize) {
@@ -102,10 +105,24 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
     }
     
+    
+    
+    //MARK: INIT: ============================================================================
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented") // 6
     }
+//MARK: CLOCK FUNCTIONS   =================================================================================
+    func didEnterBackground(){
+        self.gamePausedAt = lastUpdateTime
+    }
+    func didEnterForeground(){
+        let currentTime = CACurrentMediaTime()
+    // the new start time should be == old start time + time passed since pause
+        let timePaused = currentTime - gamePausedAt!
+        self.lastUpdateTime = self.lastUpdateTime + timePaused
+    }
     
+    //MARK: DID MOVE TO VIEW ============================================================
     override func didMoveToView(view: SKView) {
         dude.position = centerScreen
         
@@ -175,6 +192,11 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(doctorWizardsHealthLabel!)
         
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        //clockfix
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil)
+
     }
     
     
@@ -461,7 +483,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //            println("firstBody is rock")
 //        }
  
-    
+//MARK: SPAWN ENEMIES  ==========================================================================================
     
     func spawnFireBall() {
 

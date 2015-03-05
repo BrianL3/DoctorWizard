@@ -67,9 +67,9 @@ class Player: SKSpriteNode {
         let waitAction = SKAction.waitForDuration(0.2)
 
         let healthPercentage : Float = Float(self.healthPoints)/Float(self.maximumHealthPoints)
-        println(self.healthPoints)
-        println(self.maximumHealthPoints)
-        println("health percentage is at: \(healthPercentage)")
+//        println(self.healthPoints)
+//        println(self.maximumHealthPoints)
+//        println("health percentage is at: \(healthPercentage)")
         switch healthPercentage{
         case 0..<0.25 :
             let hitAction = SKAction.sequence([changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction, waitAction, changeColorToRedAction, waitAction, changeColorToWhiteAction])
@@ -86,7 +86,7 @@ class Player: SKSpriteNode {
     
     func setInvincible(){
         self.isInvincible = true
-        println("is now set invicble")
+//        println("is now set invicble")
 //        let wait = SKAction.waitForDuration(0.7)
 //
 //        let disable = SKAction.runBlock { () -> Void in
