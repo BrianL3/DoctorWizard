@@ -23,7 +23,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     var timeController = GameTime.sharedTameControler;
     
     
-    //MARK: setup time propertys
+    //MARK: setup time propertys ============================================================
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
     var updateCounterForSpawing: Int = 0
@@ -101,10 +101,24 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
     }
     
+    
+    
+    //MARK: INIT: ============================================================================
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented") // 6
     }
+//MARK: CLOCK FUNCTIONS   =================================================================================
+    func didEnterBackground(){
+        self.gamePausedAt = lastUpdateTime
+    }
+    func didEnterForeground(){
+        let currentTime = CACurrentMediaTime()
+    // the new start time should be == old start time + time passed since pause
+        let timePaused = currentTime - gamePausedAt!
+        self.lastUpdateTime = self.lastUpdateTime + timePaused
+    }
     
+    //MARK: DID MOVE TO VIEW ============================================================
     override func didMoveToView(view: SKView) {
         dude.position = centerScreen
         
@@ -505,7 +519,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     func spawnPinkRock(){
         
         if self.updateCounterForSpawing % Int(60 * 1.2) == 0 {
-            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
+            let rock = PinkRock(rockImageName: randomRockString, initialPosition: self.pinkRockSpawnPoint())
             self.backgroundLayer.addChild(rock)
             //            rock.fadeInFadeOut()
             rock.spawnRock()

@@ -12,11 +12,19 @@ import SpriteKit
 
 
 class FireBall: SKSpriteNode {
+    let fireballAnimation:SKAction
     
     init(fireBallImageName : String, initialPosition: CGPoint) {
-        let fireBallTexture = SKTexture(imageNamed: fireBallImageName)
+        var animTextures: [SKTexture] = []
+        for i in 0...5 {
+            animTextures.append(SKTexture(imageNamed: "fireball\(i)"))
+        }
+        
+        self.fireballAnimation = SKAction.repeatActionForever(SKAction.animateWithTextures(animTextures, timePerFrame: 0.1))
+        let fireBallTexture = SKTexture(imageNamed: "fireball0")
         let fireBallPhysicsBody = SKPhysicsBody(texture: fireBallTexture, alphaThreshold: 0.1, size: fireBallTexture.size())
         super.init(texture: fireBallTexture, color: nil, size: fireBallTexture.size())
+        self.runAction(SKAction.repeatActionForever(self.fireballAnimation))
         self.position = initialPosition
         self.physicsBody = fireBallPhysicsBody
         self.physicsBody?.categoryBitMask = 0x100
@@ -49,7 +57,7 @@ class FireBall: SKSpriteNode {
         var moveTO = layer.convertPoint(CGPoint(
             x: -2048, y: 0), fromNode: self)
         moveTO.y = self.position.y
-        let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 1.7), remove])
+        let moveAcross = SKAction.sequence([SKAction.moveTo(moveTO, duration: 2), remove])
         let move = SKAction.group([wiggle, moveAcross])
         self.runAction(move)
     }

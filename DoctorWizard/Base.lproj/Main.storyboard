@@ -43,7 +43,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="min-36-gcu">
+                            <button opaque="NO" contentMode="center" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="min-36-gcu">
                                 <rect key="frame" x="180" y="202" width="240" height="34"/>
                                 <fontDescription key="fontDescription" name="GALACTICVANGUARDIANNCV" family="GALACTIC VANGUARDIAN NCV" pointSize="18"/>
                                 <state key="normal" title="Choose Song" backgroundImage="chooseSongButton.png">
