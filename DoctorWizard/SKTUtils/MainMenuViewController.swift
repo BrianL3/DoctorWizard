@@ -80,9 +80,9 @@ class MainMenuViewController: UIViewController, MPMediaPickerControllerDelegate,
     func launchGame(){
         self.scene = nil
         self.scene = SpaceScene(size:CGSize(width: 2048, height: 1536))
-        println(self.songGenre)
+//        println(self.songGenre)
         scene?.songGenre = self.songGenre
-        println(self.songDuration)
+//        println(self.songDuration)
         scene?.songDuration = self.songDuration
         scene?.menuDelegate = self
         let skView = SKView(frame: self.view.frame)

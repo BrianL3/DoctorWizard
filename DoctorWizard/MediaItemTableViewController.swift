@@ -33,7 +33,7 @@ class MediaItemTableViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet var navBar: UINavigationBar!
     @IBAction func cancelAction(sender: UIBarButtonItem) {
     
-        println("cancel")
+//        println("cancel")
         delegate?.userDidCancel()
         dismissViewControllerAnimated(true, completion: nil)
     }

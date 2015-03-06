@@ -172,7 +172,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addSubview(timeRemainingToPlayLabel);
         
         //Mark: Console Label - Dr Wizard Health Status
-        healthStatusBarLabel = UILabel(frame: CGRect(origin: CGPoint(x:self.view!.frame.size.width * 0.80,y:0.03), size: CGSize(width: 120, height: 40)));
+        healthStatusBarLabel = UILabel(frame: CGRect(origin: CGPoint(x:self.view!.frame.size.width * 0.75,y:0.03), size: CGSize(width: 120, height: 40)));
         healthStatusBarLabel.textColor = UIColor.yellowColor()
         healthStatusBarLabel.font = UIFont(name: "GALACTICVANGUARDIANNCV", size: 24.0);
         self.view?.addSubview(healthStatusBarLabel);
@@ -206,7 +206,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         if self.dude.isInvincible == true {
             if self.updateCounterForSpawing -  self.dudeSetInvincibleCount > Int(60 * 1.5) {
                 self.dude.isInvincible = false
-                println("we have set  the dude invincible to false")
+//                println("we have set  the dude invincible to false")
             }
         }
         
@@ -274,7 +274,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         if let didWin = self.winCondition{
             if self.isPresenting == false {
-                println("entered win condition loop because winCondition was set as true or false")
+//                println("entered win condition loop because winCondition was set as true or false")
                 // player won
                 self.healthStatusBarLabel.hidden = true
                 self.timeRemainingToPlayLabel.hidden = true
@@ -342,7 +342,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 */
 
         if (dudeBody != nil && self.dude.isInvincible != true) || self.dude.hitByBlackHole{
-            println("dude is one of the contact bodys")
+//            println("dude is one of the contact bodys")
             self.dude.setInvincible()
             self.dudeSetInvincibleCount = self.updateCounterForSpawing
             
@@ -354,7 +354,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 self.dude.healthPoints -= 100
             case self.categoryAlien :
                 self.dude.healthPoints -= 150
-                println("dude hit alien")
+//                println("dude hit alien")
             case self.categoryBlackHole :
 //                self.dude.healthPoints -= 2
                 self.dude.hitByBlackHole = true
@@ -364,10 +364,10 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
                     let dudePositionOnBG = self.backgroundLayer.convertPoint(self.dude.position, fromNode: self)
                     let dudeFrameOnBG = CGRect(origin: dudePositionOnBG, size: self.dude.size)
-                    println("we found the blackwhole \(blackWhole.frame)")
-                    println("dude position is         \(dudeFrameOnBG)")
+//                    println("we found the blackwhole \(blackWhole.frame)")
+//                    println("dude position is         \(dudeFrameOnBG)")
                     if CGRectIntersectsRect(blackWhole.frame, dudeFrameOnBG){
-                        println("what is up we hit the blackWhole")
+//                        println("what is up we hit the blackWhole")
                         let angle : CGFloat = -CGFloat(M_PI)
                         let oneSpin = SKAction.rotateByAngle(angle, duration: 0.5)
 //                        let repeatSpin = SKAction.repeatActionForever(oneSpin)
@@ -382,7 +382,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     }
                 })
             case self.categoryDragon:
-                println("yaawww the dude hit the dragon")
+//                println("yaawww the dude hit the dragon")
                 self.dude.healthPoints -= 200
             default:
                 println("")
@@ -439,7 +439,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             let fireBall = FireBall(fireBallImageName: "fireball", initialPosition: self.fireBallSpawnPoint())
             self.backgroundLayer.addChild(fireBall)
             fireBall.spawnFireBall(self.backgroundLayer)
-                    println("Spawning FireBall")
+//                    println("Spawning FireBall")
         }
 
 
@@ -485,18 +485,18 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 ////            let rock = PinkRock(rockImageName: "pinkRock1", initialPosition: self.pinkRockSpawnPoint())
 ////            self.backgroundLayer.addChild(rock)
 ////            rock.fadeInFadeOut()
-            println("bout to spawn a balckwhole")
+//            println("bout to spawn a balckwhole")
         let blackHole = BlackHole(blacHoleImageName: "blackhole", initialPosition: self.pinkRockSpawnPoint()) //use same spawn code as rocks
         self.backgroundLayer.addChild(blackHole)
         blackHole.spawnBlackHole()
-            println("black whole has spawned")
+//            println("black whole has spawned")
 //
         }
     }
     
     func spawnDragon() {
         if self.dragon == nil {
-            println("fuccck in der is a dragon")
+//            println("fuccck in der is a dragon")
             let spawnPoint = CGPoint(x: self.size.width * 0.8, y: self.size.height * 0.8)
             let bgSpawnPoint = self.backgroundLayer.convertPoint(spawnPoint, fromNode: self)
             self.dragon = Dragon(dragonImageName: "dragon_final", initialPosition: bgSpawnPoint)
@@ -562,7 +562,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 
     override func willMoveFromView(view: SKView) {
         self.paused = true
-        println("bouta pause game")
+//        println("bouta pause game")
         self.removeAllActions()
 
     }
@@ -648,7 +648,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                 SKTAudio.sharedInstance().playSoundEffect("blop_nine.wav")
                 
             default:
-                println("fucked something up")
+                println("")
             }
             
             SKTAudio.sharedInstance().backgroundMusicPlayer?.volume = 1.0
@@ -744,7 +744,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
 //            println("fith level")
         default:
             self.spawnPinkRock()
-            println("default case of CurrentLevel, current level is: \(self.curLevel)")
+//            println("default case of CurrentLevel, current level is: \(self.curLevel)")
         }
     }
     
