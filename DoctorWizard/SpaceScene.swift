@@ -50,7 +50,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
     
     let debriLayer = BackgroundLayer(backgroundImageName: "dunk_debri", backgroundIdentifier: "debri", movePointsPerSec: 20)
     
-    let bigDebriLayer = BackgroundLayer(backgroundImageName: "debri_big3", backgroundIdentifier: "big_debri", movePointsPerSec: 20)
+    let bigDebriLayer = BackgroundLayer(backgroundImageName: "debri_big3", backgroundIdentifier: "big_debri", movePointsPerSec: 30)
     
     //setup dude and dudes enemies
     let dude:Player = Player()
@@ -243,7 +243,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     if ( playTimeRemainingTicker > 15 ){
                             timeRemainingToPlayLabel.textColor = UIColor.yellowColor()
                     }else{
-                            timeRemainingToPlayLabel.textColor = UIColor.redColor()
+                            timeRemainingToPlayLabel.textColor = UIColor.greenColor()
                     }
             }else{
                 self.winCondition = true
@@ -276,8 +276,9 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
             if self.isPresenting == false {
                 println("entered win condition loop because winCondition was set as true or false")
                 // player won
+                self.healthStatusBarLabel.hidden = true
+                self.timeRemainingToPlayLabel.hidden = true
                 if didWin == true{
-                    
                     self.paused = true
                     if GameCenterKit.sharedGameCenter.gameCenterEnabled == true{
                         // create achievements, if any
@@ -304,6 +305,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
                     //player lost
                     
                 }else if didWin == false {
+                    
                     self.paused = true
                     let lostGameScene = LooserScene(size: self.size)
                     lostGameScene.mainMenuDelegate = self.menuDelegate
