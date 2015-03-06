@@ -37,7 +37,7 @@ class Alien: SKSpriteNode {
         self.zRotation = CGFloat.random(min:0, max: 90)
         let remove = SKAction.removeFromParent()
         self.zPosition = 2
-        let scaleIn = SKAction.scaleTo(1, duration: 0.3)
+        let scaleIn = SKAction.scaleTo(0.75, duration: 0.3)
         let scaleOut = SKAction.scaleTo(0, duration: 0.3)
         let fadeIn = SKAction.fadeAlphaTo(1, duration: 0.3)
         let fadeOut = SKAction.fadeAlphaTo(0, duration: 0.3)
