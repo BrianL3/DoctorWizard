@@ -166,13 +166,13 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
         
         //Mark: Console Label - Time Remaining To Play
-        timeRemainingToPlayLabel = UILabel(frame: CGRect(origin: CGPoint(x:self.view!.frame.size.width * 0.03,y:0.03), size: CGSize(width: 70, height: 40)));
+        timeRemainingToPlayLabel = UILabel(frame: CGRect(origin: CGPoint(x:self.view!.frame.size.width * 0.03,y:0.03), size: CGSize(width: 370, height: 40)));
         timeRemainingToPlayLabel.textColor = UIColor.greenColor()
         timeRemainingToPlayLabel.font = UIFont(name: "GALACTICVANGUARDIANNCV", size: 24.0);
         self.view?.addSubview(timeRemainingToPlayLabel);
         
         //Mark: Console Label - Dr Wizard Health Status
-        healthStatusBarLabel = UILabel(frame: CGRect(origin: CGPoint(x:self.view!.frame.size.width * 0.85,y:0.03), size: CGSize(width: 70, height: 40)));
+        healthStatusBarLabel = UILabel(frame: CGRect(origin: CGPoint(x:self.view!.frame.size.width * 0.80,y:0.03), size: CGSize(width: 120, height: 40)));
         healthStatusBarLabel.textColor = UIColor.yellowColor()
         healthStatusBarLabel.font = UIFont(name: "GALACTICVANGUARDIANNCV", size: 24.0);
         self.view?.addSubview(healthStatusBarLabel);
@@ -225,7 +225,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
       //MARK: GAME CONSOLE LABELS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
         
-        healthStatusBarLabel.text = "\(self.dude.healthPoints)"
+        healthStatusBarLabel.text = "HP  \(self.dude.healthPoints)"
         
             if ( self.dude.healthPoints < 15 ){
                 
@@ -238,7 +238,7 @@ class SpaceScene: SKScene, SKPhysicsContactDelegate {
         
             if ( playTimeRemainingTicker > 0 ){
             
-                timeRemainingToPlayLabel.text = "\(nSTimeIntervalValueToString(playTimeRemainingTicker, decimalPlaceRequired: 0))";
+                timeRemainingToPlayLabel.text = "Win in  \(nSTimeIntervalValueToString(playTimeRemainingTicker, decimalPlaceRequired: 0))";
             
                     if ( playTimeRemainingTicker > 15 ){
                             timeRemainingToPlayLabel.textColor = UIColor.yellowColor()
